@@ -1,0 +1,33 @@
+[
+  { "price": 200, "count": 1, "violation": "COLOR CODING" },
+  { "price": 250, "count": 1, "violation": "OBSTRUCTION" },
+  {
+    "price": 1000,
+    "count": 1,
+    "violation": "LOADING IN PROHIBITED ZONE (LPZ)"
+  },
+  { "price": 250, "count": 1, "violation": "DISREGARDING TRAFFIC LIGHTS" },
+  {
+    "price": 250,
+    "count": 1,
+    "violation": "DRIVING WITH DELIQUENT DRIVER'S LICENSE"
+  },
+  { "price": 1000, "count": 1, "violation": "UNREGISTERED VEHICLE" },
+  { "price": 250, "count": 1, "violation": "OVER SPEEDING" },
+  {
+    "price": 250,
+    "count": 1,
+    "violation": "DRIVING UNDER INFLUENCE OF LIQOUR"
+  },
+  { "price": 500, "count": 1, "violation": "TRUCK BAN" },
+  { "price": 1000, "count": 1, "violation": "NO FRANCHISE" },
+  { "price": 1000, "count": 1, "violation": "REFUSE TO CONVEY PASSENGER" },
+  { "price": 250, "count": 1, "violation": "COUNTER FLOW" },
+  { "price": 250, "count": 1, "violation": "SECTION 24-(PROPER ATTIRE)" },
+  { "price": 250, "count": 1, "violation": "ILLEGAL PARKING" },
+  { "price": 1000, "count": 1, "violation": "NO OR/CR" },
+  { "price": 250, "count": 1, "violation": "STUDENT LICENSE" },
+  { "price": 500, "count": 1, "violation": "NO HELMET" },
+  { "price": 500, "count": 1, "violation": "ARROGANT DRIVER" },
+  { "price": 500, "count": 1, "violation": "OTHERS" }
+]

@@ -1,0 +1,21 @@
+@import "../../index.scss";
+
+.navbar {
+  box-sizing: border-box;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 80px);
+  width: 100%;
+  border-right: 1px solid $mono;
+  z-index: 100;
+  position: sticky;
+  top: 73px;
+  left: 0;
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    display: none;
+  }
+}
