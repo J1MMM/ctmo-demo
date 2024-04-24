@@ -144,7 +144,7 @@ const Dashboard = () => {
             width: "100%",
             display: "flex",
             justifyContent: "center",
-            bgcolor: "#FFF",
+            bgcolor: "red",
             borderRadius: 3,
             flexDirection: "column",
             boxSizing: "border-box",
