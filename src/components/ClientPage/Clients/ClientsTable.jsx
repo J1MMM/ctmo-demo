@@ -22,6 +22,8 @@ import {
 import TableToolbar from "../../common/ui/TableToolbar";
 import OutlinedButton from "../../common/ui/OutlinedButton";
 import FilterButton from "../../common/ui/FilterButton";
+import useAuth from "../../../hooks/useAuth";
+import ROLES_LIST from "../../common/data/ROLES_LIST";
 
 const ClientsTable = memo(() => {
   const axiosPrivate = useAxiosPrivate();
@@ -37,6 +39,10 @@ const ClientsTable = memo(() => {
   const [pageSize, setPageSize] = useState(100);
   const [totalRows, setTotalRows] = useState(0);
   const [paidViolations, setPaidViolations] = useState([]);
+  const { auth } = useAuth();
+
+  const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
+  const ctmo1 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO1));
 
   const handleRowDoubleClick = (e) => {
     setClientInfo(true);
@@ -48,10 +54,7 @@ const ClientsTable = memo(() => {
     const violations = foundFranchise.complaint;
     let paidviolations = foundFranchise.paidViolations;
     const result = helper.removeOneItemPerMatch(violations, paidviolations);
-    console.log("result");
-    console.log(violations);
-    console.log(paidViolations);
-    console.log(result);
+
     setPaidViolations(result);
   };
 
@@ -75,11 +78,13 @@ const ClientsTable = memo(() => {
             actionButtons={
               <>
                 <FilterButton />
-                <ContainedButton
-                  title="Add Client"
-                  icon={<Add sx={{ color: "#FFF" }} />}
-                  onClick={() => setAddclient(true)}
-                />
+                {admin || ctmo1 ? (
+                  <ContainedButton
+                    title="Add Client"
+                    icon={<Add sx={{ color: "#FFF" }} />}
+                    onClick={() => setAddclient(true)}
+                  />
+                ) : null}
               </>
             }
           />

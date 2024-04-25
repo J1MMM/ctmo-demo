@@ -9,6 +9,8 @@ import helper from "../../common/data/helper";
 import OfficerInfo from "./OfficerInfo";
 import TableToolbar from "../../common/ui/TableToolbar";
 import FilterButton from "../../common/ui/FilterButton";
+import useAuth from "../../../hooks/useAuth";
+import ROLES_LIST from "../../common/data/ROLES_LIST";
 
 const initialDetails = {
   callsign: "",
@@ -29,6 +31,11 @@ const OfficersTable = () => {
   const [officerInfoShown, setOfficerInfoShown] = useState(false);
   const [addOfficerFormShown, setAddOfficerFormShown] = useState(false);
 
+  const { auth } = useAuth();
+
+  const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
+  const ctmo3 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO3));
+
   const handleDoubleClick = (e) => {
     const foundOfficer = officers.find((v) => v._id == e.id);
     console.log(foundOfficer);
@@ -46,11 +53,13 @@ const OfficersTable = () => {
             actionButtons={
               <>
                 <FilterButton />
-                <ContainedButton
-                  title="Add Officer"
-                  onClick={() => setAddOfficerFormShown(true)}
-                  icon={<Add sx={{ color: "#FFF" }} />}
-                />
+                {admin || ctmo3 ? (
+                  <ContainedButton
+                    title="Add Officer"
+                    onClick={() => setAddOfficerFormShown(true)}
+                    icon={<Add sx={{ color: "#FFF" }} />}
+                  />
+                ) : null}
               </>
             }
           />

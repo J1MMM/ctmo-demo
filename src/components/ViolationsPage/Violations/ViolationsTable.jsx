@@ -18,6 +18,9 @@ const ViolationsTable = () => {
     "Violators Management | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
 
   const { auth } = useAuth();
+
+  const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
+  const ctmo3 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO3));
   const { violations, violationsLoading, violationsList } = useData();
   const [addViolatorOpen, setAddViolatorOpen] = useState(false);
   const [vioModalShown, setVioModalShown] = useState(false);
@@ -28,6 +31,7 @@ const ViolationsTable = () => {
   const [initialViolationDetails, setInitialViolationsDetails] = useState(
     Vhelper.initialDetails
   );
+
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(100);
   const [totalRows, setTotalRows] = useState(0);
@@ -49,10 +53,6 @@ const ViolationsTable = () => {
     setInitialViolationsDetails(foundviolations);
   };
 
-  const paymentBtnClick = () => {
-    console.log("click");
-  };
-
   return (
     <>
       <DataTable
@@ -63,13 +63,13 @@ const ViolationsTable = () => {
             actionButtons={
               <>
                 <FilterButton />
-                {auth.roles[0] !== ROLES_LIST.Cashier && (
+                {admin || ctmo3 ? (
                   <ContainedButton
                     title="add violator"
                     icon={<Add sx={{ color: "#FFF" }} />}
                     onClick={() => setAddViolatorOpen(true)}
                   />
-                )}
+                ) : null}
               </>
             }
           />

@@ -40,28 +40,76 @@ function App() {
             <Route path="user-archive" element={<UserArchive />} />
           </Route>
 
-          <Route
-            element={
-              <RequireAuth
-                allowedRoles={[
-                  ROLES_LIST.Admin,
-                  ROLES_LIST.CTMO1,
-                  ROLES_LIST.CTMO2,
-                  ROLES_LIST.CTMO3,
-                  ROLES_LIST.Cashier,
-                ]}
-              />
-            }
-          >
-            <Route path="clients" element={<ClientsPageLayout />}>
+          <Route path="clients" element={<ClientsPageLayout />}>
+            <Route
+              element={
+                <RequireAuth
+                  allowedRoles={[
+                    ROLES_LIST.Admin,
+                    ROLES_LIST.Cashier,
+                    ROLES_LIST.CTMO1,
+                    ROLES_LIST.CTMO2,
+                  ]}
+                />
+              }
+            >
               <Route path="" element={<ClientsTable />} />
               <Route path="archive" element={<ClientArchived />} />
             </Route>
+          </Route>
 
-            <Route path="violations" element={<ViolationsPageLayout />}>
+          <Route path="violations" element={<ViolationsPageLayout />}>
+            <Route
+              element={
+                <RequireAuth
+                  allowedRoles={[
+                    ROLES_LIST.Admin,
+                    ROLES_LIST.Cashier,
+                    ROLES_LIST.CTMO1,
+                    ROLES_LIST.CTMO2,
+                    ROLES_LIST.CTMO3,
+                  ]}
+                />
+              }
+            >
               <Route path="" element={<ViolationsTable />} />
+            </Route>
+
+            <Route
+              element={
+                <RequireAuth
+                  allowedRoles={[
+                    ROLES_LIST.Admin,
+                    ROLES_LIST.CTMO1,
+                    ROLES_LIST.CTMO2,
+                    ROLES_LIST.CTMO3,
+                    ROLES_LIST.Cashier,
+                  ]}
+                />
+              }
+            >
               <Route path="paid" element={<PaidTable />} />
+            </Route>
+            <Route
+              element={
+                <RequireAuth
+                  allowedRoles={[ROLES_LIST.Admin, ROLES_LIST.CTMO3]}
+                />
+              }
+            >
               <Route path="released-tct" element={<ReleasedtctTable />} />
+            </Route>
+            <Route
+              element={
+                <RequireAuth
+                  allowedRoles={[
+                    ROLES_LIST.Admin,
+                    ROLES_LIST.CTMO2,
+                    ROLES_LIST.CTMO3,
+                  ]}
+                />
+              }
+            >
               <Route path="officers" element={<OfficersList />} />
             </Route>
           </Route>

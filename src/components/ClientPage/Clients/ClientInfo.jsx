@@ -36,6 +36,8 @@ import helper from "../../common/data/helper";
 import { QrCode, QrCode2, QrCodeOutlined } from "@mui/icons-material";
 import PrintableReport from "./PrintableReport";
 import { useReactToPrint } from "react-to-print";
+import ROLES_LIST from "../../common/data/ROLES_LIST";
+import useAuth from "../../../hooks/useAuth";
 
 const ClientInfo = ({
   open,
@@ -63,6 +65,11 @@ const ClientInfo = ({
   const [alertSeverity, setAlertSeverity] = useState("success");
   const [transferConfirmation, setTransferConfirmation] = useState(false);
   const [updateConfirmation, setUpdateConfirmation] = useState(false);
+  const { auth } = useAuth();
+
+  const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
+  const ctmo1 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO1));
+  const ctmo2 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO2));
 
   const handleFranchiseRevoke = async () => {
     setDisable(true);
@@ -92,7 +99,6 @@ const ClientInfo = ({
         "/franchise/transfer",
         franchiseDetails
       );
-      console.log(response.data);
       const newFranchise = helper.formatFranchise(response.data.newFranchise);
       setFranchises((prev) => {
         const newFranchises = prev.map((franchise) => {
@@ -267,106 +273,112 @@ const ClientInfo = ({
         actions={
           !archiveMode && (
             <>
-              <Collapse
-                in={transferForm}
-                mountOnEnter
-                unmountOnExit
-                timeout={transferForm ? 300 : 0}
-              >
-                <Box display="flex" gap={1}>
-                  <Button
-                    disabled={disable}
-                    variant="outlined"
-                    size="small"
-                    onClick={handleCloseOnclick}
+              {admin || ctmo1 ? (
+                <>
+                  <Collapse
+                    in={transferForm}
+                    mountOnEnter
+                    unmountOnExit
+                    timeout={transferForm ? 300 : 0}
                   >
-                    Cancel
-                  </Button>
-                  <Button
-                    disabled={disable}
-                    variant="contained"
-                    size="small"
-                    type="submit"
+                    <Box display="flex" gap={1}>
+                      <Button
+                        disabled={disable}
+                        variant="outlined"
+                        size="small"
+                        onClick={handleCloseOnclick}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        disabled={disable}
+                        variant="contained"
+                        size="small"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    </Box>
+                  </Collapse>
+                  <Collapse
+                    in={updateForm}
+                    mountOnEnter
+                    unmountOnExit
+                    timeout={updateForm ? 300 : 0}
                   >
-                    Submit
-                  </Button>
-                </Box>
-              </Collapse>
-              <Collapse
-                in={updateForm}
-                mountOnEnter
-                unmountOnExit
-                timeout={updateForm ? 300 : 0}
-              >
-                <Box display="flex" gap={1}>
-                  <Button
-                    disabled={disable}
-                    variant="outlined"
-                    size="small"
-                    onClick={handleCloseOnclick}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    disabled={disable}
-                    variant="contained"
-                    size="small"
-                    type="submit"
-                  >
-                    Submit
-                  </Button>
-                </Box>
-              </Collapse>
+                    <Box display="flex" gap={1}>
+                      <Button
+                        disabled={disable}
+                        variant="outlined"
+                        size="small"
+                        onClick={handleCloseOnclick}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        disabled={disable}
+                        variant="contained"
+                        size="small"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    </Box>
+                  </Collapse>
 
-              <Collapse
-                in={!transferForm && !updateForm}
-                mountOnEnter
-                unmountOnExit
-                timeout={!transferForm && !updateForm ? 300 : 0}
-              >
-                <Box display="flex" gap={1}>
-                  <Button
-                    disabled={disable}
-                    variant="contained"
-                    size="small"
-                    color="error"
-                    onClick={() => setDropConfirm(true)}
+                  <Collapse
+                    in={!transferForm && !updateForm}
+                    mountOnEnter
+                    unmountOnExit
+                    timeout={!transferForm && !updateForm ? 300 : 0}
                   >
-                    DROP
-                  </Button>
-                  <Button
-                    disabled={disable}
-                    variant="contained"
-                    size="small"
-                    onClick={handleTransferClick}
-                  >
-                    Transfer
-                  </Button>
-                  <Button
-                    disabled={disable}
-                    variant="contained"
-                    size="small"
-                    onClick={handleUpdateClick}
-                  >
-                    Update
-                  </Button>
-                </Box>
-              </Collapse>
+                    <Box display="flex" gap={1}>
+                      <Button
+                        disabled={disable}
+                        variant="contained"
+                        size="small"
+                        color="error"
+                        onClick={() => setDropConfirm(true)}
+                      >
+                        DROP
+                      </Button>
+                      <Button
+                        disabled={disable}
+                        variant="contained"
+                        size="small"
+                        onClick={handleTransferClick}
+                      >
+                        Transfer
+                      </Button>
+                      <Button
+                        disabled={disable}
+                        variant="contained"
+                        size="small"
+                        onClick={handleUpdateClick}
+                      >
+                        Update
+                      </Button>
+                    </Box>
+                  </Collapse>
+                </>
+              ) : null}
             </>
           )
         }
       >
-        <Collapse in={printable && !updateForm && !transferForm}>
-          <Button
-            variant="outlined"
-            sx={{ mb: 2, py: 1 }}
-            startIcon={<QrCode />}
-            size="small"
-            onClick={handlePrint}
-          >
-            generate report
-          </Button>
-        </Collapse>
+        {admin || ctmo2 ? (
+          <Collapse in={printable && !updateForm && !transferForm}>
+            <Button
+              variant="outlined"
+              sx={{ mb: 2, py: 1 }}
+              startIcon={<QrCode />}
+              size="small"
+              onClick={handlePrint}
+            >
+              generate report
+            </Button>
+          </Collapse>
+        ) : null}
 
         <FlexRow>
           <OutlinedTextField

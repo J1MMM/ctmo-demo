@@ -8,6 +8,8 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import SnackBar from "../../common/ui/SnackBar";
 import useData from "../../../hooks/useData";
 import helper from "../../common/data/helper";
+import useAuth from "../../../hooks/useAuth";
+import ROLES_LIST from "../../common/data/ROLES_LIST";
 
 const initialDetails = {
   callsign: "",
@@ -28,6 +30,11 @@ const OfficerInfo = ({ open, onClose, officerInfo, setOfficerInfo }) => {
   const [alertShown, setAlertShown] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState("success");
   const [alertMsg, setAlertMsg] = useState("");
+
+  const { auth } = useAuth();
+
+  const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
+  const ctmo3 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO3));
 
   const handleClose = () => {
     setEditMode(false);
@@ -99,59 +106,61 @@ const OfficerInfo = ({ open, onClose, officerInfo, setOfficerInfo }) => {
         title="Add Officer"
         onSubmit={handleSubmit}
         actions={
-          <>
-            {editMode ? (
-              <>
-                <Button
-                  disabled={disable}
-                  variant="outlined"
-                  size="small"
-                  onClick={handleClose}
-                >
-                  cancel
-                </Button>
-                <Button
-                  disabled={disable}
-                  variant="contained"
-                  size="small"
-                  type="submit"
-                >
-                  submit
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  disabled={disable}
-                  variant="outlined"
-                  size="small"
-                  onClick={handleClose}
-                >
-                  cancel
-                </Button>
-                <Button
-                  disabled={disable}
-                  variant="contained"
-                  size="small"
-                  color="error"
-                  onClick={() => setConfirmationDeleteShown(true)}
-                >
-                  delete
-                </Button>
-                <Button
-                  disabled={disable}
-                  variant="contained"
-                  size="small"
-                  onClick={() => {
-                    setEditMode(true);
-                    setReadOnly(false);
-                  }}
-                >
-                  edit
-                </Button>
-              </>
-            )}
-          </>
+          admin || ctmo3 ? (
+            <>
+              {editMode ? (
+                <>
+                  <Button
+                    disabled={disable}
+                    variant="outlined"
+                    size="small"
+                    onClick={handleClose}
+                  >
+                    cancel
+                  </Button>
+                  <Button
+                    disabled={disable}
+                    variant="contained"
+                    size="small"
+                    type="submit"
+                  >
+                    submit
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    disabled={disable}
+                    variant="outlined"
+                    size="small"
+                    onClick={handleClose}
+                  >
+                    cancel
+                  </Button>
+                  <Button
+                    disabled={disable}
+                    variant="contained"
+                    size="small"
+                    color="error"
+                    onClick={() => setConfirmationDeleteShown(true)}
+                  >
+                    delete
+                  </Button>
+                  <Button
+                    disabled={disable}
+                    variant="contained"
+                    size="small"
+                    onClick={() => {
+                      setEditMode(true);
+                      setReadOnly(false);
+                    }}
+                  >
+                    edit
+                  </Button>
+                </>
+              )}
+            </>
+          ) : null
         }
       >
         <Box maxWidth={500}>

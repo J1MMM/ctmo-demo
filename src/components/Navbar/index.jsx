@@ -12,15 +12,26 @@ import { RiFolderWarningLine } from "react-icons/ri";
 
 const Navbar = ({ navOpen }) => {
   const { auth } = useAuth();
-  const isAdmin = Boolean(
+  const isSuperAdmin = Boolean(
     auth?.roles?.find((role) => role === ROLES_LIST.SuperAdmin)
+  );
+
+  const isAdmin = Boolean(
+    auth?.roles?.find((role) => role === ROLES_LIST.Admin)
+  );
+
+  const ctmo1 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO1));
+  const ctmo2 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO2));
+  const ctmo3 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO3));
+  const cashier = Boolean(
+    auth?.roles?.find((role) => role === ROLES_LIST.Cashier)
   );
 
   return (
     <div className="navbar">
       <nav className="navbar-nav">
         <NavLink to="/" className={navOpen ? "open" : ""}>
-          {isAdmin ? (
+          {isSuperAdmin ? (
             <>
               <FiUsers size={24} style={{ minWidth: 26 }} />
               <Typography
@@ -43,7 +54,7 @@ const Navbar = ({ navOpen }) => {
           )}
         </NavLink>
 
-        {isAdmin && (
+        {isSuperAdmin && (
           <NavLink to={"user-archive"} className={navOpen ? "open" : ""}>
             <BsArchive size={24} style={{ minWidth: 26 }} />
             <Typography component={"span"} className={navOpen ? "active" : ""}>
@@ -51,17 +62,21 @@ const Navbar = ({ navOpen }) => {
             </Typography>
           </NavLink>
         )}
-        {!isAdmin && (
+
+        {!isSuperAdmin && (
           <>
-            <NavLink to="clients" className={navOpen ? "open" : ""}>
-              <PiUserList size={26} style={{ minWidth: 26 }} />
-              <Typography
-                component={"span"}
-                className={navOpen ? "active" : ""}
-              >
-                Clients
-              </Typography>
-            </NavLink>
+            {!ctmo3 && (
+              <NavLink to="clients" className={navOpen ? "open" : ""}>
+                <PiUserList size={26} style={{ minWidth: 26 }} />
+                <Typography
+                  component={"span"}
+                  className={navOpen ? "active" : ""}
+                >
+                  Clients
+                </Typography>
+              </NavLink>
+            )}
+
             <NavLink to="violations" className={navOpen ? "open" : ""}>
               <RiFolderWarningLine size={26} style={{ minWidth: 26 }} />
               <Typography

@@ -18,7 +18,7 @@ class PrintableReport extends Component {
           if (v != "")
             return (
               <Chip
-                sx={{ maxWidth: 750, mr: 1 }}
+                sx={{ maxWidth: 750 }}
                 key={i}
                 label={v}
                 color={paidViolations[i] == v ? "primary" : "error"}
@@ -144,7 +144,9 @@ class PrintableReport extends Component {
                   {franchiseDetails?.remarks}
                 </td>
                 <td className="td center" colSpan={2}>
-                  {complaintsEl}
+                  <Box display={"flex"} gap={1}>
+                    {complaintsEl}
+                  </Box>
                 </td>
               </tr>
             </tbody>

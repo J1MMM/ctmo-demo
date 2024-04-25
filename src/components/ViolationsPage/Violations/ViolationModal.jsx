@@ -79,6 +79,8 @@ const ViolationModal = ({
   const [editMode, setEditMode] = useState(false);
 
   const isAdmin = auth.roleCode === ROLES_LIST.Admin;
+  const ctmo1 = auth.roleCode === ROLES_LIST.CTMO1;
+  const ctmo3 = auth.roleCode === ROLES_LIST.CTMO3;
   const isCashier = auth.roleCode === ROLES_LIST.Cashier;
 
   const handleChange = (event) => {
@@ -201,98 +203,114 @@ const ViolationModal = ({
               </Collapse>
             </>
           ) : (
-            <>
-              <Collapse
-                in={readOnly}
-                mountOnEnter
-                unmountOnExit
-                timeout={readOnly ? 300 : 0}
-              >
-                <Box display="flex" gap={1}>
-                  <Button variant="outlined" size="small" onClick={handleClose}>
-                    cancel
-                  </Button>
-                  {isAdmin || isCashier ? (
-                    <>
+            <Box>
+              {isAdmin || ctmo1 || ctmo3 || isCashier ? (
+                <>
+                  <Collapse
+                    in={readOnly}
+                    mountOnEnter
+                    unmountOnExit
+                    timeout={readOnly ? 300 : 0}
+                  >
+                    <Box display="flex" gap={1}>
+                      {isAdmin || isCashier ? (
+                        <>
+                          <Button
+                            disabled={disable}
+                            variant="contained"
+                            size="small"
+                            onClick={() => {
+                              helper.handleScrollToTop();
+                              setReadOnly(false);
+                              setPaymentMode(true);
+                              setEditAlertShown(true);
+                            }}
+                          >
+                            Proceed to Payment
+                          </Button>
+                        </>
+                      ) : null}
+                      {isAdmin || ctmo3 || ctmo1 ? (
+                        <>
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            onClick={handleClose}
+                          >
+                            cancel
+                          </Button>
+                          <Button
+                            disabled={disable}
+                            variant="contained"
+                            size="small"
+                            onClick={() => {
+                              helper.handleScrollToTop();
+                              setReadOnly(false);
+                              setEditMode(true);
+                              setEditAlertShown(true);
+                            }}
+                          >
+                            Edit
+                          </Button>
+                        </>
+                      ) : null}
+                    </Box>
+                  </Collapse>
+                  <Collapse
+                    in={paymentMode}
+                    mountOnEnter
+                    unmountOnExit
+                    timeout={paymentMode ? 300 : 0}
+                  >
+                    <Box display="flex" gap={1}>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        onClick={handleClose}
+                      >
+                        cancel
+                      </Button>
                       <Button
                         disabled={disable}
                         variant="contained"
                         size="small"
-                        onClick={() => {
-                          helper.handleScrollToTop();
-                          setReadOnly(false);
-                          setPaymentMode(true);
-                          setEditAlertShown(true);
-                        }}
+                        type="submit"
                       >
-                        Proceed to Payment
+                        mark as paid
                       </Button>
-                    </>
-                  ) : null}
-                  <Button
-                    disabled={disable}
-                    variant="contained"
-                    size="small"
-                    onClick={() => {
-                      helper.handleScrollToTop();
-                      setReadOnly(false);
-                      setEditMode(true);
-                      setEditAlertShown(true);
-                    }}
-                  >
-                    Edit
-                  </Button>
-                </Box>
-              </Collapse>
-              <Collapse
-                in={paymentMode}
-                mountOnEnter
-                unmountOnExit
-                timeout={paymentMode ? 300 : 0}
-              >
-                <Box display="flex" gap={1}>
-                  <Button variant="outlined" size="small" onClick={handleClose}>
-                    cancel
-                  </Button>
-                  <Button
-                    disabled={disable}
-                    variant="contained"
-                    size="small"
-                    type="submit"
-                  >
-                    mark as paid
-                  </Button>
-                </Box>
-              </Collapse>
+                    </Box>
+                  </Collapse>
 
-              <Collapse
-                in={editMode}
-                mountOnEnter
-                unmountOnExit
-                timeout={editMode ? 300 : 0}
-              >
-                <Box display="flex" gap={1}>
-                  <Button
-                    disabled={disable}
-                    variant="outlined"
-                    size="small"
-                    onClick={handleClose}
+                  <Collapse
+                    in={editMode}
+                    mountOnEnter
+                    unmountOnExit
+                    timeout={editMode ? 300 : 0}
                   >
-                    cancel
-                  </Button>
-                  <Button
-                    disabled={
-                      disable || violationDetails == initialViolationDetails
-                    }
-                    variant="contained"
-                    size="small"
-                    type="submit"
-                  >
-                    Submit
-                  </Button>
-                </Box>
-              </Collapse>
-            </>
+                    <Box display="flex" gap={1}>
+                      <Button
+                        disabled={disable}
+                        variant="outlined"
+                        size="small"
+                        onClick={handleClose}
+                      >
+                        cancel
+                      </Button>
+                      <Button
+                        disabled={
+                          disable || violationDetails == initialViolationDetails
+                        }
+                        variant="contained"
+                        size="small"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    </Box>
+                  </Collapse>
+                </>
+              ) : null}
+            </Box>
           )
         }
       >

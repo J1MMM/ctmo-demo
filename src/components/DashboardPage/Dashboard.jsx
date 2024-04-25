@@ -76,7 +76,7 @@ const Dashboard = () => {
           loading...
         </Typography>
       ) : (
-        franchises.length
+        franchiseAnalytics?.franchises || 0
       ),
       icon: <HiOutlineUserGroup color={"#FFF"} size={18} />,
       subText: "Registered Franchises in San Pablo City",
