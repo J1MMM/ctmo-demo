@@ -185,6 +185,7 @@ const Dashboard = () => {
           gap={2}
           width="100%"
           display="grid"
+          maxHeight={400}
           sx={{
             gridTemplateColumns: {
               xs: "1fr",
@@ -199,7 +200,7 @@ const Dashboard = () => {
         </Box>
       </Box>
 
-      <Box // bargraph and cards container for layout
+      <Box // table and piechart container
         gap={2}
         width="100%"
         display="grid"
@@ -222,6 +223,7 @@ const Dashboard = () => {
               boxSizing: "border-box",
               flex: 1,
               position: "relative",
+              height: 500,
             }}
           >
             <OfficersTable />
@@ -229,7 +231,13 @@ const Dashboard = () => {
         </Slide>
         <Paper
           elevation={3}
-          sx={{ p: 2, borderRadius: 3, boxSizing: "border-box", flex: 1 }}
+          sx={{
+            p: 2,
+            borderRadius: 3,
+            boxSizing: "border-box",
+            flex: 1,
+            height: 500,
+          }}
         >
           <Box
             gap={2}
@@ -294,7 +302,7 @@ const Dashboard = () => {
                 </li>
               </ul>
             </Box>
-            <Box maxHeight={500}>
+            <Box maxHeight={450}>
               <PieGraph pieData={violationAnalytics?.pieData} />
             </Box>
           </Box>

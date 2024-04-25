@@ -85,7 +85,7 @@ class PrintableReport extends Component {
             </tbody>
           </table>
 
-          <table className="table" style={{ width: "100%" }}>
+          <table className="table bt-0" style={{ width: "100%" }}>
             <tbody>
               <tr>
                 <td className="td center">

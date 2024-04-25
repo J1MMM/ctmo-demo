@@ -54,8 +54,6 @@ const LoadingComp = () => (
 );
 
 const OfficersTable = () => {
-  document.title = "Officers List | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
-
   const { officers, officersLoading } = useData();
   const [officerInfo, setOfficerInfo] = useState(initialDetails);
   const [page, setPage] = useState(0);
@@ -132,8 +130,6 @@ const OfficersTable = () => {
         showCellVerticalBorder
         sx={{
           boxSizing: "border-box",
-          maxHeight: "55vh",
-          minHeight: "55vh",
           ".data-grid-header": {
             bgcolor: "#1A237E",
             color: "#FFF",
