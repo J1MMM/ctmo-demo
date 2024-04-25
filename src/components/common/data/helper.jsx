@@ -74,11 +74,25 @@ const clientsColumns = [
     renderCell: (params) => {
       const forRevoke =
         params.row?.complaint?.filter((str) => str?.trim() !== "").length >= 4;
+      const dateNow = new Date();
+      const DATE_RENEWAL = new Date(params.row?.date);
+
+      // Add one year to the renewal date
+      DATE_RENEWAL.setFullYear(DATE_RENEWAL.getFullYear() + 1);
+
+      // Compare the updated DATE_RENEWAL with the current date
+      const isExpired = DATE_RENEWAL <= dateNow;
 
       return (
         <Stack direction="row" gap={1}>
           <span>
-            {forRevoke && <Error fontSize="small" sx={{ color: "#D74141" }} />}
+            {isExpired || forRevoke ? (
+              <Tooltip
+                title={isExpired ? "expired franchise" : "too many violations"}
+              >
+                <Error fontSize="small" sx={{ color: "#D74141" }} />
+              </Tooltip>
+            ) : null}
           </span>
           <span>{params.row?.mtop}</span>
         </Stack>
@@ -245,16 +259,14 @@ const clientsColumns = [
     width: 800,
     headerClassName: "data-grid-header",
     editable: false,
+    headerAlign: "center",
+    align: "center",
 
     renderCell: (params, i) => {
       const violations = params.row.complaint;
       const paidviolations = params.row.paidViolations;
       const result = removeOneItemPerMatch(violations, paidviolations);
 
-      // console.log(params.row.mtop);
-      // console.log(violations);
-      // console.log(paidviolations);
-      // console.log(result);
       if (typeof params.value[0] == "string") {
         return (
           <Stack key={i} direction="row" gap={1}>

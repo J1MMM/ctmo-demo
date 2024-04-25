@@ -341,29 +341,31 @@ const UsersTable = ({
                             minWidth: { xs: "12rem", sm: "12rem", md: "15rem" },
                           }}
                         >
-                          <Checkbox
-                            size={mobileView ? "small" : "medium"}
-                            color="primary"
-                            inputProps={{
-                              "aria-label": "select row",
-                            }}
-                            checked={selectedRows.includes(user._id)}
-                            onClick={() => handleRowClick(user._id)}
-                            disabled={isAdmin ? true : false}
-                            indeterminate={isAdmin ? true : false}
-                          />
-                          <Typography
-                            component={"span"}
-                            variant="inherit"
-                            mr={1}
-                          >
-                            {`${fullname} `}
-                          </Typography>
-                          {user.gender == "male" ? (
-                            <PiGenderMaleBold color="rgb(2,170,232)" />
-                          ) : (
-                            <PiGenderFemaleBold color="#EF5890" />
-                          )}
+                          <Box display="flex" alignItems="center">
+                            <Checkbox
+                              size={mobileView ? "small" : "medium"}
+                              color="primary"
+                              inputProps={{
+                                "aria-label": "select row",
+                              }}
+                              checked={selectedRows.includes(user._id)}
+                              onClick={() => handleRowClick(user._id)}
+                              disabled={isAdmin ? true : false}
+                              indeterminate={isAdmin ? true : false}
+                            />
+                            <Typography
+                              component={"span"}
+                              variant="inherit"
+                              mr={1}
+                            >
+                              {`${fullname} `}
+                            </Typography>
+                            {user.gender == "male" ? (
+                              <PiGenderMaleBold color="rgb(2,170,232)" />
+                            ) : (
+                              <PiGenderFemaleBold color="#EF5890" />
+                            )}
+                          </Box>
                         </TableCell>
                         <TableCell
                           sx={{
