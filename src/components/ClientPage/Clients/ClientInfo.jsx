@@ -256,9 +256,9 @@ const ClientInfo = ({
         <PrintableReport
           ref={componentRef}
           franchiseDetails={franchiseDetails}
+          paidViolations={paidViolations}
         />
       </Box>
-
       <DialogForm
         onSubmit={handleSubmit}
         title={formTitle}

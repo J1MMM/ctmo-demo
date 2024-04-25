@@ -87,7 +87,7 @@ class ViolationReceipt extends Component {
                   style={{ display: "flex", alignItems: "center", gap: "8px" }}
                 >
                   <b>Payor: </b>
-                  {violationDetails.payor}
+                  {violationDetails?.name}
                 </td>
               </tr>
             </tbody>

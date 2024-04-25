@@ -332,13 +332,19 @@ input:-webkit-autofill,
     float: right;
     margin-right: 24px;
   }
+
   .b-0 {
     border: none !important;
   }
-  .by-0 {
-    border-top: none;
-    border-bottom: none;
+  &.by-0 {
+    border-top: none !important;
+    border-bottom: none !important;
+    td {
+      border-top: none !important;
+      border-bottom: none !important;
+    }
   }
+
   .payor-input {
     border: none;
     font-size: large;
@@ -348,7 +354,6 @@ input:-webkit-autofill,
     }
   }
 }
-
 .colored-row {
   background-color: #ffcccc;
 
