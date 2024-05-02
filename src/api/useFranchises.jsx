@@ -19,6 +19,11 @@ const useFranchises = () => {
     setFranchisesLoading,
     violations,
     setfranchiseAnalytics,
+    pendingFranchises,
+    setPendingFranchises,
+    pendingFranchisesLoading,
+    setPendingFranchisesLoading,
+    dummyVariable,
   } = useData();
   const [error, setError] = useState(null);
 
@@ -65,7 +70,11 @@ const useFranchises = () => {
               data.TYPE_OF_FRANCHISE || "",
               data.KIND_OF_BUSINESS || "",
               data.ROUTE || "",
-              data.PAID_VIOLATIONS
+              data.PAID_VIOLATIONS,
+              data.refNo,
+              data.paymentOr,
+              data.paymentOrDate,
+              data.pending
             );
           });
         });
@@ -75,9 +84,68 @@ const useFranchises = () => {
         setFranchisesLoading(false);
       }
     };
-
     fetchFranchises();
   }, [axiosPrivate, violations]); // Ensure axiosPrivate is included as a dependency
+
+  useEffect(() => {
+    const fetchFranchises = async () => {
+      setPendingFranchisesLoading(true);
+      try {
+        const response = await axiosPrivate.get("/franchise/pending");
+        setPendingFranchises(() => {
+          return response.data?.map((data) => {
+            return helper.createClientsData(
+              data._id || "",
+              data.MTOP || "",
+              data.LASTNAME || "",
+              data.FIRSTNAME || "",
+              data.MI || "",
+              data.ADDRESS || "",
+              data.OWNER_NO?.replace(/-/g, "").replace(/^0+/g, ""),
+              data.DRIVERS_NO?.replace(/-/g, "").replace(/^0+/g, ""),
+              data.TODA || "",
+              data.DRIVERS_NAME || "",
+              data.DRIVERS_ADDRESS || "",
+              data.OR || "",
+              data.CR || "",
+              data.DRIVERS_LICENSE_NO || "",
+              data.MODEL || "",
+              data.MOTOR_NO || "",
+              data.CHASSIS_NO || "",
+              data.PLATE_NO || "",
+              data.STROKE || "",
+              data.DATE_RENEWAL && new Date(data.DATE_RENEWAL),
+              data.REMARKS || "",
+              data.DATE_RELEASE_OF_ST_TP &&
+                new Date(data.DATE_RELEASE_OF_ST_TP),
+              removeEmptyStrings(data.COMPLAINT),
+              data.DATE_ARCHIVED || "",
+              data.OWNER_SEX || "",
+              data.DRIVERS_SEX || "",
+              data.TPL_PROVIDER || "",
+              data.TPL_DATE_1 && new Date(data.TPL_DATE_1),
+              data.TPL_DATE_2 && new Date(data.TPL_DATE_2),
+              data.FUEL_DISP || "",
+              data.TYPE_OF_FRANCHISE || "",
+              data.KIND_OF_BUSINESS || "",
+              data.ROUTE || "",
+              data.PAID_VIOLATIONS,
+              data.refNo,
+              data.paymentOr,
+              data.paymentOrDate,
+              data.pending
+            );
+          });
+        });
+      } catch (error) {
+        setError(error);
+      } finally {
+        setPendingFranchisesLoading(false);
+      }
+    };
+
+    fetchFranchises();
+  }, [axiosPrivate, franchises, dummyVariable]); // Ensure axiosPrivate is included as a dependency
 
   useEffect(() => {
     const update = async () => {
@@ -91,7 +159,7 @@ const useFranchises = () => {
       }
     };
     update();
-  }, [franchises]);
+  }, [franchises, dummyVariable]);
 
   return { franchises, franchisesLoading, error };
 };

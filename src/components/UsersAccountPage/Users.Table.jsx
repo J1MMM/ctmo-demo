@@ -31,12 +31,25 @@ import {
 } from "@mui/icons-material";
 import NoServerResponse from "../common/ui/NoServerResponse";
 import { PiGenderFemaleBold, PiGenderMaleBold } from "react-icons/pi";
+import UserEditModal from "./User.Edit";
+
+const initialAccountDetails = {
+  id: "",
+  firstname: "",
+  lastname: "",
+  middlename: "",
+  email: "",
+  role: "",
+  pwd: "",
+  pwd2: "",
+  gender: "",
+  address: "",
+  contactNo: "",
+};
 
 const UsersTable = ({
   users,
   setDeleteModal,
-  setUpateUserModal,
-  getUser,
   setAddUserModal,
   noResponse,
   selectedRows,
@@ -45,6 +58,9 @@ const UsersTable = ({
   setSorted,
 }) => {
   const [mobileView, setMobileView] = useState(false);
+  const [userDetails, setUserDetails] = useState(initialAccountDetails);
+  const [prevDetails, setPrevDetails] = useState(initialAccountDetails);
+  const [updateUserModal, setUpdateUserModal] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -71,7 +87,27 @@ const UsersTable = ({
     }
   };
 
-  console.log(users);
+  const getUser = (id) => {
+    const result = users?.find((user) => user._id == id);
+    const foundUser = {
+      id: id,
+      firstname: result.firstname,
+      lastname: result.lastname,
+      middlename: result.middlename,
+      email: result.email,
+      role: Object.keys(result.roles).filter(
+        (key) => result.roles[key] !== 0
+      )[0],
+      pwd: "",
+      pwd2: "",
+      gender: result.gender,
+      address: result.address,
+      contactNo: result.contactNo,
+    };
+
+    setUserDetails(foundUser);
+    setPrevDetails(foundUser);
+  };
 
   return (
     <>
@@ -394,7 +430,7 @@ const UsersTable = ({
                               sm: "x-small",
                               md: "small",
                             },
-                            minWidth: "5rem",
+                            minWidth: "10rem",
                           }}
                         >
                           {user.address}
@@ -406,7 +442,7 @@ const UsersTable = ({
                               sm: "x-small",
                               md: "small",
                             },
-                            minWidth: "5rem",
+                            minWidth: "10rem",
                           }}
                         >
                           {user.contactNo}
@@ -418,7 +454,7 @@ const UsersTable = ({
                               sm: "x-small",
                               md: "small",
                             },
-                            minWidth: "5rem",
+                            minWidth: "10rem",
                           }}
                         >
                           <Chip
@@ -427,8 +463,8 @@ const UsersTable = ({
                             )}
                             sx={{
                               fontFamily: "Poppins, sans-serif",
-                              color: isAdmin ? "#000" : "primary.main",
-                              bgcolor: "#EFF4FF",
+                              color: isAdmin ? "#FFF" : "primary.main",
+                              bgcolor: isAdmin ? "primary.main" : "",
                               fontSize: "x-small",
                             }}
                           />
@@ -438,7 +474,7 @@ const UsersTable = ({
                             <IconButton
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setUpateUserModal(true);
+                                setUpdateUserModal(true);
                                 getUser(user?._id);
                               }}
                             >
@@ -467,6 +503,15 @@ const UsersTable = ({
           </Grow>
         </Box>
       )}
+
+      <UserEditModal
+        prevDetails={prevDetails}
+        setPrevDetails={setPrevDetails}
+        accountDetails={userDetails}
+        setAccountDetails={setUserDetails}
+        open={updateUserModal}
+        onClose={() => setUpdateUserModal(false)}
+      />
     </>
   );
 };

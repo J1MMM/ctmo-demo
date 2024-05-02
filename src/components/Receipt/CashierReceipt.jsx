@@ -5,10 +5,89 @@ import BorderBox from "../common/ui/BorderBox";
 import dayjs from "dayjs";
 import OutlinedTextField from "../common/ui/OutlinedTextField";
 import DialogForm from "../common/ui/DialogForm";
+import useAuth from "../../hooks/useAuth";
 
-class ViolationReceipt extends Component {
+function numberToWords(number) {
+  const ones = [
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+  ];
+  const teens = [
+    "ten",
+    "eleven",
+    "twelve",
+    "thirteen",
+    "fourteen",
+    "fifteen",
+    "sixteen",
+    "seventeen",
+    "eighteen",
+    "nineteen",
+  ];
+  const tens = [
+    "",
+    "",
+    "twenty",
+    "thirty",
+    "forty",
+    "fifty",
+    "sixty",
+    "seventy",
+    "eighty",
+    "ninety",
+  ];
+
+  function convertToWords(number) {
+    if (number < 10) {
+      return ones[number];
+    } else if (number < 20) {
+      return teens[number - 10];
+    } else if (number < 100) {
+      return (
+        tens[Math.floor(number / 10)] +
+        (number % 10 !== 0 ? " " + ones[number % 10] : "")
+      );
+    } else if (number < 1000) {
+      return (
+        ones[Math.floor(number / 100)] +
+        " hundred" +
+        (number % 100 !== 0 ? " " + convertToWords(number % 100) : "")
+      );
+    } else if (number < 1000000) {
+      return (
+        convertToWords(Math.floor(number / 1000)) +
+        " thousand" +
+        (number % 1000 !== 0 ? " " + convertToWords(number % 1000) : "")
+      );
+    } else if (number < 1000000000) {
+      return (
+        convertToWords(Math.floor(number / 1000000)) +
+        " million" +
+        (number % 1000000 !== 0 ? " " + convertToWords(number % 1000000) : "")
+      );
+    }
+  }
+
+  if (number === 0) {
+    return ones[0];
+  } else if (number < 0) {
+    return "minus " + convertToWords(Math.abs(number));
+  } else {
+    return convertToWords(number);
+  }
+}
+
+class CashierReceipt extends Component {
   render() {
-    const { violationDetails } = this.props;
+    const { violationDetails, fullname } = this.props;
     const datenow = new Date();
     console.log(violationDetails);
 
@@ -158,7 +237,12 @@ class ViolationReceipt extends Component {
           <table className="table">
             <tbody>
               <tr>
-                <td className="td">Amount in words:</td>
+                <td className="td" style={{ borderRight: "none" }}>
+                  Amount in words:
+                </td>
+                <td className="td" style={{ borderLeft: "none" }}>
+                  <b> {numberToWords(totalAmount)?.toUpperCase()}</b>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -175,8 +259,10 @@ class ViolationReceipt extends Component {
             <tbody>
               <tr>
                 <td className="td">
-                  <input type="checkbox" id="cash" name="cash" value="cash" />
-                  <label htmlFor="cash">Cash</label>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <input type="checkbox" id="cash" name="cash" value="cash" />
+                    <label htmlFor="cash">Cash</label>
+                  </div>
                 </td>
                 <td className="td">Drawee Bank</td>
                 <td className="td">Number</td>
@@ -184,27 +270,67 @@ class ViolationReceipt extends Component {
               </tr>
               <tr>
                 <td className="td">
-                  <input
-                    type="checkbox"
-                    id="check"
-                    name="check"
-                    value="check"
-                  />
-                  <label htmlFor="check">Check</label>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <input
+                      type="checkbox"
+                      id="check"
+                      name="check"
+                      value="check"
+                    />
+                    <label htmlFor="check">Check</label>
+                  </div>
                 </td>
-                <td className="td"></td>
-                <td className="td"></td>
-                <td className="td"></td>
+                <td className="td">
+                  <input
+                    type="text"
+                    style={{
+                      width: "100%",
+                      margin: 0,
+                      padding: 0,
+                      border: "none",
+                      fontSize: "larger",
+                      outline: "none",
+                    }}
+                  />
+                </td>
+                <td className="td">
+                  <input
+                    type="text"
+                    style={{
+                      width: "100%",
+                      margin: 0,
+                      padding: 0,
+                      border: "none",
+                      fontSize: "larger",
+                      outline: "none",
+                    }}
+                  />
+                </td>
+                <td className="td">
+                  <input
+                    type="text"
+                    style={{
+                      width: "100%",
+                      margin: 0,
+                      padding: 0,
+                      border: "none",
+                      fontSize: "larger",
+                      outline: "none",
+                    }}
+                  />
+                </td>
               </tr>
               <tr>
                 <td className="td" colSpan={2}>
-                  <input
-                    type="checkbox"
-                    id="money"
-                    name="money"
-                    value="money"
-                  />
-                  <label htmlFor="money">Money Order</label>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <input
+                      type="checkbox"
+                      id="money"
+                      name="money"
+                      value="money"
+                    />
+                    <label htmlFor="money">Money Order</label>
+                  </div>
                 </td>
                 <td className="td"></td>
                 <td className="td"></td>
@@ -220,8 +346,27 @@ class ViolationReceipt extends Component {
               <tr>
                 <td className="td b-0">
                   <div className="container">
+                    <p
+                      style={{
+                        textAlign: "center",
+                        marginBottom: "-10px",
+                        marginTop: "-10px",
+                        fontWeight: "500",
+                        fontSize: "larger",
+                      }}
+                    >
+                      {fullname}
+                    </p>
                     <div className="broken-line" />
-                    <p style={{ textAlign: "center" }}> Collecting Officer</p>
+                    <p
+                      style={{
+                        textAlign: "center",
+
+                        marginTop: "-3px",
+                      }}
+                    >
+                      Collecting Officer
+                    </p>
                   </div>
                 </td>
               </tr>
@@ -244,4 +389,4 @@ class ViolationReceipt extends Component {
   }
 }
 
-export default ViolationReceipt;
+export default CashierReceipt;

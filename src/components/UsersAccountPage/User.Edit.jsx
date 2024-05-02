@@ -32,19 +32,9 @@ import OutlinedTextField from "../common/ui/OutlinedTextField";
 import ConfirmationDialog from "../common/ui/ConfirmationDialog";
 import { MuiTelInput } from "mui-tel-input";
 import spcbrgy from "../common/data/spcbrgy";
-
-const initialAccountDetails = {
-  fname: "",
-  lname: "",
-  mname: "",
-  email: "",
-  role: "",
-  pwd: "",
-  pwd2: "",
-  gender: "",
-  address: "",
-  contactNo: "",
-};
+import SnackBar from "../common/ui/SnackBar";
+import helper from "../common/data/helper";
+import useData from "../../hooks/useData";
 
 function validatePassword(password) {
   // Check if password length is at least 8 characters
@@ -76,29 +66,30 @@ function validatePassword(password) {
   return "Password is valid.";
 }
 
-const AddUserDialog = ({
+const UserEditModal = ({
   open,
   onClose,
-  setUsers,
-  setResMsg,
-  setSnack,
-  setSeverity,
+  accountDetails,
+  setAccountDetails,
+  prevDetails,
+  setPrevDetails,
 }) => {
+  const { setUsers } = useData();
   const axiosPrivate = useAxiosPrivate();
-  const [accountDetails, setAccountDetails] = useState(initialAccountDetails);
   const [pwdVisible, setPwdVisible] = useState(false);
   const [pwdVisible2, setPwdVisible2] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [confirmationShown, setConfirmationShown] = useState(false);
   const [error, setError] = useState(false);
-
+  const [resMsg, setResMsg] = useState("");
+  const [severity, setSeverity] = useState("");
+  const [snack, setSnack] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const msg = validatePassword(accountDetails.pwd);
 
     if (
-      accountDetails.fname.trim() == "" ||
-      accountDetails.lname.trim() == ""
+      accountDetails.firstname.trim() == "" ||
+      accountDetails.lastname.trim() == ""
     ) {
       setResMsg("firstname and lastname cannot be empty.");
       setSeverity("error");
@@ -108,24 +99,28 @@ const AddUserDialog = ({
       return;
     }
 
-    try {
-      const result = await axiosPrivate.post("users/email", {
-        email: accountDetails.email,
-      });
+    const msg = validatePassword(accountDetails.pwd);
+    if (prevDetails.email != accountDetails.email) {
+      try {
+        const result = await axiosPrivate.post("users/email", {
+          email: accountDetails.email,
+        });
 
-      console.log(result.data);
-      if (result.data?.length > 0) {
-        setResMsg("Email address is already use");
-        setSeverity("error");
-        setSnack(true);
-        setConfirmationShown(false);
-        setError(true);
-        return;
+        console.log(result.data);
+        if (result.data?.length > 0) {
+          setResMsg("Email address is already use");
+          setSeverity("error");
+          setSnack(true);
+          setConfirmationShown(false);
+          setError(true);
+          return;
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
-    if (msg != "Password is valid.") {
+
+    if (msg != "Password is valid." && accountDetails.pwd != "") {
       setResMsg(msg);
       setSeverity("error");
       setSnack(true);
@@ -150,23 +145,45 @@ const AddUserDialog = ({
     setDisabled(true);
 
     try {
-      const response = await axiosPrivate.post("users", accountDetails);
+      const response = await axiosPrivate.put("users", {
+        id: accountDetails.id,
+        firstname: accountDetails.firstname.trimStart().trimEnd(),
+        lastname: accountDetails.lastname.trimStart().trimEnd(),
+        middlename: accountDetails.middlename.trimStart()?.trimEnd(),
+        email: accountDetails.email.trimStart().trimEnd(),
+        password: accountDetails.pwd,
+        contactNo: accountDetails.contactNo.trimStart()?.trimEnd(),
+        address: accountDetails.address.trimStart()?.trimEnd(),
+        gender: accountDetails.gender,
+        role: accountDetails.role,
+      });
 
-      setUsers((prev) => [...prev, response?.data?.result]);
+      setUsers((prev) => {
+        return prev.map((data) => {
+          if (data._id == accountDetails.id) {
+            return response.data?.result;
+          }
+          return data;
+        });
+      });
       setResMsg(response?.data?.success);
       setSeverity("success");
       setSnack(true);
-      onClose(false);
-      setAccountDetails(initialAccountDetails);
+      setPrevDetails(accountDetails);
     } catch (error) {
+      console.log(error);
+      setSeverity("error");
       if (!error?.response) {
         setResMsg("No Server Response");
+      } else if (error?.response?.status == 304) {
+        setSeverity("warning");
+        setResMsg(`No changes for user with email: ${accountDetails?.email}`);
       } else if (error?.response?.status == 409) {
         setResMsg("Email address is already use");
       } else {
         setResMsg("Request Failed");
       }
-      setSeverity("error");
+      setSnack(true);
     }
     setDisabled(false);
     setConfirmationShown(false);
@@ -196,7 +213,10 @@ const AddUserDialog = ({
               cancel
             </Button>
             <Button
-              disabled={disabled}
+              disabled={
+                disabled ||
+                !helper.checkedFormModified(prevDetails, accountDetails)
+              }
               variant="contained"
               size="small"
               type="submit"
@@ -212,9 +232,12 @@ const AddUserDialog = ({
             disabled={disabled}
             label="First name"
             required
-            value={accountDetails.fname}
+            value={accountDetails.firstname}
             onChange={(e) =>
-              setAccountDetails((prev) => ({ ...prev, fname: e.target.value }))
+              setAccountDetails((prev) => ({
+                ...prev,
+                firstname: e.target.value,
+              }))
             }
           />
           <OutlinedTextField
@@ -222,18 +245,24 @@ const AddUserDialog = ({
             disabled={disabled}
             required
             label="Last name"
-            value={accountDetails.lname}
+            value={accountDetails.lastname}
             onChange={(e) =>
-              setAccountDetails((prev) => ({ ...prev, lname: e.target.value }))
+              setAccountDetails((prev) => ({
+                ...prev,
+                lastname: e.target.value,
+              }))
             }
           />
           <OutlinedTextField
             error={error}
             disabled={disabled}
             label="M.I. (optional)"
-            value={accountDetails.mname}
+            value={accountDetails.middlename}
             onChange={(e) =>
-              setAccountDetails((prev) => ({ ...prev, mname: e.target.value }))
+              setAccountDetails((prev) => ({
+                ...prev,
+                middlename: e.target.value,
+              }))
             }
           />
         </FlexRow>
@@ -257,7 +286,7 @@ const AddUserDialog = ({
               }
             >
               <MenuItem value={"male"}>
-                <Stack direction="row" gap={0.5}>
+                <Stack direction="row">
                   Male
                   <PiGenderMaleBold size={14} color="rgb(2,170,232)" />
                 </Stack>
@@ -323,7 +352,7 @@ const AddUserDialog = ({
               setAccountDetails((prev) => ({ ...prev, email: e.target.value }))
             }
           />
-          <FormControl margin="dense" fullWidth>
+          <FormControl margin="dense" fullWidth disabled>
             <InputLabel id="demo-simple-select-label">Station</InputLabel>
             <Select
               error={error}
@@ -358,7 +387,6 @@ const AddUserDialog = ({
               onChange={(e) =>
                 setAccountDetails((prev) => ({ ...prev, pwd: e.target.value }))
               }
-              required
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -384,7 +412,6 @@ const AddUserDialog = ({
               onChange={(e) =>
                 setAccountDetails((prev) => ({ ...prev, pwd2: e.target.value }))
               }
-              required
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -406,12 +433,19 @@ const AddUserDialog = ({
         open={confirmationShown}
         setOpen={setConfirmationShown}
         confirm={handleAddUser}
-        title="Create Account Confirmation"
-        content="Please review the information you've provided. This account can be used after submission."
+        title="Confirm Submission"
+        content="Are you sure you want to submit the changes?"
         disabled={disabled}
+      />
+
+      <SnackBar
+        open={snack}
+        onClose={setSnack}
+        msg={resMsg}
+        severity={severity}
       />
     </>
   );
 };
 
-export default AddUserDialog;
+export default UserEditModal;

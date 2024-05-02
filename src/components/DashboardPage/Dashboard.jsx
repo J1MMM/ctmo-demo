@@ -149,7 +149,7 @@ const Dashboard = () => {
             flexDirection: "column",
             boxSizing: "border-box",
             padding: 2,
-            maxHeight: 400,
+            height: 400,
           }}
         >
           <Stack direction="row" justifyContent="space-between">

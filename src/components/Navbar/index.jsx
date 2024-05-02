@@ -3,12 +3,13 @@ import { NavLink } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import ROLES_LIST from "../common/data/ROLES_LIST";
 import { FiUserPlus, FiUsers } from "react-icons/fi";
-import { Typography } from "@mui/material";
+import { List, Typography } from "@mui/material";
 import { BsArchive, BsGraphUpArrow } from "react-icons/bs";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "./style.scss";
 import { PiUserList } from "react-icons/pi";
 import { RiFolderWarningLine } from "react-icons/ri";
+import { ListAlt, ListAltOutlined } from "@mui/icons-material";
 
 const Navbar = ({ navOpen }) => {
   const { auth } = useAuth();
@@ -65,7 +66,7 @@ const Navbar = ({ navOpen }) => {
 
         {!isSuperAdmin && (
           <>
-            {!ctmo3 && (
+            {!ctmo3 && !cashier && (
               <NavLink to="clients" className={navOpen ? "open" : ""}>
                 <PiUserList size={26} style={{ minWidth: 26 }} />
                 <Typography
@@ -73,6 +74,17 @@ const Navbar = ({ navOpen }) => {
                   className={navOpen ? "active" : ""}
                 >
                   Clients
+                </Typography>
+              </NavLink>
+            )}
+            {!ctmo1 && !ctmo2 && !ctmo3 && (
+              <NavLink to="franchise" className={navOpen ? "open" : ""}>
+                <ListAltOutlined size={26} style={{ minWidth: 26 }} />
+                <Typography
+                  component={"span"}
+                  className={navOpen ? "active" : ""}
+                >
+                  Franchise
                 </Typography>
               </NavLink>
             )}

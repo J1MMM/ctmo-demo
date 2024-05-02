@@ -11,6 +11,7 @@ const useMTOP = () => {
     setAvailableMTOP,
     availableMTOPLoading,
     setAvailableMTOPLoading,
+    dummyVariable,
   } = useData();
   const [error, setError] = useState(null);
 
@@ -29,7 +30,7 @@ const useMTOP = () => {
     };
 
     fetchMTOP();
-  }, [axiosPrivate, franchises]); // Ensure axiosPrivate is included as a dependency
+  }, [axiosPrivate, franchises, dummyVariable]); // Ensure axiosPrivate is included as a dependency
 
   return { availableMTOP, availableMTOPLoading, error };
 };

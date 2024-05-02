@@ -1,38 +1,32 @@
-import { Add, Filter, FilterAlt, FilterList } from "@mui/icons-material";
 import React, { memo, useEffect, useRef, useState } from "react";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import useData from "../../../hooks/useData";
-import ClientInfo from "./ClientInfo";
-import TableLayout from "../../common/ui/TableLayout";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useData from "../../hooks/useData";
+import PendingFranchiseInfo from "./PendingFranchise.info";
 
-import ContainedButton from "../../common/ui/ContainedButton";
-import DataTable from "../../common/ui/DataTable";
-import AddFranchiseForm from "./AddFranchiseForm";
-import { Box, Button, Grow, Stack, Typography } from "@mui/material";
-import helper from "../../common/data/helper";
-import {
-  GridPreferencePanelsValue,
-  GridToolbar,
-  GridToolbarContainer,
-  GridToolbarFilterButton,
-  GridToolbarQuickFilter,
-  gridPreferencePanelStateSelector,
-  useGridApiContext,
-} from "@mui/x-data-grid";
-import TableToolbar from "../../common/ui/TableToolbar";
-import OutlinedButton from "../../common/ui/OutlinedButton";
-import FilterButton from "../../common/ui/FilterButton";
-import useAuth from "../../../hooks/useAuth";
-import ROLES_LIST from "../../common/data/ROLES_LIST";
+import ContainedButton from "../common/ui/ContainedButton";
+import DataTable from "../common/ui/DataTable";
+import { Box, Button, Grow, Paper, Stack, Typography } from "@mui/material";
+import helper from "../common/data/helper";
 
-const ClientsTable = memo(() => {
+import TableToolbar from "../common/ui/TableToolbar";
+import OutlinedButton from "../common/ui/OutlinedButton";
+import FilterButton from "../common/ui/FilterButton";
+import useAuth from "../../hooks/useAuth";
+import ROLES_LIST from "../common/data/ROLES_LIST";
+
+const PendingFranchiseTable = () => {
   const axiosPrivate = useAxiosPrivate();
-  const { franchises, setFranchises, franchisesLoading } = useData();
+  const {
+    pendingFranchises,
+    setPendingFranchises,
+    pendingFranchisesLoading,
+    setPendingFranchisesLoading,
+  } = useData();
+
   const [franchiseDetails, setFranchiseDetails] = useState(
     helper.initialFranchiseDetails
   );
   const [initialFormInfo, setinitialFormInfo] = useState({});
-  const [noResponse, setNoResponse] = useState(false);
   const [clientInfo, setClientInfo] = useState(false);
   const [addclient, setAddclient] = useState(false);
   const [page, setPage] = useState(0);
@@ -46,7 +40,7 @@ const ClientsTable = memo(() => {
 
   const handleRowDoubleClick = (e) => {
     setClientInfo(true);
-    let foundFranchise = franchises.find((v) => v.id == e.id);
+    let foundFranchise = pendingFranchises.find((v) => v.id == e.id);
 
     setFranchiseDetails(foundFranchise);
     setinitialFormInfo(foundFranchise);
@@ -69,28 +63,21 @@ const ClientsTable = memo(() => {
   };
 
   return (
-    <>
+    <Box sx={{ p: 3 }}>
       <DataTable
         Toolbar={() => (
           <TableToolbar
-            title="Clients Management"
-            description="Efficiently monitor client status and details"
+            title="Pending Franchises"
+            description="Efficiently monitor franchise status and details"
             actionButtons={
               <>
                 <FilterButton />
-                {admin || ctmo1 ? (
-                  <ContainedButton
-                    title="Add Client"
-                    icon={<Add sx={{ color: "#FFF" }} />}
-                    onClick={() => setAddclient(true)}
-                  />
-                ) : null}
               </>
             }
           />
         )}
         columns={helper.clientsColumns}
-        rows={franchises}
+        rows={pendingFranchises}
         rowCount={totalRows}
         page={page}
         pageSize={pageSize}
@@ -103,24 +90,21 @@ const ClientsTable = memo(() => {
         onStateChange={(e) =>
           setTotalRows(helper.countTrueValues(e?.visibleRowsLookup))
         }
-        loading={franchisesLoading}
+        loading={pendingFranchisesLoading}
         getRowClassName={getRowClassName}
       />
 
-      <ClientInfo
+      <PendingFranchiseInfo
         open={clientInfo}
         onClose={setClientInfo}
         franchiseDetails={franchiseDetails}
         setFranchiseDetails={setFranchiseDetails}
         initialFormInfo={initialFormInfo}
-        setinitialFormInfo={setinitialFormInfo}
         paidViolations={paidViolations}
         printable
       />
-
-      <AddFranchiseForm open={addclient} onClose={setAddclient} />
-    </>
+    </Box>
   );
-});
+};
 
-export default ClientsTable;
+export default PendingFranchiseTable;

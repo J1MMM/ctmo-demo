@@ -38,7 +38,7 @@ import { Clear, PrintOutlined, QrCode } from "@mui/icons-material";
 import { useReactToPrint } from "react-to-print";
 import useAuth from "../../../hooks/useAuth";
 import ROLES_LIST from "../../common/data/ROLES_LIST";
-import ViolationReceipt from "../../Receipt/ViolationReceipt";
+import CashierReceipt from "../../Receipt/CashierReceipt";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -610,9 +610,10 @@ const PaymentViolationsInfo = ({
           </>
         }
       >
-        <ViolationReceipt
+        <CashierReceipt
           ref={componentRef}
           violationDetails={violationDetails}
+          fullname={auth?.fullname}
         />
       </DialogForm>
     </>

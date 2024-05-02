@@ -6,7 +6,6 @@ import dayjs from "dayjs";
 class PrintableReport extends Component {
   render() {
     const { franchiseDetails, paidViolations } = this.props;
-    console.log(franchiseDetails);
 
     const date_released = franchiseDetails?.daterelease
       ? dayjs(franchiseDetails?.daterelease).format("MM/DD/YYYY")

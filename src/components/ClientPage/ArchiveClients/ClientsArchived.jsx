@@ -47,6 +47,7 @@ const ClientArchived = () => {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(100);
   const [totalRows, setTotalRows] = useState(0);
+  const [initialFormInfo, setinitialFormInfo] = useState({});
 
   function countTrueValues(obj) {
     let count = 0;
@@ -63,6 +64,7 @@ const ClientArchived = () => {
     let foundFranchise = archivedFranchises.find((v) => v.id == e.id);
 
     setFranchiseDetails(foundFranchise);
+    setinitialFormInfo(foundFranchise);
 
     const violations = foundFranchise.complaint;
     let paidviolations = foundFranchise.paidViolations;
@@ -103,6 +105,7 @@ const ClientArchived = () => {
       />
 
       <ClientInfo
+        initialFormInfo={initialFormInfo}
         open={clientInfo}
         setFranchiseDetails={setFranchiseDetails}
         onClose={setClientInfo}

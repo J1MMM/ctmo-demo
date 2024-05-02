@@ -11,6 +11,7 @@ const useArchivedFranchises = () => {
     setArchivedFranchises,
     archivedFranchisesLoading,
     setArchivedFranchisesLoading,
+    dummyVariable,
   } = useData();
   const [error, setError] = useState(null);
 
@@ -69,7 +70,7 @@ const useArchivedFranchises = () => {
     };
 
     fetchArchived();
-  }, [axiosPrivate, franchises]); // Ensure axiosPrivate is included as a dependency
+  }, [axiosPrivate, franchises, dummyVariable]); // Ensure axiosPrivate is included as a dependency
 
   return { archivedFanchises, archivedFranchisesLoading, error };
 };

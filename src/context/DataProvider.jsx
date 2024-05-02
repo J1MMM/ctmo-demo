@@ -12,6 +12,10 @@ export const DataProvider = ({ children }) => {
   const [franchises, setFranchises] = useState([]);
   const [franchisesLoading, setFranchisesLoading] = useState(true);
 
+  const [pendingFranchises, setPendingFranchises] = useState([]);
+  const [pendingFranchisesLoading, setPendingFranchisesLoading] =
+    useState(true);
+
   const [archivedFranchises, setArchivedFranchises] = useState([]);
   const [archivedFranchisesLoading, setArchivedFranchisesLoading] =
     useState(true);
@@ -35,7 +39,7 @@ export const DataProvider = ({ children }) => {
   const [violationAnalytics, setviolationAnalytics] = useState();
 
   const [headerShadow, setHeaderShadow] = useState(false);
-
+  const [dummyVariable, setDummyVariable] = useState(false);
   return (
     <DataContext.Provider
       value={{
@@ -81,9 +85,14 @@ export const DataProvider = ({ children }) => {
         setTickets,
         franchiseAnalytics,
         setfranchiseAnalytics,
-
         violationAnalytics,
         setviolationAnalytics,
+        pendingFranchises,
+        setPendingFranchises,
+        pendingFranchisesLoading,
+        setPendingFranchisesLoading,
+        dummyVariable,
+        setDummyVariable,
       }}
     >
       {children}

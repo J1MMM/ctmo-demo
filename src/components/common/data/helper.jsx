@@ -56,6 +56,10 @@ const initialFranchiseDetails = {
   tplProvider: "",
   route: "",
   paidViolations: "",
+  refNo: "",
+  paymentOr: "",
+  paymentOrDate: null,
+  pending: false,
 };
 
 const clientsColumns = [
@@ -85,7 +89,7 @@ const clientsColumns = [
 
       return (
         <Stack direction="row" gap={1}>
-          <span>
+          {/* <span>
             {isExpired || forRevoke ? (
               <Tooltip
                 title={isExpired ? "expired franchise" : "too many violations"}
@@ -93,7 +97,7 @@ const clientsColumns = [
                 <Error fontSize="small" sx={{ color: "#D74141" }} />
               </Tooltip>
             ) : null}
-          </span>
+          </span> */}
           <span>{params.row?.mtop}</span>
         </Stack>
       );
@@ -324,7 +328,11 @@ function createClientsData(
   typeofFranchise,
   kindofBusiness,
   route,
-  paidViolations
+  paidViolations,
+  refNo,
+  paymentOr,
+  paymentOrDate,
+  pending
 ) {
   return {
     id,
@@ -361,6 +369,10 @@ function createClientsData(
     kindofBusiness,
     route,
     paidViolations,
+    refNo,
+    paymentOr,
+    paymentOrDate,
+    pending,
   };
 }
 function countTrueValues(obj) {
@@ -436,7 +448,11 @@ const formatFranchise = (franchise) => {
     franchise.TYPE_OF_FRANCHISE,
     franchise.KIND_OF_BUSINESS,
     franchise.ROUTE,
-    franchise.PAID_VIOLATIONS
+    franchise.PAID_VIOLATIONS,
+    franchise.refNo,
+    franchise.paymentOr,
+    franchise.paymentOrDate,
+    franchise.pending
   );
 };
 

@@ -20,6 +20,7 @@ import UserArchive from "./components/UsersAccountPage/UserArchive";
 import Users from "./components/UsersAccountPage/Users";
 import useAuth from "./hooks/useAuth";
 import OfficersList from "./components/ViolationsPage/Officers/OfficersList";
+import PendingFranchiseTable from "./components/PendingFranchisePage";
 
 function App() {
   const { auth } = useAuth();
@@ -46,7 +47,6 @@ function App() {
                 <RequireAuth
                   allowedRoles={[
                     ROLES_LIST.Admin,
-                    ROLES_LIST.Cashier,
                     ROLES_LIST.CTMO1,
                     ROLES_LIST.CTMO2,
                   ]}
@@ -55,6 +55,18 @@ function App() {
             >
               <Route path="" element={<ClientsTable />} />
               <Route path="archive" element={<ClientArchived />} />
+            </Route>
+          </Route>
+
+          <Route path="franchise" element={<PendingFranchiseTable />}>
+            <Route
+              element={
+                <RequireAuth
+                  allowedRoles={[ROLES_LIST.Admin, ROLES_LIST.Cashier]}
+                />
+              }
+            >
+              <Route path="" element={<PendingFranchiseTable />} />
             </Route>
           </Route>
 

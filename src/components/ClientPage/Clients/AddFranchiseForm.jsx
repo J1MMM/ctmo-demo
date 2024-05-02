@@ -7,10 +7,11 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import useData from "../../../hooks/useData";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -23,12 +24,19 @@ import SnackBar from "../../common/ui/SnackBar";
 import ConfirmationDialog from "../../common/ui/ConfirmationDialog";
 import spcbrgy from "../../common/data/spcbrgy";
 import helper from "../../common/data/helper";
+import { MuiTelInput } from "mui-tel-input";
+import { PiGenderFemaleBold, PiGenderMaleBold } from "react-icons/pi";
+import NewFranchise from "../../Receipt/NewFranchise";
+import { useReactToPrint } from "react-to-print";
+import useAuth from "../../../hooks/useAuth";
+import { Print, PrintOutlined } from "@mui/icons-material";
 
 const AddFranchiseForm = ({ open, onClose }) => {
   document.title =
     "Clients Management | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
   const axiosPrivate = useAxiosPrivate();
-  const { franchises, setFranchises, availableMTOP } = useData();
+  const { setDummyVariable, setFranchises, availableMTOP } = useData();
+  const { auth } = useAuth();
 
   const [franchiseDetails, setFranchiseDetails] = useState(
     helper.initialFranchiseDetails
@@ -38,21 +46,29 @@ const AddFranchiseForm = ({ open, onClose }) => {
   const [confirmationShown, setConfirmaionShown] = useState(false);
   const [alertMsg, setAlertMsg] = useState("");
   const [alertSeverity, setAlertSeverity] = useState("success");
+  const [receiptModal, setReceiptModal] = useState(false);
+
+  const receiptCompRef = useRef(null);
+  const handlePrintReceipt = useReactToPrint({
+    content: () => receiptCompRef.current,
+  });
 
   const handleAddFranchise = async () => {
     setDisable(true);
     try {
       const response = await axiosPrivate.post("/franchise", franchiseDetails);
-      setFranchises((prev) => {
-        const newFranchises = [...prev, helper.formatFranchise(response.data)];
-        return helper.sortData(newFranchises, "mtop");
-      });
-      setFranchiseDetails(helper.initialFranchiseDetails);
+      setFranchiseDetails((prev) => ({ ...prev, refNo: response.data }));
+      setDummyVariable((prev) => !prev);
+      // setFranchises((prev) => {
+      //   const newFranchises = [...prev, helper.formatFranchise(response.data)];
+      //   return helper.sortData(newFranchises, "mtop");
+      // });
       setAlertSeverity("success");
       setAlertMsg(
-        "Success! The franchise has been added to the system successfully"
+        "Success! The new franchise is in pending status. It will be added to the system after payment."
       );
       onClose(false);
+      setReceiptModal(true);
     } catch (error) {
       console.log(error);
       setAlertSeverity("error");
@@ -208,29 +224,37 @@ const AddFranchiseForm = ({ open, onClose }) => {
                   }))
                 }
               >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="male">
+                  <Stack direction="row" gap={0.5}>
+                    Male
+                    <PiGenderMaleBold size={14} color="rgb(2,170,232)" />
+                  </Stack>
+                </MenuItem>
+                <MenuItem value="female">
+                  <Stack direction="row" gap={0.5}>
+                    Female
+                    <PiGenderFemaleBold size={14} color="#EF5890" />
+                  </Stack>
+                </MenuItem>
               </Select>
             </FormControl>
 
-            <OutlinedTextField
-              required={true}
-              label="Contact no."
+            <MuiTelInput
+              label="Contact No."
+              required
+              fullWidth
+              margin="dense"
+              defaultCountry="PH"
+              disableDropdown
+              forceCallingCode
               value={franchiseDetails.contact}
-              onChange={(e) =>
+              onChange={(num) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  contact: e.target.value,
+                  contact: num,
                 }))
               }
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">+63</InputAdornment>
-                ),
-              }}
-              error={franchiseDetails.contact.length > 10}
             />
-
             <Autocomplete
               freeSolo
               clearIcon={false}
@@ -283,26 +307,35 @@ const AddFranchiseForm = ({ open, onClose }) => {
                   }))
                 }
               >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="male">
+                  <Stack direction="row" gap={0.5}>
+                    Male
+                    <PiGenderMaleBold size={14} color="rgb(2,170,232)" />
+                  </Stack>
+                </MenuItem>
+                <MenuItem value="female">
+                  <Stack direction="row" gap={0.5}>
+                    Female
+                    <PiGenderFemaleBold size={14} color="#EF5890" />
+                  </Stack>
+                </MenuItem>
               </Select>
             </FormControl>
-            <OutlinedTextField
-              required={true}
-              label="Contact no."
+            <MuiTelInput
+              label="Contact No."
+              required
+              fullWidth
+              margin="dense"
+              defaultCountry="PH"
+              disableDropdown
+              forceCallingCode
               value={franchiseDetails.contact2}
-              onChange={(e) =>
+              onChange={(num) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  contact2: e.target.value,
+                  contact2: num,
                 }))
               }
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">+63</InputAdornment>
-                ),
-              }}
-              error={franchiseDetails.contact2.length > 10}
             />
           </FlexRow>
           <FlexRow>
@@ -405,6 +438,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               }
             />
             <OutlinedTextField
+              required={false}
               label="Fuel DISP.(cc)"
               value={franchiseDetails.fuelDisp}
               onChange={(e) =>
@@ -592,9 +626,48 @@ const AddFranchiseForm = ({ open, onClose }) => {
         setOpen={setConfirmaionShown}
         confirm={handleAddFranchise}
         title="New Franchise Confirmation"
-        content="Are you sure you want to add this franchise? Once confirmed, the franchise will be added to the system."
+        content="Are you sure you want to add this franchise? Once confirmed, it will be added to pending franchises and integrated into the system upon payment. "
         disabled={disable}
       />
+
+      <DialogForm
+        open={receiptModal}
+        onClose={() => {
+          setReceiptModal(false);
+          setFranchiseDetails(helper.initialFranchiseDetails);
+        }}
+        title="New Franchise Receipt"
+        actions={
+          <>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                setReceiptModal(false);
+                setFranchiseDetails(helper.initialFranchiseDetails);
+              }}
+            >
+              close
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<PrintOutlined />}
+              onClick={handlePrintReceipt}
+            >
+              Print
+            </Button>
+          </>
+        }
+      >
+        <Box display="flex" justifyContent="center">
+          <NewFranchise
+            ref={receiptCompRef}
+            franchiseDetails={franchiseDetails}
+            fullname={auth?.fullname}
+          />
+        </Box>
+      </DialogForm>
     </>
   );
 };

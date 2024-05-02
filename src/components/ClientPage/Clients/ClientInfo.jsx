@@ -2,10 +2,12 @@ import {
   Autocomplete,
   Box,
   Button,
+  Checkbox,
   Chip,
   Collapse,
   Fade,
   FormControl,
+  FormControlLabel,
   FormHelperText,
   Grow,
   InputAdornment,
@@ -15,6 +17,7 @@ import {
   Select,
   Slide,
   Snackbar,
+  Stack,
   TextField,
   Typography,
   Zoom,
@@ -33,11 +36,26 @@ import SnackBar from "../../common/ui/SnackBar";
 import AlertDialog from "../../common/ui/AlertDialog";
 import spcbrgy from "../../common/data/spcbrgy";
 import helper from "../../common/data/helper";
-import { QrCode, QrCode2, QrCodeOutlined } from "@mui/icons-material";
+import {
+  List,
+  ListAltOutlined,
+  Pending,
+  PendingActions,
+  PendingActionsOutlined,
+  PrintOutlined,
+  QrCode,
+  QrCode2,
+  QrCodeOutlined,
+  Report,
+} from "@mui/icons-material";
 import PrintableReport from "./PrintableReport";
 import { useReactToPrint } from "react-to-print";
 import ROLES_LIST from "../../common/data/ROLES_LIST";
 import useAuth from "../../../hooks/useAuth";
+import { MuiTelInput } from "mui-tel-input";
+import NewFranchise from "../../Receipt/NewFranchise";
+import { PiGenderFemaleBold, PiGenderMaleBold } from "react-icons/pi";
+import RenewFranchise from "../../Receipt/RenewFranchise";
 
 const ClientInfo = ({
   open,
@@ -47,6 +65,7 @@ const ClientInfo = ({
   archiveMode,
   printable,
   initialFormInfo,
+  setinitialFormInfo,
   paidViolations,
 }) => {
   const axiosPrivate = useAxiosPrivate();
@@ -58,18 +77,35 @@ const ClientInfo = ({
   const [updateAlertShown, setUpdateAlertShown] = useState(false);
   const [closingAlert, setClosingAlert] = useState(false);
   const [readOnly, setReadOnly] = useState(true);
-  const [formTitle, setFormTitle] = useState("Client's Information");
-  const { setFranchises, franchises } = useData();
+  const [formTitle, setFormTitle] = useState("Franchise Details");
+  const { setFranchises, setDummyVariable } = useData();
   const [alertShown, setAlertShown] = useState(false);
   const [alertMsg, setAlertMsg] = useState("");
   const [alertSeverity, setAlertSeverity] = useState("success");
   const [transferConfirmation, setTransferConfirmation] = useState(false);
   const [updateConfirmation, setUpdateConfirmation] = useState(false);
   const { auth } = useAuth();
+  const [receiptModal, setReceiptModal] = useState(false);
+  const [receiptData, setReceiptData] = useState([]);
+  const [changeOwner, setChangeOwner] = useState(false);
+  const [changeDriver, setChangeDriver] = useState(false);
+  const [changeMotor, setChangeMotor] = useState(false);
+  const [changeToda, setChangeToda] = useState(false);
 
   const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
   const ctmo1 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO1));
   const ctmo2 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO2));
+
+  const componentRef = useRef(null);
+  const reportComp = useRef(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  const handlePrintReport = useReactToPrint({
+    content: () => reportComp.current,
+  });
 
   const handleFranchiseRevoke = async () => {
     setDisable(true);
@@ -99,18 +135,25 @@ const ClientInfo = ({
         "/franchise/transfer",
         franchiseDetails
       );
-      const newFranchise = helper.formatFranchise(response.data.newFranchise);
-      setFranchises((prev) => {
-        const newFranchises = prev.map((franchise) => {
-          if (franchise.mtop == response.data?.newFranchise.MTOP) {
-            return newFranchise;
-          } else {
-            return franchise;
-          }
-        });
-        return helper.sortData(newFranchises, "mtop");
-      });
-      setFranchiseDetails(newFranchise);
+      setFranchiseDetails((prev) => ({
+        ...initialFormInfo,
+        refNo: response.data,
+      }));
+
+      setDummyVariable((prev) => !prev);
+
+      // const newFranchise = helper.formatFranchise(response.data.newFranchise);
+      // setFranchises((prev) => {
+      //   const newFranchises = prev.map((franchise) => {
+      //     if (franchise.mtop == response.data?.newFranchise.MTOP) {
+      //       return newFranchise;
+      //     } else {
+      //       return franchise;
+      //     }
+      //   });
+      //   return helper.sortData(newFranchises, "mtop");
+      // });
+      // setFranchiseDetails(newFranchise);
       setTransferForm(false);
       setReadOnly(true);
       helper.handleScrollToTop();
@@ -118,6 +161,7 @@ const ClientInfo = ({
       setAlertMsg(
         "Franchise successfully transferred to the new owner, franchise information has been added to the system."
       );
+      setReceiptModal(true);
     } catch (error) {
       console.log(error);
       setAlertSeverity("error");
@@ -141,25 +185,55 @@ const ClientInfo = ({
         "/franchise/update",
         franchiseDetails
       );
-      const newFranchise = helper.formatFranchise(response.data);
+
+      // setFranchiseDetails({
+      //   ...initialFormInfo,
+      //   refNo: response.data?.refNo,
+      // });
+      setFranchiseDetails((prev) => ({
+        ...prev,
+        refNo: response.data?.refNo,
+        pending: true,
+      }));
+
+      setinitialFormInfo((prev) => ({
+        ...prev,
+        refNo: response.data?.refNo,
+        pending: true,
+      }));
+
+      setReceiptData(response.data?.receiptData);
+      // setDummyVariable((prev) => !prev);
       setFranchises((prev) => {
-        const newFranchises = prev.map((franchise) => {
-          if (franchise.mtop == response.data.MTOP) {
-            return newFranchise;
+        return prev.map((v) => {
+          if (v.id == franchiseDetails.id) {
+            return { ...v, pending: true };
           } else {
-            return franchise;
+            return v;
           }
         });
-        return helper.sortData(newFranchises, "mtop");
       });
-      setFranchiseDetails(newFranchise);
+
+      // const newFranchise = helper.formatFranchise(response.data);
+      // setFranchises((prev) => {
+      //   const newFranchises = prev.map((franchise) => {
+      //     if (franchise.mtop == response.data.MTOP) {
+      //       return newFranchise;
+      //     } else {
+      //       return franchise;
+      //     }
+      //   });
+      //   return helper.sortData(newFranchises, "mtop");
+      // });
+      // setFranchiseDetails(newFranchise);
       setUpdateForm(false);
       setReadOnly(true);
       helper.handleScrollToTop();
       setAlertSeverity("success");
       setAlertMsg(
-        "Franchise information updated successfully. Your changes have been saved and are now reflected in the system."
+        "Franchise information updated successfully. It will be added to the system after payment"
       );
+      setReceiptModal(true);
     } catch (error) {
       console.log(error);
       setAlertSeverity("error");
@@ -181,8 +255,12 @@ const ClientInfo = ({
       setFranchiseDetails(initialFormInfo);
     } else {
       onClose(false);
-      setFranchiseDetails(helper.initialFranchiseDetails);
+      setTimeout(() => {
+        setFranchiseDetails(helper.initialFranchiseDetails);
+      }, 500);
     }
+
+    setFormTitle("Franchise Details");
     setClosingAlert(false);
     setUpdateForm(false);
     setTransferForm(false);
@@ -202,19 +280,19 @@ const ClientInfo = ({
     if (transferForm || updateForm) {
       let formIsModified;
 
-      if (transferForm) {
-        formIsModified = helper.checkedFormModified(
-          {
-            ...helper.initialFranchiseDetails,
-            mtop: franchiseDetails.mtop,
-            date: franchiseDetails.date,
-            id: franchiseDetails.id,
-          },
-          franchiseDetails
-        );
-      }
+      // if (transferForm) {
+      //   formIsModified = helper.checkedFormModified(
+      //     {
+      //       ...helper.initialFranchiseDetails,
+      //       mtop: franchiseDetails.mtop,
+      //       date: franchiseDetails.date,
+      //       id: franchiseDetails.id,
+      //     },
+      //     franchiseDetails
+      //   );
+      // }
 
-      if (updateForm) {
+      if (updateForm || transferForm) {
         formIsModified = helper.checkedFormModified(
           initialFormInfo,
           franchiseDetails
@@ -236,11 +314,11 @@ const ClientInfo = ({
     setTransferForm(true);
     setTransferAlertShown(true);
     helper.handleScrollToTop();
-    clearForm();
+    // clearForm();
   };
 
   const handleUpdateClick = () => {
-    setFormTitle("Update Franchise");
+    setFormTitle("Franchise Renewal");
     setReadOnly(false);
     setUpdateForm(true);
     setUpdateAlertShown(true);
@@ -252,26 +330,34 @@ const ClientInfo = ({
     transferForm ? setTransferConfirmation(true) : setUpdateConfirmation(true);
   };
 
-  const componentRef = useRef(null);
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
   return (
     <>
-      <Box display="none">
-        <PrintableReport
-          ref={componentRef}
-          franchiseDetails={franchiseDetails}
-          paidViolations={paidViolations}
-        />
-      </Box>
       <DialogForm
         onSubmit={handleSubmit}
         title={formTitle}
         open={open}
         onClose={handleCloseOnclick}
         actions={
-          !archiveMode && (
+          !archiveMode &&
+          (franchiseDetails?.pending ? (
+            <>
+              <Box
+                display="flex"
+                bgcolor="warning.main"
+                gap={1}
+                px={2}
+                py={1}
+                borderRadius={5}
+                boxSizing="border-box"
+              >
+                <PendingActionsOutlined
+                  sx={{ color: "#FFF" }}
+                  fontSize="small"
+                />
+                <Typography color="#FFF">Pending</Typography>
+              </Box>
+            </>
+          ) : (
             <>
               {admin || ctmo1 ? (
                 <>
@@ -291,7 +377,13 @@ const ClientInfo = ({
                         Cancel
                       </Button>
                       <Button
-                        disabled={disable}
+                        disabled={
+                          disable ||
+                          !helper.checkedFormModified(
+                            initialFormInfo,
+                            franchiseDetails
+                          )
+                        }
                         variant="contained"
                         size="small"
                         type="submit"
@@ -316,7 +408,13 @@ const ClientInfo = ({
                         Cancel
                       </Button>
                       <Button
-                        disabled={disable}
+                        disabled={
+                          disable ||
+                          !helper.checkedFormModified(
+                            initialFormInfo,
+                            franchiseDetails
+                          )
+                        }
                         variant="contained"
                         size="small"
                         type="submit"
@@ -340,7 +438,7 @@ const ClientInfo = ({
                         color="error"
                         onClick={() => setDropConfirm(true)}
                       >
-                        DROP
+                        REVOKE
                       </Button>
                       <Button
                         disabled={disable}
@@ -356,14 +454,14 @@ const ClientInfo = ({
                         size="small"
                         onClick={handleUpdateClick}
                       >
-                        Update
+                        RENEW
                       </Button>
                     </Box>
                   </Collapse>
                 </>
               ) : null}
             </>
-          )
+          ))
         }
       >
         {admin || ctmo2 ? (
@@ -371,14 +469,24 @@ const ClientInfo = ({
             <Button
               variant="outlined"
               sx={{ mb: 2, py: 1 }}
-              startIcon={<QrCode />}
+              startIcon={<ListAltOutlined />}
               size="small"
-              onClick={handlePrint}
+              onClick={handlePrintReport}
             >
               generate report
             </Button>
           </Collapse>
         ) : null}
+        {/* 
+        <Button
+          variant="outlined"
+          sx={{ mb: 2, py: 1 }}
+          startIcon={<QrCode />}
+          size="small"
+          onClick={handlePrintR}
+        >
+          click
+        </Button> */}
 
         <FlexRow>
           <OutlinedTextField
@@ -403,7 +511,15 @@ const ClientInfo = ({
             </LocalizationProvider>
           </FormControl>
         </FlexRow>
-
+        {transferForm && (
+          <FormControlLabel
+            control={<Checkbox />}
+            label="Change Owner"
+            sx={{ mt: 1, mb: -1 }}
+            value={changeOwner}
+            onChange={(e) => setChangeOwner(e.target.checked)}
+          />
+        )}
         <Fieldset legend="Owner's Information">
           <FlexRow>
             <OutlinedTextField
@@ -449,7 +565,6 @@ const ClientInfo = ({
                 readOnly={readOnly}
                 disabled={disable}
                 label="Sex"
-                required
                 fullWidth
                 value={
                   franchiseDetails.ownerSex ? franchiseDetails.ownerSex : ""
@@ -461,24 +576,34 @@ const ClientInfo = ({
                   }))
                 }
               >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="male">
+                  <Stack direction="row" gap={0.5}>
+                    Male
+                    <PiGenderMaleBold size={14} color="rgb(2,170,232)" />
+                  </Stack>
+                </MenuItem>
+                <MenuItem value="female">
+                  <Stack direction="row" gap={0.5}>
+                    Female
+                    <PiGenderFemaleBold size={14} color="#EF5890" />
+                  </Stack>
+                </MenuItem>
               </Select>
             </FormControl>
-            <OutlinedTextField
-              required={true}
-              label="Contact number"
-              value={franchiseDetails?.contact}
-              readOnly={readOnly}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">+63</InputAdornment>
-                ),
-              }}
-              onChange={(e) =>
+            <MuiTelInput
+              disabled={readOnly || disable}
+              label="Contact No."
+              required
+              fullWidth
+              margin="dense"
+              defaultCountry="PH"
+              disableDropdown
+              forceCallingCode
+              value={franchiseDetails.contact}
+              onChange={(num) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  contact: e.target.value,
+                  contact: num,
                 }))
               }
             />
@@ -508,6 +633,16 @@ const ClientInfo = ({
           </FlexRow>
         </Fieldset>
 
+        {transferForm && (
+          <FormControlLabel
+            control={<Checkbox />}
+            label="Change Driver"
+            sx={{ mt: 1, mb: -1 }}
+            value={changeDriver}
+            onChange={(e) => setChangeDriver(e.target.checked)}
+          />
+        )}
+
         <Fieldset legend="Driver's Information">
           <FlexRow>
             <OutlinedTextField
@@ -528,7 +663,6 @@ const ClientInfo = ({
                 disabled={disable}
                 readOnly={readOnly}
                 label="Sex"
-                required
                 fullWidth
                 value={
                   franchiseDetails.driverSex ? franchiseDetails.driverSex : ""
@@ -540,24 +674,33 @@ const ClientInfo = ({
                   }))
                 }
               >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="male">
+                  <Stack direction="row" gap={0.5}>
+                    Male
+                    <PiGenderMaleBold size={14} color="rgb(2,170,232)" />
+                  </Stack>
+                </MenuItem>
+                <MenuItem value="female">
+                  <Stack direction="row" gap={0.5}>
+                    Female
+                    <PiGenderFemaleBold size={14} color="#EF5890" />
+                  </Stack>
+                </MenuItem>
               </Select>
             </FormControl>
-            <OutlinedTextField
-              required={true}
-              label="Contact no."
-              value={franchiseDetails?.contact2}
-              readOnly={readOnly}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">+63</InputAdornment>
-                ),
-              }}
-              onChange={(e) =>
+            <MuiTelInput
+              disabled={readOnly || disable}
+              label="Contact No."
+              fullWidth
+              margin="dense"
+              defaultCountry="PH"
+              disableDropdown
+              forceCallingCode
+              value={franchiseDetails.contact2}
+              onChange={(num) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  contact2: e.target.value,
+                  contact2: num,
                 }))
               }
             />
@@ -586,7 +729,6 @@ const ClientInfo = ({
               )}
             />
             <OutlinedTextField
-              required={true}
               label="Driver's License no."
               value={franchiseDetails?.driverlicenseno}
               readOnly={readOnly}
@@ -599,6 +741,16 @@ const ClientInfo = ({
             />
           </FlexRow>
         </Fieldset>
+
+        {transferForm && (
+          <FormControlLabel
+            control={<Checkbox />}
+            label="Change Motor"
+            sx={{ mt: 1, mb: -1 }}
+            value={changeMotor}
+            onChange={(e) => setChangeMotor(e.target.checked)}
+          />
+        )}
 
         <Fieldset legend="Vehicle's Information">
           <FlexRow>
@@ -760,6 +912,16 @@ const ClientInfo = ({
           </FlexRow>
         </Fieldset>
 
+        {transferForm && (
+          <FormControlLabel
+            control={<Checkbox />}
+            label="Change TODA"
+            sx={{ mt: 1, mb: -1 }}
+            value={changeToda}
+            onChange={(e) => setChangeToda(e.target.checked)}
+          />
+        )}
+
         <Fieldset legend="Franchise Details">
           <FlexRow>
             <OutlinedTextField
@@ -880,14 +1042,14 @@ const ClientInfo = ({
       <SnackBar
         open={transferAlertShown}
         onClose={setTransferAlertShown}
-        msg="Please fill out the following details to transfer the franchise to another client. Ensure all information is accurate before submitting"
+        msg="Please fill in the following details to transfer the franchise to another client. Make sure all information is accurate before submitting, as data is pending and will be saved after payment."
         severity={"info"}
         position={{ horizontal: "center", vertical: "top" }}
       />
       <SnackBar
         open={updateAlertShown}
         onClose={setUpdateAlertShown}
-        msg="This form is for updating franchise information and renewal. Please ensure that the data you enter is accurate before submitting, as changes will be saved to the system."
+        msg="This form is for updating franchise information and renewal. Please ensure that the data you enter is accurate before submitting."
         severity={"info"}
         position={{ horizontal: "center", vertical: "top" }}
       />
@@ -924,10 +1086,58 @@ const ClientInfo = ({
         open={updateConfirmation}
         setOpen={setUpdateConfirmation}
         confirm={handleUpdateSubmit}
-        title="Update Franchise Confirmation"
-        content="Before proceeding, kindly confirm the update of franchise information. Your changes will be saved upon submission."
+        title="Renewal Confirmation"
+        content="Before proceeding, kindly confirm the update of franchise information. Your changes will go to pending status and saved after payment."
         disabled={disable}
       />
+      {!archiveMode && (
+        <DialogForm
+          open={receiptModal}
+          onClose={() => {
+            setReceiptModal(false);
+            setFranchiseDetails(initialFormInfo);
+          }}
+          title="Franchise Renewal Receipt"
+          actions={
+            <>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => {
+                  setReceiptModal(false);
+                  setFranchiseDetails(initialFormInfo);
+                }}
+              >
+                close
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                startIcon={<PrintOutlined />}
+                onClick={handlePrint}
+              >
+                Print
+              </Button>
+            </>
+          }
+        >
+          <Box display="flex" justifyContent="center">
+            <RenewFranchise
+              ref={componentRef}
+              franchiseDetails={franchiseDetails}
+              fullname={auth?.fullname}
+              receiptData={receiptData}
+            />
+          </Box>
+        </DialogForm>
+      )}
+      <Box display="none">
+        <PrintableReport
+          ref={reportComp}
+          franchiseDetails={franchiseDetails}
+          paidViolations={paidViolations}
+        />
+      </Box>
     </>
   );
 };

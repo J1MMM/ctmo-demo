@@ -35,10 +35,10 @@ import ConfirmationDialog from "../../common/ui/ConfirmationDialog";
 import SnackBar from "../../common/ui/SnackBar";
 import Vhelper from "./Vhelper";
 import { Clear, PrintOutlined, QrCode } from "@mui/icons-material";
-import ViolationReceipt from "../../Receipt/ViolationReceipt";
 import { useReactToPrint } from "react-to-print";
 import useAuth from "../../../hooks/useAuth";
 import ROLES_LIST from "../../common/data/ROLES_LIST";
+import CashierReceipt from "../../Receipt/CashierReceipt";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -125,7 +125,7 @@ const ViolationModal = ({
     try {
       const response = await axiosPrivate.patch("/violation", violationDetails);
       console.log(response.data);
-      setViolationDetails((prev) => ({ ...prev, receiptNo: response.data }));
+      setViolationDetails((prev) => ({ ...prev, receiptNo: prev.or }));
       setViolations((prev) => {
         return prev?.filter((v) => v._id !== violationDetails._id);
       });
@@ -160,6 +160,16 @@ const ViolationModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const selectedOthers = violationDetails.violation?.filter(
+      (v) => v.violation == "OTHERS"
+    );
+    console.log(selectedOthers);
+    if (violationDetails.others?.trim() == "" && selectedOthers.length > 0) {
+      setAlertMsg("violations field cannot be empty.");
+      setAlertSeverity("error");
+      setAlertShown(true);
+      return;
+    }
     if (editMode) {
       setUpdateConfirmation(true);
     } else {
@@ -366,19 +376,6 @@ const ViolationModal = ({
                   </LocalizationProvider>
                 </FormControl>
               </FlexRow>
-
-              <OutlinedTextField
-                disabled={disable}
-                label="Remarks"
-                value={violationDetails?.remarks}
-                onChange={(e) =>
-                  setViolationDetails((prev) => ({
-                    ...prev,
-                    remarks: e.target.value,
-                  }))
-                }
-                readOnly={readOnly}
-              />
             </>
           )}
           <FlexRow>
@@ -684,37 +681,21 @@ const ViolationModal = ({
             </FormHelperText>
           </FormControl>
 
+          <OutlinedTextField
+            disabled={disable}
+            label="Remarks"
+            value={violationDetails?.remarks}
+            onChange={(e) =>
+              setViolationDetails((prev) => ({
+                ...prev,
+                remarks: e.target.value,
+              }))
+            }
+            readOnly={readOnly || !editMode}
+          />
+
           {!paymentMode && (
             <>
-              <FlexRow>
-                <OutlinedTextField
-                  disabled={disable}
-                  label="Remarks"
-                  value={violationDetails?.remarks}
-                  onChange={(e) =>
-                    setViolationDetails((prev) => ({
-                      ...prev,
-                      remarks: e.target.value,
-                    }))
-                  }
-                  readOnly={readOnly}
-                />
-
-                {/* <OutlinedTextField
-                  required={true}
-                  disabled={disable || editMode}
-                  readOnly={readOnly || !paymentMode}
-                  label="Name of Payor"
-                  value={violationDetails?.payor}
-                  onChange={(e) =>
-                    setViolationDetails((prev) => ({
-                      ...prev,
-                      payor: e.target.value,
-                    }))
-                  }
-                /> */}
-              </FlexRow>
-
               <FlexRow>
                 <OutlinedTextField
                   disabled={disable || editMode}
@@ -829,9 +810,10 @@ const ViolationModal = ({
         }
       >
         <Box maxWidth={720}>
-          <ViolationReceipt
+          <CashierReceipt
             ref={componentRef}
             violationDetails={violationDetails}
+            fullname={auth?.fullname}
           />
         </Box>
       </DialogForm>
