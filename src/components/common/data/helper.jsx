@@ -60,6 +60,10 @@ const initialFranchiseDetails = {
   paymentOr: "",
   paymentOrDate: null,
   pending: false,
+  changeOwner: false,
+  changeDriver: false,
+  changeMotor: false,
+  changeTODA: false,
 };
 
 const clientsColumns = [
@@ -332,7 +336,8 @@ function createClientsData(
   refNo,
   paymentOr,
   paymentOrDate,
-  pending
+  pending,
+  transaction
 ) {
   return {
     id,
@@ -373,6 +378,7 @@ function createClientsData(
     paymentOr,
     paymentOrDate,
     pending,
+    transaction,
   };
 }
 function countTrueValues(obj) {
@@ -452,7 +458,8 @@ const formatFranchise = (franchise) => {
     franchise.refNo,
     franchise.paymentOr,
     franchise.paymentOrDate,
-    franchise.pending
+    franchise.pending,
+    franchise.transaction
   );
 };
 

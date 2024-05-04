@@ -16,6 +16,10 @@ export const DataProvider = ({ children }) => {
   const [pendingFranchisesLoading, setPendingFranchisesLoading] =
     useState(true);
 
+  const [pendingFranchisesPaid, setPendingFranchisesPaid] = useState([]);
+  const [pendingFranchisesLoadingPaid, setPendingFranchisesPaidLoading] =
+    useState(true);
+
   const [archivedFranchises, setArchivedFranchises] = useState([]);
   const [archivedFranchisesLoading, setArchivedFranchisesLoading] =
     useState(true);
@@ -93,6 +97,10 @@ export const DataProvider = ({ children }) => {
         setPendingFranchisesLoading,
         dummyVariable,
         setDummyVariable,
+        pendingFranchisesPaid,
+        setPendingFranchisesPaid,
+        pendingFranchisesLoadingPaid,
+        setPendingFranchisesPaidLoading,
       }}
     >
       {children}

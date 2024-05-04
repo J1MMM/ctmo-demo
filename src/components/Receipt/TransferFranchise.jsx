@@ -3,29 +3,29 @@ import React, { Component } from "react";
 import BorderBox from "../common/ui/BorderBox";
 import dayjs from "dayjs";
 
+//generate receipt data
+const initialreceiptData = [
+  { key: "7", label: "Sticker-Color Coding", price: 0 },
+  { key: "11", label: "Garbage Fee", price: 0.0 },
+  { key: "1", label: "Tin Plate", price: 0.0 },
+  { key: "2", label: "Dropping", price: 0.0 },
+  { key: "12", label: "Notarial Fee", price: 0.0 },
+];
+
 const justifyCenter = { justifyContent: "center", border: "none" };
 const justifyStart = { justifyContent: "start", border: "none" };
 
-const receiptData = [
-  { label: "Mayor's Permit", price: 385.0 },
-  { label: "Franchise Tax", price: 110.0 },
-  { label: "Health / S.S.F.", price: 63.8 },
-  { label: "Sticker - Color Coding", price: 55.0 },
-  { label: "Docket Fee", price: 27.5 },
-  { label: "Filing Fee", price: 27.5 },
-  { label: "Tin Plate", price: 330.0 },
-  { label: "Registration Fee", price: 15.0 },
-  { label: "Sticker for Garbage", price: 50.0 },
-  { label: "Garbage Fee", price: 50.0 },
-  { label: "Notarial Fee", price: 0.0 },
-];
-
-const totalAmount = receiptData?.reduce((total, obj) => total + obj?.price, 0);
-
-class NewFranchise extends Component {
+class TransferFranchise extends Component {
   render() {
-    const { franchiseDetails, fullname } = this.props;
+    const { franchiseDetails, fullname, receiptData, initialFormInfo } =
+      this.props;
     const datenow = new Date();
+    let totalAmount = 0;
+
+    if (franchiseDetails && receiptData && receiptData.length > 0) {
+      totalAmount = receiptData?.reduce((total, obj) => total + obj?.price, 0);
+    }
+
     return (
       <BorderBox
         sx={{
@@ -64,9 +64,10 @@ class NewFranchise extends Component {
             textAlign="center"
             sx={{ textDecoration: "underline", mt: -1 }}
           >
-            NEW
+            TRANSFER
           </Typography>
         </BorderBox>
+
         <br />
         <BorderBox sx={justifyStart}>
           <Typography variant="h6" fontFamily={"monospace"} fontWeight="bold">
@@ -99,8 +100,39 @@ class NewFranchise extends Component {
             {franchiseDetails?.address}
           </Typography>
         </BorderBox>
+
         <br />
-        {receiptData?.map((item, index) => {
+        <BorderBox sx={justifyStart}>
+          <Typography variant="h6" fontFamily={"monospace"} fontWeight="bold">
+            Amendment:
+          </Typography>
+        </BorderBox>
+        {receiptData.length > 0
+          ? receiptData?.map((item, index) => {
+              return (
+                <BorderBox
+                  key={index}
+                  sx={{ ...justifyStart, justifyContent: "space-between" }}
+                >
+                  <Typography
+                    variant="h6"
+                    fontFamily={"monospace"}
+                    fontWeight="bold"
+                  >
+                    {item?.label}
+                  </Typography>
+                  <Typography variant="h6" fontFamily="monospace">
+                    {item?.price?.toLocaleString("en", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </Typography>
+                </BorderBox>
+              );
+            })
+          : null}
+        <br />
+        {initialreceiptData.map((item, index) => {
           return (
             <BorderBox
               key={index}
@@ -269,6 +301,7 @@ class NewFranchise extends Component {
             </tr>
           </tbody>
         </table>
+
         <br />
         <BorderBox
           sx={{
@@ -279,8 +312,25 @@ class NewFranchise extends Component {
         >
           <Box borderTop="2px solid #000" width="70%" />
         </BorderBox>
-        <table className="table b-0 p-0" style={{ maxWidth: 300 }}>
+        <table className="table b-0 p-0" style={{ maxWidth: 350 }}>
           <tbody>
+            <tr>
+              <td className="td b-0 p-0">
+                <Typography
+                  variant="h6"
+                  fontFamily={"monospace"}
+                  fontWeight="bold"
+                >
+                  FROM:
+                </Typography>
+              </td>
+              <td className="td b-0 p-0">
+                <Typography variant="h6" fontFamily="monospace">
+                  {initialFormInfo?.fname} {initialFormInfo?.mi}{" "}
+                  {initialFormInfo?.lname}
+                </Typography>
+              </td>
+            </tr>
             <tr>
               <td className="td b-0 p-0">
                 <Typography
@@ -291,7 +341,7 @@ class NewFranchise extends Component {
                   Processed by:
                 </Typography>
               </td>
-              <td className="td b-0 p-0 ">
+              <td className="td b-0 p-0">
                 <Typography variant="h6" fontFamily="monospace">
                   {fullname}
                 </Typography>
@@ -331,6 +381,7 @@ class NewFranchise extends Component {
             </tr>
           </tbody>
         </table>
+
         <br />
         <BorderBox
           sx={{ justifyContent: "flex-end", alignItems: "end", border: "none" }}
@@ -360,6 +411,7 @@ class NewFranchise extends Component {
           </BorderBox>
         </BorderBox>
         <br />
+
         <BorderBox
           sx={{
             border: "none",
@@ -379,4 +431,4 @@ class NewFranchise extends Component {
   }
 }
 
-export default NewFranchise;
+export default TransferFranchise;

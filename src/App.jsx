@@ -20,7 +20,9 @@ import UserArchive from "./components/UsersAccountPage/UserArchive";
 import Users from "./components/UsersAccountPage/Users";
 import useAuth from "./hooks/useAuth";
 import OfficersList from "./components/ViolationsPage/Officers/OfficersList";
-import PendingFranchiseTable from "./components/PendingFranchisePage";
+import PendingPageLayout from "./components/PendingFranchisePage";
+import PendingFranchiseTable from "./components/PendingFranchisePage/PendingFranchise.table";
+import PendingFranchisePaid from "./components/PendingFranchisePage/PendingFranchise.paid";
 
 function App() {
   const { auth } = useAuth();
@@ -58,7 +60,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="franchise" element={<PendingFranchiseTable />}>
+          <Route path="franchise" element={<PendingPageLayout />}>
             <Route
               element={
                 <RequireAuth
@@ -67,6 +69,7 @@ function App() {
               }
             >
               <Route path="" element={<PendingFranchiseTable />} />
+              <Route path="paid" element={<PendingFranchisePaid />} />
             </Route>
           </Route>
 

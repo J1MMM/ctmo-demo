@@ -56,6 +56,7 @@ import { MuiTelInput } from "mui-tel-input";
 import NewFranchise from "../../Receipt/NewFranchise";
 import { PiGenderFemaleBold, PiGenderMaleBold } from "react-icons/pi";
 import RenewFranchise from "../../Receipt/RenewFranchise";
+import TransferFranchise from "../../Receipt/TransferFranchise";
 
 const ClientInfo = ({
   open,
@@ -86,21 +87,23 @@ const ClientInfo = ({
   const [updateConfirmation, setUpdateConfirmation] = useState(false);
   const { auth } = useAuth();
   const [receiptModal, setReceiptModal] = useState(false);
+  const [transferReceiptModal, setTransferReceiptModal] = useState(false);
   const [receiptData, setReceiptData] = useState([]);
-  const [changeOwner, setChangeOwner] = useState(false);
-  const [changeDriver, setChangeDriver] = useState(false);
-  const [changeMotor, setChangeMotor] = useState(false);
-  const [changeToda, setChangeToda] = useState(false);
 
   const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
   const ctmo1 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO1));
   const ctmo2 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO2));
 
   const componentRef = useRef(null);
+  const transferRecieptRef = useRef(null);
   const reportComp = useRef(null);
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+  });
+
+  const handlePrintTransferReceipt = useReactToPrint({
+    content: () => transferRecieptRef.current,
   });
 
   const handlePrintReport = useReactToPrint({
@@ -136,11 +139,27 @@ const ClientInfo = ({
         franchiseDetails
       );
       setFranchiseDetails((prev) => ({
-        ...initialFormInfo,
-        refNo: response.data,
+        ...prev,
+        refNo: response.data?.refNo,
+        pending: true,
       }));
 
-      setDummyVariable((prev) => !prev);
+      setinitialFormInfo((prev) => ({
+        ...prev,
+        refNo: response.data?.refNo,
+        pending: true,
+      }));
+
+      setReceiptData(response.data?.receiptData);
+      setFranchises((prev) => {
+        return prev.map((v) => {
+          if (v.id == franchiseDetails.id) {
+            return { ...v, pending: true };
+          } else {
+            return v;
+          }
+        });
+      });
 
       // const newFranchise = helper.formatFranchise(response.data.newFranchise);
       // setFranchises((prev) => {
@@ -159,9 +178,9 @@ const ClientInfo = ({
       helper.handleScrollToTop();
       setAlertSeverity("success");
       setAlertMsg(
-        "Franchise successfully transferred to the new owner, franchise information has been added to the system."
+        "Franchise successfully transferred to the new owner, franchise information has been added to the system after payment."
       );
-      setReceiptModal(true);
+      setTransferReceiptModal(true);
     } catch (error) {
       console.log(error);
       setAlertSeverity("error");
@@ -516,8 +535,13 @@ const ClientInfo = ({
             control={<Checkbox />}
             label="Change Owner"
             sx={{ mt: 1, mb: -1 }}
-            value={changeOwner}
-            onChange={(e) => setChangeOwner(e.target.checked)}
+            value={franchiseDetails.changeOwner}
+            onChange={(e) =>
+              setFranchiseDetails((prev) => ({
+                ...prev,
+                changeOwner: e.target.checked,
+              }))
+            }
           />
         )}
         <Fieldset legend="Owner's Information">
@@ -638,8 +662,13 @@ const ClientInfo = ({
             control={<Checkbox />}
             label="Change Driver"
             sx={{ mt: 1, mb: -1 }}
-            value={changeDriver}
-            onChange={(e) => setChangeDriver(e.target.checked)}
+            value={franchiseDetails.changeDriver}
+            onChange={(e) =>
+              setFranchiseDetails((prev) => ({
+                ...prev,
+                changeDriver: e.target.checked,
+              }))
+            }
           />
         )}
 
@@ -747,8 +776,13 @@ const ClientInfo = ({
             control={<Checkbox />}
             label="Change Motor"
             sx={{ mt: 1, mb: -1 }}
-            value={changeMotor}
-            onChange={(e) => setChangeMotor(e.target.checked)}
+            value={franchiseDetails.changeMotor}
+            onChange={(e) =>
+              setFranchiseDetails((prev) => ({
+                ...prev,
+                changeMotor: e.target.checked,
+              }))
+            }
           />
         )}
 
@@ -917,8 +951,13 @@ const ClientInfo = ({
             control={<Checkbox />}
             label="Change TODA"
             sx={{ mt: 1, mb: -1 }}
-            value={changeToda}
-            onChange={(e) => setChangeToda(e.target.checked)}
+            value={franchiseDetails.changeTODA}
+            onChange={(e) =>
+              setFranchiseDetails((prev) => ({
+                ...prev,
+                changeTODA: e.target.checked,
+              }))
+            }
           />
         )}
 
@@ -935,6 +974,7 @@ const ClientInfo = ({
                 }))
               }
             />
+
             <OutlinedTextField
               label="Kind of Business"
               value={franchiseDetails?.kindofBusiness}
@@ -961,6 +1001,7 @@ const ClientInfo = ({
                 }))
               }
             />
+
             <OutlinedTextField
               label="Route"
               value={franchiseDetails?.route}
@@ -973,6 +1014,7 @@ const ClientInfo = ({
               }
             />
           </FlexRow>
+
           <FlexRow>
             <FormControl margin="dense" fullWidth focused>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -1090,6 +1132,7 @@ const ClientInfo = ({
         content="Before proceeding, kindly confirm the update of franchise information. Your changes will go to pending status and saved after payment."
         disabled={disable}
       />
+
       {!archiveMode && (
         <DialogForm
           open={receiptModal}
@@ -1131,6 +1174,50 @@ const ClientInfo = ({
           </Box>
         </DialogForm>
       )}
+
+      {!archiveMode && (
+        <DialogForm
+          open={transferReceiptModal}
+          onClose={() => {
+            setTransferReceiptModal(false);
+            setFranchiseDetails(initialFormInfo);
+          }}
+          title="Transfer Franchise Receipt"
+          actions={
+            <>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => {
+                  setTransferReceiptModal(false);
+                  setFranchiseDetails(initialFormInfo);
+                }}
+              >
+                close
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                startIcon={<PrintOutlined />}
+                onClick={handlePrintTransferReceipt}
+              >
+                Print
+              </Button>
+            </>
+          }
+        >
+          <Box display="flex" justifyContent="center">
+            <TransferFranchise
+              ref={transferRecieptRef}
+              franchiseDetails={franchiseDetails}
+              fullname={auth?.fullname}
+              receiptData={receiptData}
+              initialFormInfo={initialFormInfo}
+            />
+          </Box>
+        </DialogForm>
+      )}
+
       <Box display="none">
         <PrintableReport
           ref={reportComp}

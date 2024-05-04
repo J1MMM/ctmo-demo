@@ -9,16 +9,10 @@ const justifyStart = { justifyContent: "start", border: "none" };
 class RenewFranchise extends Component {
   render() {
     const { franchiseDetails, fullname, receiptData } = this.props;
+    const datenow = new Date();
     let totalAmount = 0;
-    let formattedDateRange = "";
 
     if (franchiseDetails && receiptData && receiptData.length > 0) {
-      const datenow = new Date();
-      const startDate = dayjs(datenow).format("YYYY");
-      const endDate = dayjs(datenow).add(1, "year").format("YYYY");
-
-      formattedDateRange = `${startDate}-${endDate}`;
-
       totalAmount = receiptData?.reduce((total, obj) => total + obj?.price, 0);
     }
 
@@ -32,86 +26,71 @@ class RenewFranchise extends Component {
           border: "none",
         }}
       >
-        <table className="table b-0 ">
-          <tbody>
-            <tr>
-              <td className="td b-0 p-0 ">
-                <Typography
-                  variant="h6"
-                  fontFamily={"monospace"}
-                  fontWeight="bold"
-                >
-                  NAME
-                </Typography>
-              </td>
-              <td className="td b-0 p-0 center">
-                <Typography
-                  variant="h6"
-                  fontFamily={"monospace"}
-                  sx={{ minWidth: 50 }}
-                >
-                  :
-                </Typography>
-              </td>
-              <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
-                  {franchiseDetails?.fname} {franchiseDetails?.mi}{" "}
-                  {franchiseDetails?.lname}
-                </Typography>
-              </td>
-            </tr>
-            <tr>
-              <td className="td b-0 p-0">
-                <Typography
-                  variant="h6"
-                  fontFamily={"monospace"}
-                  fontWeight="bold"
-                >
-                  Address
-                </Typography>
-              </td>
-              <td className="td b-0 p-0 center">
-                <Typography
-                  variant="h6"
-                  fontFamily={"monospace"}
-                  sx={{ minWidth: 50 }}
-                >
-                  :
-                </Typography>
-              </td>
-              <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
-                  {franchiseDetails?.address}
-                </Typography>
-              </td>
-            </tr>
-            <tr>
-              <td className="td b-0 p-0">
-                <Typography
-                  variant="h6"
-                  fontFamily={"monospace"}
-                  fontWeight="bold"
-                >
-                  Year
-                </Typography>
-              </td>
-              <td className="td b-0 p-0 center">
-                <Typography
-                  variant="h6"
-                  fontFamily={"monospace"}
-                  sx={{ minWidth: 50 }}
-                >
-                  :
-                </Typography>
-              </td>
-              <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
-                  {formattedDateRange}
-                </Typography>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <BorderBox sx={justifyCenter}>
+          <Typography
+            variant="h6"
+            fontFamily={"monospace"}
+            textAlign="center"
+            fontWeight="bold"
+          >
+            Tax Order
+          </Typography>
+        </BorderBox>
+        <BorderBox sx={justifyCenter}>
+          <Typography
+            variant="h6"
+            fontFamily={"monospace"}
+            textAlign="center"
+            fontWeight="bold"
+            sx={{ mt: -1 }}
+          >
+            TRICYCLE FRANCHISE
+          </Typography>
+        </BorderBox>
+        <BorderBox sx={justifyCenter}>
+          <Typography
+            variant="h6"
+            fontFamily={"monospace"}
+            textAlign="center"
+            sx={{ textDecoration: "underline", mt: -1 }}
+          >
+            RENEWAL
+          </Typography>
+        </BorderBox>
+
+        <br />
+        <BorderBox sx={justifyStart}>
+          <Typography variant="h6" fontFamily={"monospace"} fontWeight="bold">
+            NAME:
+          </Typography>
+        </BorderBox>
+        <BorderBox sx={justifyCenter}>
+          <Typography
+            variant="h6"
+            textAlign="center"
+            sx={{ mt: -1 }}
+            fontFamily={"monospace"}
+          >
+            {franchiseDetails?.fname} {franchiseDetails?.mi}{" "}
+            {franchiseDetails?.lname}
+          </Typography>
+        </BorderBox>
+        <BorderBox sx={justifyStart}>
+          <Typography variant="h6" fontFamily={"monospace"} fontWeight="bold">
+            ADDRESS:
+          </Typography>
+        </BorderBox>
+        <BorderBox sx={justifyCenter}>
+          <Typography
+            variant="h6"
+            textAlign="center"
+            sx={{ mt: -1 }}
+            fontFamily={"monospace"}
+          >
+            {franchiseDetails?.address}
+          </Typography>
+        </BorderBox>
+
         <br />
         {receiptData.length > 0
           ? receiptData?.map((item, index) => {
@@ -155,10 +134,10 @@ class RenewFranchise extends Component {
           </Typography>
         </BorderBox>
         <br />
-        <table className="table b-0 ">
+        <table className="table b-0 " style={{ maxWidth: 150 }}>
           <tbody>
             <tr>
-              <td className="td b-0 p-0 w-10">
+              <td className="td b-0 p-0 ">
                 <Typography
                   variant="h6"
                   fontFamily={"monospace"}
@@ -183,7 +162,7 @@ class RenewFranchise extends Component {
               </td>
             </tr>
             <tr>
-              <td className="td b-0 p-0 w-10">
+              <td className="td b-0 p-0">
                 <Typography
                   variant="h6"
                   fontFamily={"monospace"}
@@ -208,7 +187,7 @@ class RenewFranchise extends Component {
               </td>
             </tr>
             <tr>
-              <td className="td b-0 p-0 w-10">
+              <td className="td b-0 p-0">
                 <Typography
                   variant="h6"
                   fontFamily={"monospace"}
@@ -233,7 +212,7 @@ class RenewFranchise extends Component {
               </td>
             </tr>
             <tr>
-              <td className="td b-0 p-0 w-10">
+              <td className="td b-0 p-0">
                 <Typography
                   variant="h6"
                   fontFamily={"monospace"}
@@ -258,7 +237,7 @@ class RenewFranchise extends Component {
               </td>
             </tr>
             <tr>
-              <td className="td b-0 p-0 w-10">
+              <td className="td b-0 p-0">
                 <Typography
                   variant="h6"
                   fontFamily={"monospace"}
@@ -288,6 +267,102 @@ class RenewFranchise extends Component {
         <br />
         <BorderBox
           sx={{
+            justifyContent: "flex-start",
+            alignItems: "end",
+            border: "none",
+          }}
+        >
+          <Box borderTop="2px solid #000" width="70%" />
+        </BorderBox>
+        <table className="table b-0 p-0" style={{ maxWidth: 300 }}>
+          <tbody>
+            <tr>
+              <td className="td b-0 p-0">
+                <Typography
+                  variant="h6"
+                  fontFamily={"monospace"}
+                  fontWeight="bold"
+                >
+                  Processed by:
+                </Typography>
+              </td>
+              <td className="td b-0 p-0" style={{ textAlign: "start" }}>
+                <Typography
+                  variant="h6"
+                  fontFamily="monospace"
+                  textAlign="center"
+                >
+                  {fullname}
+                </Typography>
+              </td>
+            </tr>
+            <tr>
+              <td className="td b-0 p-0">
+                <Typography
+                  variant="h6"
+                  fontFamily={"monospace"}
+                  fontWeight="bold"
+                >
+                  Date:
+                </Typography>
+              </td>
+              <td className="td b-0 p-0 ">
+                <Typography variant="h6" fontFamily="monospace">
+                  {dayjs(datenow).format("MM/DD/YYYY")}
+                </Typography>
+              </td>
+            </tr>
+            <tr>
+              <td className="td b-0 p-0">
+                <Typography
+                  variant="h6"
+                  fontFamily={"monospace"}
+                  fontWeight="bold"
+                >
+                  Ref No.
+                </Typography>
+              </td>
+              <td className="td b-0 p-0 p-0">
+                <Typography variant="h6" fontFamily="monospace">
+                  {franchiseDetails?.refNo}
+                </Typography>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br />
+        <BorderBox
+          sx={{ justifyContent: "flex-end", alignItems: "end", border: "none" }}
+        >
+          <BorderBox
+            sx={{
+              flexDirection: "column",
+              border: "none",
+              maxWidth: 230,
+            }}
+          >
+            <Typography variant="h6" fontFamily="monospace" textAlign="center">
+              ARJAN V. BABANI
+            </Typography>
+
+            <Typography
+              variant="h6"
+              fontFamily="monospace"
+              textAlign="center"
+              fontWeight="bold"
+              sx={{
+                mt: -1,
+              }}
+            >
+              ICO-CITY TREASURER
+            </Typography>
+          </BorderBox>
+        </BorderBox>
+        <br />
+
+        <BorderBox
+          sx={{
             border: "none",
           }}
         >
@@ -298,32 +373,6 @@ class RenewFranchise extends Component {
             fontWeight="bold"
           >
             ( PLS. ATTACHED THIS TO TRIPLICATE O.R. )
-          </Typography>
-        </BorderBox>
-        <br />
-        <br />
-        <BorderBox
-          sx={{
-            justifyContent: "flex-start",
-            alignItems: "end",
-            border: "none",
-          }}
-        >
-          <Box borderTop="1px solid #000" width="70%" />
-        </BorderBox>
-
-        <BorderBox sx={{ border: "none", gap: 1 }}>
-          <Typography
-            variant="h6"
-            fontFamily={"monospace"}
-            maxWidth={150}
-            fontWeight="bold"
-          >
-            Computed by:
-          </Typography>
-
-          <Typography variant="h6" fontFamily="monospace">
-            {fullname}
           </Typography>
         </BorderBox>
       </BorderBox>
