@@ -1,5 +1,5 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import logo from "../../assets/images/receipt-logo.png";
 import BorderBox from "../common/ui/BorderBox";
 import dayjs from "dayjs";
@@ -76,56 +76,38 @@ function numberToWords(number) {
     }
   }
 
-  // Function to convert cents to words
-  function centsToWords(cents) {
-    if (cents === 0) {
-      return "zero centavos";
-    } else if (cents < 10) {
-      return ones[cents] + " centavo";
-    } else if (cents < 20) {
-      return teens[cents - 10] + " centavos";
-    } else {
-      return (
-        tens[Math.floor(cents / 10)] +
-        (cents % 10 !== 0 ? " " + ones[cents % 10] : "") +
-        " centavos"
-      );
-    }
+  if (number === 0) {
+    return ones[0];
+  } else if (number < 0) {
+    return "minus " + convertToWords(Math.abs(number));
+  } else {
+    return convertToWords(number);
   }
-
-  // Split number into integer and decimal parts
-  const integerPart = Math.floor(number);
-  const decimalPart = Math.round((number - integerPart) * 100); // Convert decimal to cents
-
-  let result = convertToWords(integerPart);
-
-  // Include cents if decimal part is present
-  if (decimalPart > 0) {
-    result += " and " + centsToWords(decimalPart);
-  }
-
-  return result;
 }
 
-class CashierFranchiseReceipt extends Component {
+class ReceiptViolationPrintable extends Component {
   render() {
-    const { fullname, franchiseDetails, receiptData } = this.props;
-    const receiptDataHaha =
-      receiptData?.length > 0
-        ? [...receiptData]
-        : [...franchiseDetails?.receiptData];
+    const { violationDetails, fullname } = this.props;
     const datenow = new Date();
     let totalAmount = 0;
+    let receiptData = [];
 
-    if (receiptDataHaha.length > 0) {
-      totalAmount = receiptDataHaha?.reduce(
+    if (violationDetails) {
+      totalAmount = violationDetails?.violation?.reduce(
         (total, obj) => total + obj?.price,
         0
       );
+
+      receiptData = violationDetails?.violation.concat(
+        Array.from({
+          length: Math.max(0, 8 - violationDetails?.violation.length),
+        })
+      );
     }
+
     return (
       <BorderBox sx={{ p: 1, border: "none", maxWidth: 450 }}>
-        <BorderBox sx={{ flexDirection: "column" }}>
+        <BorderBox sx={{ flexDirection: "column", border: "none" }}>
           <BorderBox
             sx={{
               display: "grid",
@@ -133,14 +115,13 @@ class CashierFranchiseReceipt extends Component {
               border: "none",
             }}
           >
-            <BorderBox sx={{ p: 4 }}>
-              <img src={logo} width="100%" style={{ objectFit: "contain" }} />
-            </BorderBox>
+            <BorderBox sx={{ p: 4, border: "none" }}></BorderBox>
             <BorderBox
               sx={{
                 flexDirection: "column",
                 borderLeft: "none",
                 borderRight: "none",
+                border: "none",
               }}
             >
               <BorderBox
@@ -148,6 +129,7 @@ class CashierFranchiseReceipt extends Component {
                   borderTop: "none",
                   flex: 1,
                   alignItems: "center",
+                  border: "none",
                 }}
               >
                 <Typography
@@ -155,38 +137,77 @@ class CashierFranchiseReceipt extends Component {
                   textAlign="center"
                   fontWeight="bold"
                   m={1}
+                  sx={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
                 >
                   Official Receipt of the Republic of the Philippines
                 </Typography>
               </BorderBox>
-              <BorderBox sx={{}}>
+              <BorderBox
+                sx={{
+                  border: "none",
+                }}
+              >
                 <Typography fontFamily={"monospace"} m={1}>
-                  <b>No.</b>
-                  {franchiseDetails?.paymentOr}
+                  <b
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                      marginRight: "24px",
+                    }}
+                  >
+                    No.
+                  </b>
+                  {violationDetails?.or}
                 </Typography>
               </BorderBox>
-              <BorderBox sx={{ borderBottom: "none" }}>
+              <BorderBox sx={{ borderBottom: "none", border: "none" }}>
                 <Typography fontFamily={"monospace"} m={1}>
-                  <b>Date:</b> {dayjs(datenow).format("MMMM D, YYYY")}
+                  <b
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Date:
+                  </b>{" "}
+                  {dayjs(datenow).format("MMMM D, YYYY")}
                 </Typography>
               </BorderBox>
             </BorderBox>
           </BorderBox>
 
-          <table className="table">
+          <table className={"noOutline"}>
             <tbody>
               <tr>
                 <td className="td w-75">
-                  <b>Agency: </b> SPC CTMO
+                  <b
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Agency:{" "}
+                  </b>{" "}
+                  SPC CTMO
                 </td>
                 <td className="td w-25">
-                  <b>Fund: </b>
+                  <b
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Fund:{" "}
+                  </b>
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <table className="table">
+          <table className={"noOutline"}>
             <tbody>
               <tr>
                 <td
@@ -198,35 +219,84 @@ class CashierFranchiseReceipt extends Component {
                     border: "none",
                   }}
                 >
-                  <b>Payor: </b>
-                  {franchiseDetails?.fname} {franchiseDetails?.mi}{" "}
-                  {franchiseDetails?.lname}
+                  <b
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                      marginRight: "8px",
+                    }}
+                  >
+                    Payor:
+                  </b>
+                  {violationDetails?.name}
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <table className="table">
+          <table className={"noOutline"}>
             <tbody>
               <tr>
                 <th className="th">
-                  <p>Nature of</p>
-                  <p>Collection</p>
+                  <p
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Nature of
+                  </p>
+                  <p
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Collection
+                  </p>
                 </th>
                 <th className="th">
-                  <p>Account</p>
-                  <p>Code</p>
+                  <p
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Account
+                  </p>
+                  <p
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Code
+                  </p>
                 </th>
-                <th className="th">Amount</th>
+                <th
+                  className="th"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
+                  Amount
+                </th>
               </tr>
 
-              {receiptDataHaha.map((item, index) => {
+              {receiptData?.map((item, index) => {
                 return (
                   <tr key={index}>
-                    <td className="td ">{item?.label}</td>
-                    <td className="td "></td>
                     <td className="td ">
-                      {item?.price.toLocaleString("en-PH", {
+                      {item?.violation ? (
+                        item?.violation
+                      ) : (
+                        <p className="invi">.</p>
+                      )}
+                    </td>
+                    <td className="td"></td>
+                    <td className="td">
+                      {item?.price?.toLocaleString("en-PH", {
                         style: "currency",
                         currency: "PHP",
                       })}
@@ -234,8 +304,17 @@ class CashierFranchiseReceipt extends Component {
                   </tr>
                 );
               })}
+
               <tr>
-                <th className="th" colSpan={2} style={{ textAlign: "start" }}>
+                <th
+                  className="th"
+                  colSpan={2}
+                  style={{
+                    textAlign: "start",
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
                   Total
                 </th>
 
@@ -248,7 +327,14 @@ class CashierFranchiseReceipt extends Component {
               </tr>
 
               <tr>
-                <td className="td" style={{ borderRight: "none" }}>
+                <td
+                  className="td"
+                  style={{
+                    borderRight: "none",
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
                   Amount in words:
                 </td>
                 <td
@@ -256,13 +342,13 @@ class CashierFranchiseReceipt extends Component {
                   style={{ borderLeft: "none", textAlign: "start" }}
                   colSpan={2}
                 >
-                  <b> {numberToWords(totalAmount)?.toUpperCase()}</b>
+                  <b>{numberToWords(totalAmount)?.toUpperCase()}</b>
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <table className="table">
+          <table className={"noOutline"}>
             <tbody>
               <tr>
                 <td className="td p-3"></td>
@@ -270,29 +356,80 @@ class CashierFranchiseReceipt extends Component {
             </tbody>
           </table>
 
-          <table className="table">
+          <table className={"noOutline"}>
             <tbody>
               <tr>
                 <td className="td">
                   <div style={{ display: "flex", gap: "8px" }}>
-                    <input type="checkbox" id="cash" name="cash" value="cash" />
-                    <label htmlFor="cash">Cash</label>
+                    <label
+                      htmlFor="cash"
+                      style={{
+                        color: "transparent",
+                        userSelect: "none",
+                      }}
+                    >
+                      Cash
+                    </label>
+                    <label
+                      htmlFor="cash"
+                      style={{
+                        color: "transparent",
+                        userSelect: "none",
+                      }}
+                    >
+                      Cash
+                    </label>
                   </div>
                 </td>
-                <td className="td">Drawee Bank</td>
-                <td className="td">Number</td>
-                <td className="td">Date</td>
+                <td
+                  className="td"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
+                  Drawee Bank
+                </td>
+                <td
+                  className="td"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
+                  Number
+                </td>
+                <td
+                  className="td"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
+                  Date
+                </td>
               </tr>
               <tr>
                 <td className="td">
                   <div style={{ display: "flex", gap: "8px" }}>
-                    <input
-                      type="checkbox"
-                      id="check"
-                      name="check"
-                      value="check"
-                    />
-                    <label htmlFor="check">Check</label>
+                    <label
+                      htmlFor="check"
+                      style={{
+                        color: "transparent",
+                        userSelect: "none",
+                      }}
+                    >
+                      Check
+                    </label>
+                    <label
+                      htmlFor="check"
+                      style={{
+                        color: "transparent",
+                        userSelect: "none",
+                      }}
+                    >
+                      Check
+                    </label>
                   </div>
                 </td>
                 <td className="td">
@@ -341,13 +478,24 @@ class CashierFranchiseReceipt extends Component {
               <tr>
                 <td className="td" colSpan={2}>
                   <div style={{ display: "flex", gap: "8px" }}>
-                    <input
-                      type="checkbox"
-                      id="money"
-                      name="money"
-                      value="money"
-                    />
-                    <label htmlFor="money">Money Order</label>
+                    <label
+                      htmlFor="money"
+                      style={{
+                        color: "transparent",
+                        userSelect: "none",
+                      }}
+                    >
+                      Money Order
+                    </label>
+                    <label
+                      htmlFor="money"
+                      style={{
+                        color: "transparent",
+                        userSelect: "none",
+                      }}
+                    >
+                      Money Order
+                    </label>
                   </div>
                 </td>
                 <td className="td"></td>
@@ -356,10 +504,18 @@ class CashierFranchiseReceipt extends Component {
             </tbody>
           </table>
 
-          <table className="table">
+          <table className={"noOutline"}>
             <tbody>
               <tr>
-                <td className="td b-0">Received the amount stated above.</td>
+                <td
+                  className="td b-0"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
+                  Received the amount stated above.
+                </td>
               </tr>
               <tr>
                 <td className="td b-0">
@@ -375,12 +531,19 @@ class CashierFranchiseReceipt extends Component {
                     >
                       {fullname}
                     </p>
-                    <div className="broken-line" />
+                    <div
+                      className="broken-line"
+                      style={{
+                        color: "transparent",
+                        userSelect: "none",
+                      }}
+                    />
                     <p
                       style={{
                         textAlign: "center",
-
                         marginTop: "-3px",
+                        color: "transparent",
+                        userSelect: "none",
                       }}
                     >
                       Collecting Officer
@@ -391,10 +554,16 @@ class CashierFranchiseReceipt extends Component {
             </tbody>
           </table>
 
-          <table className="table">
+          <table className={"noOutline"}>
             <tbody>
               <tr>
-                <td className="td center">
+                <td
+                  className="td center"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
                   NOTE: Write the number and date of the receipt on the back of
                   the check or money order received.
                 </td>
@@ -407,4 +576,4 @@ class CashierFranchiseReceipt extends Component {
   }
 }
 
-export default CashierFranchiseReceipt;
+export default ReceiptViolationPrintable;

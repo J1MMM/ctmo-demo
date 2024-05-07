@@ -107,7 +107,7 @@ function numberToWords(number) {
   return result;
 }
 
-class CashierFranchiseReceipt extends Component {
+class CashierFranchiseReceiptPrintable extends Component {
   render() {
     const { fullname, franchiseDetails, receiptData } = this.props;
     const receiptDataHaha =
@@ -125,7 +125,7 @@ class CashierFranchiseReceipt extends Component {
     }
     return (
       <BorderBox sx={{ p: 1, border: "none", maxWidth: 450 }}>
-        <BorderBox sx={{ flexDirection: "column" }}>
+        <BorderBox sx={{ flexDirection: "column", border: "none" }}>
           <BorderBox
             sx={{
               display: "grid",
@@ -133,14 +133,13 @@ class CashierFranchiseReceipt extends Component {
               border: "none",
             }}
           >
-            <BorderBox sx={{ p: 4 }}>
-              <img src={logo} width="100%" style={{ objectFit: "contain" }} />
-            </BorderBox>
+            <BorderBox sx={{ p: 4, border: "none" }}></BorderBox>
             <BorderBox
               sx={{
                 flexDirection: "column",
                 borderLeft: "none",
                 borderRight: "none",
+                border: "none",
               }}
             >
               <BorderBox
@@ -148,6 +147,7 @@ class CashierFranchiseReceipt extends Component {
                   borderTop: "none",
                   flex: 1,
                   alignItems: "center",
+                  border: "none",
                 }}
               >
                 <Typography
@@ -155,38 +155,63 @@ class CashierFranchiseReceipt extends Component {
                   textAlign="center"
                   fontWeight="bold"
                   m={1}
+                  sx={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
                 >
                   Official Receipt of the Republic of the Philippines
                 </Typography>
               </BorderBox>
-              <BorderBox sx={{}}>
-                <Typography fontFamily={"monospace"} m={1}>
-                  <b>No.</b>
+              <BorderBox sx={{ border: "none" }}>
+                <Typography fontFamily={"monospace"} m={1} ml={4}>
+                  <b
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    No.
+                  </b>
                   {franchiseDetails?.paymentOr}
                 </Typography>
               </BorderBox>
-              <BorderBox sx={{ borderBottom: "none" }}>
+              <BorderBox sx={{ borderBottom: "none", border: "none" }}>
                 <Typography fontFamily={"monospace"} m={1}>
-                  <b>Date:</b> {dayjs(datenow).format("MMMM D, YYYY")}
+                  <b
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Date:
+                  </b>
+                  {dayjs(datenow).format("MMMM D, YYYY")}
                 </Typography>
               </BorderBox>
             </BorderBox>
           </BorderBox>
 
-          <table className="table">
+          <table className="table noOutline">
             <tbody>
               <tr>
                 <td className="td w-75">
-                  <b>Agency: </b> SPC CTMO
+                  <b
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Agency:{" "}
+                  </b>{" "}
+                  SPC CTMO
                 </td>
-                <td className="td w-25">
-                  <b>Fund: </b>
-                </td>
+                <td className="td w-25"></td>
               </tr>
             </tbody>
           </table>
 
-          <table className="table">
+          <table className="table noOutline">
             <tbody>
               <tr>
                 <td
@@ -198,7 +223,15 @@ class CashierFranchiseReceipt extends Component {
                     border: "none",
                   }}
                 >
-                  <b>Payor: </b>
+                  <b
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                      marginLeft: "8px",
+                    }}
+                  >
+                    Payor:{" "}
+                  </b>
                   {franchiseDetails?.fname} {franchiseDetails?.mi}{" "}
                   {franchiseDetails?.lname}
                 </td>
@@ -206,18 +239,54 @@ class CashierFranchiseReceipt extends Component {
             </tbody>
           </table>
 
-          <table className="table">
+          <table className="table noOutline">
             <tbody>
               <tr>
                 <th className="th">
-                  <p>Nature of</p>
-                  <p>Collection</p>
+                  <p
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Nature of
+                  </p>
+                  <p
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Collection
+                  </p>
                 </th>
                 <th className="th">
-                  <p>Account</p>
-                  <p>Code</p>
+                  <p
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Account
+                  </p>
+                  <p
+                    style={{
+                      color: "transparent",
+                      userSelect: "none",
+                    }}
+                  >
+                    Code
+                  </p>
                 </th>
-                <th className="th">Amount</th>
+                <th
+                  className="th"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
+                  Amount
+                </th>
               </tr>
 
               {receiptDataHaha.map((item, index) => {
@@ -235,7 +304,14 @@ class CashierFranchiseReceipt extends Component {
                 );
               })}
               <tr>
-                <th className="th" colSpan={2} style={{ textAlign: "start" }}>
+                <th
+                  className="th"
+                  colSpan={2}
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
                   Total
                 </th>
 
@@ -248,7 +324,13 @@ class CashierFranchiseReceipt extends Component {
               </tr>
 
               <tr>
-                <td className="td" style={{ borderRight: "none" }}>
+                <td
+                  className="td"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
                   Amount in words:
                 </td>
                 <td
@@ -262,7 +344,7 @@ class CashierFranchiseReceipt extends Component {
             </tbody>
           </table>
 
-          <table className="table">
+          <table className="table noOutline">
             <tbody>
               <tr>
                 <td className="td p-3"></td>
@@ -270,29 +352,62 @@ class CashierFranchiseReceipt extends Component {
             </tbody>
           </table>
 
-          <table className="table">
+          <table className="table noOutline">
             <tbody>
               <tr>
                 <td className="td">
                   <div style={{ display: "flex", gap: "8px" }}>
-                    <input type="checkbox" id="cash" name="cash" value="cash" />
-                    <label htmlFor="cash">Cash</label>
+                    <label
+                      htmlFor="cash"
+                      style={{
+                        color: "transparent",
+                        userSelect: "none",
+                      }}
+                    >
+                      Cash
+                    </label>
                   </div>
                 </td>
-                <td className="td">Drawee Bank</td>
-                <td className="td">Number</td>
-                <td className="td">Date</td>
+                <td
+                  className="td"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
+                  Drawee Bank
+                </td>
+                <td
+                  className="td"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
+                  Number
+                </td>
+                <td
+                  className="td"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
+                  Date
+                </td>
               </tr>
               <tr>
                 <td className="td">
                   <div style={{ display: "flex", gap: "8px" }}>
-                    <input
-                      type="checkbox"
-                      id="check"
-                      name="check"
-                      value="check"
-                    />
-                    <label htmlFor="check">Check</label>
+                    <label
+                      htmlFor="check"
+                      style={{
+                        color: "transparent",
+                        userSelect: "none",
+                      }}
+                    >
+                      Check
+                    </label>
                   </div>
                 </td>
                 <td className="td">
@@ -309,20 +424,7 @@ class CashierFranchiseReceipt extends Component {
                     }}
                   />
                 </td>
-                <td className="td">
-                  <input
-                    type="text"
-                    style={{
-                      width: "100%",
-                      margin: 0,
-                      padding: 0,
-                      border: "none",
-                      fontSize: "larger",
-                      outline: "none",
-                      fontFamily: "monospace",
-                    }}
-                  />
-                </td>
+                <td className="td"></td>
                 <td className="td">
                   <input
                     type="text"
@@ -341,13 +443,15 @@ class CashierFranchiseReceipt extends Component {
               <tr>
                 <td className="td" colSpan={2}>
                   <div style={{ display: "flex", gap: "8px" }}>
-                    <input
-                      type="checkbox"
-                      id="money"
-                      name="money"
-                      value="money"
-                    />
-                    <label htmlFor="money">Money Order</label>
+                    <label
+                      style={{
+                        color: "transparent",
+                        userSelect: "none",
+                      }}
+                      htmlFor="money"
+                    >
+                      Money Order
+                    </label>
                   </div>
                 </td>
                 <td className="td"></td>
@@ -356,10 +460,18 @@ class CashierFranchiseReceipt extends Component {
             </tbody>
           </table>
 
-          <table className="table">
+          <table className="table noOutline">
             <tbody>
               <tr>
-                <td className="td b-0">Received the amount stated above.</td>
+                <td
+                  className="td b-0"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
+                  Received the amount stated above.
+                </td>
               </tr>
               <tr>
                 <td className="td b-0">
@@ -375,12 +487,14 @@ class CashierFranchiseReceipt extends Component {
                     >
                       {fullname}
                     </p>
-                    <div className="broken-line" />
+
                     <p
                       style={{
                         textAlign: "center",
 
                         marginTop: "-3px",
+                        color: "transparent",
+                        userSelect: "none",
                       }}
                     >
                       Collecting Officer
@@ -391,10 +505,16 @@ class CashierFranchiseReceipt extends Component {
             </tbody>
           </table>
 
-          <table className="table">
+          <table className="table noOutline">
             <tbody>
               <tr>
-                <td className="td center">
+                <td
+                  className="td center"
+                  style={{
+                    color: "transparent",
+                    userSelect: "none",
+                  }}
+                >
                   NOTE: Write the number and date of the receipt on the back of
                   the check or money order received.
                 </td>
@@ -407,4 +527,4 @@ class CashierFranchiseReceipt extends Component {
   }
 }
 
-export default CashierFranchiseReceipt;
+export default CashierFranchiseReceiptPrintable;

@@ -38,20 +38,18 @@ import { useReactToPrint } from "react-to-print";
 import ROLES_LIST from "../common/data/ROLES_LIST";
 import useAuth from "../../hooks/useAuth";
 import { MuiTelInput } from "mui-tel-input";
-import CashierReceipt from "../Receipt/CashierReceipt";
 import { PrintOutlined } from "@mui/icons-material";
 import { PiGenderFemaleBold, PiGenderMaleBold } from "react-icons/pi";
 import CashierFranchiseReceipt from "../Receipt/CashierFranchiseReceipt";
+import CashierFranchiseReceiptPrintable from "../Receipt/receipt.franchise.printable";
 
 const PendingFranchiseInfo = ({
   open,
   onClose,
   franchiseDetails,
   setFranchiseDetails,
-  archiveMode,
-  printable,
   initialFormInfo,
-  paidViolations,
+  paid,
 }) => {
   const axiosPrivate = useAxiosPrivate();
   const [disable, setDisable] = useState(false);
@@ -62,7 +60,7 @@ const PendingFranchiseInfo = ({
   const [updateAlertShown, setUpdateAlertShown] = useState(false);
   const [closingAlert, setClosingAlert] = useState(false);
   const [readOnly, setReadOnly] = useState(true);
-  const [formTitle, setFormTitle] = useState("Franchise Information");
+
   const { setFranchises, franchises, pendingFranchises, setPendingFranchises } =
     useData();
   const [alertShown, setAlertShown] = useState(false);
@@ -155,15 +153,6 @@ const PendingFranchiseInfo = ({
     setReadOnly(true);
   };
 
-  const clearForm = () => {
-    setFranchiseDetails({
-      ...helper.initialFranchiseDetails,
-      mtop: franchiseDetails.mtop,
-      date: franchiseDetails.date,
-      id: franchiseDetails.id,
-    });
-  };
-
   const handleCloseOnclick = () => {
     if (updateForm) {
       let formIsModified;
@@ -198,66 +187,81 @@ const PendingFranchiseInfo = ({
     <>
       <DialogForm
         onSubmit={handleSubmit}
-        title={formTitle}
+        title={paid ? "Franchise Details" : "Pending Franchise Details"}
         open={open}
         onClose={handleCloseOnclick}
         actions={
-          <>
-            <Collapse
-              in={readOnly}
-              mountOnEnter
-              unmountOnExit
-              timeout={readOnly ? 300 : 0}
-            >
-              <Box display="flex" gap={1}>
-                <Button
-                  disabled={disable}
-                  variant="outlined"
-                  size="small"
-                  onClick={handleCloseOnclick}
-                >
-                  cancel
-                </Button>
-                <Button
-                  disabled={disable}
-                  variant="contained"
-                  size="small"
-                  onClick={() => {
-                    setReadOnly(false);
-                    setUpdateForm(true);
-                  }}
-                >
-                  proceed to payment
-                </Button>
-              </Box>
-            </Collapse>
+          !paid ? (
+            <>
+              <Collapse
+                in={readOnly}
+                mountOnEnter
+                unmountOnExit
+                timeout={readOnly ? 300 : 0}
+              >
+                <Box display="flex" gap={1}>
+                  <Button
+                    disabled={disable}
+                    variant="outlined"
+                    size="small"
+                    onClick={handleCloseOnclick}
+                  >
+                    cancel
+                  </Button>
+                  <Button
+                    disabled={disable}
+                    variant="contained"
+                    size="small"
+                    onClick={() => {
+                      setReadOnly(false);
+                      setUpdateForm(true);
+                    }}
+                  >
+                    proceed to payment
+                  </Button>
+                </Box>
+              </Collapse>
 
-            <Collapse
-              in={!readOnly}
-              mountOnEnter
-              unmountOnExit
-              timeout={!readOnly ? 300 : 0}
-            >
-              <Box display="flex" gap={1}>
-                <Button
-                  disabled={disable}
-                  variant="outlined"
-                  size="small"
-                  onClick={handleCloseOnclick}
-                >
-                  cancel
-                </Button>
-                <Button
-                  disabled={disable}
-                  variant="contained"
-                  size="small"
-                  type="submit"
-                >
-                  submit
-                </Button>
-              </Box>
-            </Collapse>
-          </>
+              <Collapse
+                in={!readOnly}
+                mountOnEnter
+                unmountOnExit
+                timeout={!readOnly ? 300 : 0}
+              >
+                <Box display="flex" gap={1}>
+                  <Button
+                    disabled={disable}
+                    variant="outlined"
+                    size="small"
+                    onClick={handleCloseOnclick}
+                  >
+                    cancel
+                  </Button>
+                  <Button
+                    disabled={disable}
+                    variant="contained"
+                    size="small"
+                    type="submit"
+                  >
+                    submit
+                  </Button>
+                </Box>
+              </Collapse>
+            </>
+          ) : (
+            <>
+              <Button
+                disabled={disable}
+                variant="contained"
+                size="small"
+                onClick={() => {
+                  setReceiptModal(true);
+                }}
+              >
+                view receipt
+              </Button>
+            </>
+          )
         }
       >
         <Fieldset legend="Payment Details">
@@ -282,7 +286,10 @@ const PendingFranchiseInfo = ({
                   value={franchiseDetails.paymentOrDate}
                   readOnly={readOnly}
                   onChange={(date) =>
-                    setFranchiseDetails((prev) => ({ ...prev, date: date }))
+                    setFranchiseDetails((prev) => ({
+                      ...prev,
+                      paymentOrDate: date,
+                    }))
                   }
                   slotProps={{ textField: { required: true } }}
                 />
@@ -680,7 +687,6 @@ const PendingFranchiseInfo = ({
               size="small"
               onClick={() => {
                 setReceiptModal(false);
-                setFranchiseDetails(helper.initialFranchiseDetails);
               }}
             >
               cancel
@@ -698,12 +704,19 @@ const PendingFranchiseInfo = ({
         }
       >
         <CashierFranchiseReceipt
-          ref={componentRef}
           fullname={auth?.fullname}
           franchiseDetails={franchiseDetails}
           receiptData={receiptData}
         />
       </DialogForm>
+      <Box display="none">
+        <CashierFranchiseReceiptPrintable
+          ref={componentRef}
+          fullname={auth?.fullname}
+          franchiseDetails={franchiseDetails}
+          receiptData={receiptData}
+        />
+      </Box>
     </>
   );
 };

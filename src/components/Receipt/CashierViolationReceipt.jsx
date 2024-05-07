@@ -1,5 +1,5 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import logo from "../../assets/images/receipt-logo.png";
 import BorderBox from "../common/ui/BorderBox";
 import dayjs from "dayjs";
@@ -85,28 +85,37 @@ function numberToWords(number) {
   }
 }
 
-class CashierReceipt extends Component {
+class CashierViolationReceipt extends Component {
   render() {
     const { violationDetails, fullname } = this.props;
     const datenow = new Date();
-    console.log(violationDetails);
+    let totalAmount = 0;
+    let receiptData = [];
 
-    const totalAmount = violationDetails?.violation?.reduce(
-      (total, obj) => total + obj?.price,
-      0
-    );
+    if (violationDetails) {
+      totalAmount = violationDetails?.violation?.reduce(
+        (total, obj) => total + obj?.price,
+        0
+      );
+
+      receiptData = violationDetails?.violation.concat(
+        Array.from({
+          length: Math.max(0, 8 - violationDetails?.violation.length),
+        })
+      );
+    }
 
     return (
-      <BorderBox sx={{ p: 3, border: "none" }}>
+      <BorderBox sx={{ p: 1, border: "none", maxWidth: 450 }}>
         <BorderBox sx={{ flexDirection: "column" }}>
           <BorderBox
             sx={{
               display: "grid",
-              gridTemplateColumns: "20% 80%",
+              gridTemplateColumns: "30% 70%",
               border: "none",
             }}
           >
-            <BorderBox sx={{ p: 3 }}>
+            <BorderBox sx={{ p: 4 }}>
               <img src={logo} width="100%" style={{ objectFit: "contain" }} />
             </BorderBox>
             <BorderBox
@@ -124,7 +133,7 @@ class CashierReceipt extends Component {
                 }}
               >
                 <Typography
-                  variant="h5"
+                  fontFamily={"monospace"}
                   textAlign="center"
                   fontWeight="bold"
                   m={1}
@@ -132,13 +141,14 @@ class CashierReceipt extends Component {
                   Official Receipt of the Republic of the Philippines
                 </Typography>
               </BorderBox>
-              <BorderBox sx={{}}>
-                <Typography variant="h6" m={1}>
-                  <b>No.</b> {violationDetails?.receiptNo}
+              <BorderBox>
+                <Typography fontFamily={"monospace"} m={1}>
+                  <b>No.</b>
+                  {violationDetails?.or}
                 </Typography>
               </BorderBox>
               <BorderBox sx={{ borderBottom: "none" }}>
-                <Typography m={1} variant="h6">
+                <Typography fontFamily={"monospace"} m={1}>
                   <b>Date:</b> {dayjs(datenow).format("MMMM D, YYYY")}
                 </Typography>
               </BorderBox>
@@ -163,7 +173,12 @@ class CashierReceipt extends Component {
               <tr>
                 <td
                   className="td by-0"
-                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    border: "none",
+                  }}
                 >
                   <b>Payor: </b>
                   {violationDetails?.name}
@@ -175,34 +190,30 @@ class CashierReceipt extends Component {
           <table className="table">
             <tbody>
               <tr>
-                <th className="th">Nature of Collection</th>
-                <th className="th">General Fund(63%)</th>
-                <th className="th">Trust Fund(37%)</th>
+                <th className="th">
+                  <p>Nature of</p>
+                  <p>Collection</p>
+                </th>
+                <th className="th">
+                  <p>Account</p>
+                  <p>Code</p>
+                </th>
                 <th className="th">Amount</th>
               </tr>
 
-              {violationDetails.violation.map((item, index) => {
+              {receiptData?.map((item, index) => {
                 return (
                   <tr key={index}>
-                    <td className="td center">
-                      {item.violation == "OTHERS"
-                        ? `${violationDetails.others || ""} (OTHERS)`
-                        : item.violation}
+                    <td className="td ">
+                      {item?.violation ? (
+                        item?.violation
+                      ) : (
+                        <p className="invi">.</p>
+                      )}
                     </td>
-                    <td className="td center">
-                      {(item.price * 0.63).toLocaleString("en-PH", {
-                        style: "currency",
-                        currency: "PHP",
-                      })}
-                    </td>
-                    <td className="td center">
-                      {(item.price * 0.37).toLocaleString("en-PH", {
-                        style: "currency",
-                        currency: "PHP",
-                      })}
-                    </td>
-                    <td className="td center">
-                      {item.price.toLocaleString("en-PH", {
+                    <td className="td"></td>
+                    <td className="td">
+                      {item?.price?.toLocaleString("en-PH", {
                         style: "currency",
                         currency: "PHP",
                       })}
@@ -210,37 +221,29 @@ class CashierReceipt extends Component {
                   </tr>
                 );
               })}
+
               <tr>
-                <th className="th">Total</th>
-                <th className="th">
-                  {(totalAmount * 0.63).toLocaleString("en-PH", {
-                    style: "currency",
-                    currency: "PHP",
-                  })}
+                <th className="th" colSpan={2} style={{ textAlign: "start" }}>
+                  Total
                 </th>
-                <th className="th">
-                  {(totalAmount * 0.37).toLocaleString("en-PH", {
-                    style: "currency",
-                    currency: "PHP",
-                  })}
-                </th>
-                <th className="th">
+
+                <th className="th" style={{ textAlign: "start" }}>
                   {totalAmount.toLocaleString("en-PH", {
                     style: "currency",
                     currency: "PHP",
                   })}
                 </th>
               </tr>
-            </tbody>
-          </table>
 
-          <table className="table">
-            <tbody>
               <tr>
                 <td className="td" style={{ borderRight: "none" }}>
                   Amount in words:
                 </td>
-                <td className="td" style={{ borderLeft: "none" }}>
+                <td
+                  className="td"
+                  style={{ borderLeft: "none", textAlign: "start" }}
+                  colSpan={2}
+                >
                   <b> {numberToWords(totalAmount)?.toUpperCase()}</b>
                 </td>
               </tr>
@@ -290,6 +293,7 @@ class CashierReceipt extends Component {
                       border: "none",
                       fontSize: "larger",
                       outline: "none",
+                      fontFamily: "monospace",
                     }}
                   />
                 </td>
@@ -303,6 +307,7 @@ class CashierReceipt extends Component {
                       border: "none",
                       fontSize: "larger",
                       outline: "none",
+                      fontFamily: "monospace",
                     }}
                   />
                 </td>
@@ -316,6 +321,7 @@ class CashierReceipt extends Component {
                       border: "none",
                       fontSize: "larger",
                       outline: "none",
+                      fontFamily: "monospace",
                     }}
                   />
                 </td>
@@ -349,7 +355,7 @@ class CashierReceipt extends Component {
                     <p
                       style={{
                         textAlign: "center",
-                        marginBottom: "-10px",
+                        marginBottom: "-5px",
                         marginTop: "-10px",
                         fontWeight: "500",
                         fontSize: "larger",
@@ -389,4 +395,4 @@ class CashierReceipt extends Component {
   }
 }
 
-export default CashierReceipt;
+export default CashierViolationReceipt;

@@ -38,7 +38,8 @@ import { Clear, PrintOutlined, QrCode } from "@mui/icons-material";
 import { useReactToPrint } from "react-to-print";
 import useAuth from "../../../hooks/useAuth";
 import ROLES_LIST from "../../common/data/ROLES_LIST";
-import CashierReceipt from "../../Receipt/CashierReceipt";
+import CashierViolationReceipt from "../../Receipt/CashierViolationReceipt";
+import ReceiptViolationPrintable from "../../Receipt/receipt.violation.printable";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -610,12 +611,19 @@ const PaymentViolationsInfo = ({
           </>
         }
       >
-        <CashierReceipt
-          ref={componentRef}
+        <CashierViolationReceipt
           violationDetails={violationDetails}
           fullname={auth?.fullname}
         />
       </DialogForm>
+
+      <Box display="none">
+        <ReceiptViolationPrintable
+          ref={componentRef}
+          violationDetails={violationDetails}
+          fullname={auth?.fullname}
+        />
+      </Box>
     </>
   );
 };

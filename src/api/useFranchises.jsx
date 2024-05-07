@@ -94,6 +94,7 @@ const useFranchises = () => {
       setPendingFranchisesLoading(true);
       try {
         const response = await axiosPrivate.get("/franchise/pending");
+        console.log(response.data);
         setPendingFranchises(() => {
           return response.data?.map((data) => {
             return helper.createClientsData(
@@ -134,9 +135,10 @@ const useFranchises = () => {
               data.PAID_VIOLATIONS,
               data.refNo,
               data.paymentOr,
-              data.paymentOrDate,
+              data.paymentOrDate && new Date(data.paymentOrDate),
               data.pending,
-              data.transaction
+              data.transaction,
+              data.receiptData
             );
           });
         });
@@ -195,9 +197,10 @@ const useFranchises = () => {
               data.PAID_VIOLATIONS,
               data.refNo,
               data.paymentOr,
-              data.paymentOrDate,
+              data.paymentOrDate && new Date(data.paymentOrDate),
               data.pending,
-              data.transaction
+              data.transaction,
+              data.receiptData
             );
           });
         });

@@ -29,6 +29,8 @@ const useViolations = () => {
       setViolationsLoading(true);
       try {
         const response = await axiosPrivate.get("/violation");
+        console.log("Violation");
+
         console.log(response.data);
         setViolations(response.data);
       } catch (error) {
