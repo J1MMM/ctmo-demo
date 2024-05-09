@@ -37,8 +37,12 @@ import AlertDialog from "../../common/ui/AlertDialog";
 import spcbrgy from "../../common/data/spcbrgy";
 import helper from "../../common/data/helper";
 import {
+  Analytics,
+  AnalyticsOutlined,
+  ArticleOutlined,
   List,
   ListAltOutlined,
+  ListAltTwoTone,
   Pending,
   PendingActions,
   PendingActionsOutlined,
@@ -47,6 +51,7 @@ import {
   QrCode2,
   QrCodeOutlined,
   Report,
+  ReportGmailerrorred,
 } from "@mui/icons-material";
 import PrintableReport from "./PrintableReport";
 import { useReactToPrint } from "react-to-print";
@@ -57,6 +62,8 @@ import NewFranchise from "../../Receipt/NewFranchise";
 import { PiGenderFemaleBold, PiGenderMaleBold } from "react-icons/pi";
 import RenewFranchise from "../../Receipt/RenewFranchise";
 import TransferFranchise from "../../Receipt/TransferFranchise";
+import FranchiseFormPrintable from "./franchise.form.printable";
+import MayorPermitPrintable from "./mayorspermit.printable";
 
 const ClientInfo = ({
   open,
@@ -97,6 +104,16 @@ const ClientInfo = ({
   const componentRef = useRef(null);
   const transferRecieptRef = useRef(null);
   const reportComp = useRef(null);
+  const franchiseFormRef = useRef(null);
+  const permitRef = useRef(null);
+
+  const handlePrintFranchiseForm = useReactToPrint({
+    content: () => franchiseFormRef.current,
+  });
+
+  const handlePrintPermit = useReactToPrint({
+    content: () => permitRef.current,
+  });
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -483,29 +500,48 @@ const ClientInfo = ({
           ))
         }
       >
-        {admin || ctmo2 ? (
-          <Collapse in={printable && !updateForm && !transferForm}>
-            <Button
-              variant="outlined"
-              sx={{ mb: 2, py: 1 }}
-              startIcon={<ListAltOutlined />}
-              size="small"
-              onClick={handlePrintReport}
-            >
-              generate report
-            </Button>
-          </Collapse>
-        ) : null}
-        {/* 
-        <Button
-          variant="outlined"
-          sx={{ mb: 2, py: 1 }}
-          startIcon={<QrCode />}
-          size="small"
-          onClick={handlePrintR}
-        >
-          click
-        </Button> */}
+        <Box display="flex" gap={1}>
+          {admin || ctmo2 ? (
+            <Collapse in={printable && !updateForm && !transferForm}>
+              <Button
+                variant="outlined"
+                sx={{ mb: 2, py: 1 }}
+                startIcon={<ArticleOutlined />}
+                size="small"
+                onClick={handlePrintReport}
+              >
+                generate report
+              </Button>
+            </Collapse>
+          ) : null}
+
+          {admin || ctmo2 ? (
+            <Collapse in={printable && !updateForm && !transferForm}>
+              <Button
+                variant="outlined"
+                sx={{ mb: 2, py: 1 }}
+                startIcon={<ListAltOutlined />}
+                size="small"
+                onClick={handlePrintFranchiseForm}
+              >
+                franchise form
+              </Button>
+            </Collapse>
+          ) : null}
+          {admin || ctmo2 ? (
+            <Collapse in={printable && !updateForm && !transferForm}>
+              <Button
+                variant="outlined"
+                sx={{ mb: 2, py: 1 }}
+                startIcon={<ListAltOutlined />}
+                size="small"
+                onClick={handlePrintPermit}
+              >
+                Mayor's permit
+              </Button>
+            </Collapse>
+          ) : null}
+        </Box>
 
         <FlexRow>
           <OutlinedTextField
@@ -1223,6 +1259,14 @@ const ClientInfo = ({
           ref={reportComp}
           franchiseDetails={franchiseDetails}
           paidViolations={paidViolations}
+        />
+        <FranchiseFormPrintable
+          ref={franchiseFormRef}
+          franchiseDetails={franchiseDetails}
+        />
+        <MayorPermitPrintable
+          ref={permitRef}
+          franchiseDetails={franchiseDetails}
         />
       </Box>
     </>
