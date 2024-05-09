@@ -76,7 +76,9 @@ const useFranchises = () => {
               data.refNo,
               data.paymentOr,
               data.paymentOrDate,
-              data.pending
+              data.pending,
+              data.transaction,
+              data.receiptData
             );
           });
         });

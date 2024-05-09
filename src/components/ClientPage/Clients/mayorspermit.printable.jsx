@@ -7,7 +7,7 @@ import flag from "../../../assets/images/mayors-permit-flag.png";
 import sun from "../../../assets/images/mayors-permit-sun.png";
 import logo from "../../../assets/images/mayors-permit-logo.png";
 
-const FormContent = ({ franchiseDetails, datenow }) => {
+const FormContent = ({ franchiseDetails, datenow, total }) => {
   return (
     <Box my={1} mx={5} position="relative">
       <Typography
@@ -331,7 +331,10 @@ const FormContent = ({ franchiseDetails, datenow }) => {
                   fontSize={14}
                   ml={1}
                 >
-                  385.00
+                  {total?.toLocaleString("en-PH", {
+                    style: "currency",
+                    currency: "PHP",
+                  })}
                 </Typography>
               </Box>
             </Box>
@@ -469,6 +472,14 @@ class MayorPermitPrintable extends Component {
   render() {
     const { franchiseDetails } = this.props;
     const datenow = new Date();
+    let total = 0;
+
+    if (franchiseDetails) {
+      total = franchiseDetails?.receiptData?.reduce(
+        (total, obj) => total + obj?.price,
+        0
+      );
+    }
 
     return (
       <Box
@@ -538,7 +549,11 @@ class MayorPermitPrintable extends Component {
             }}
           />
 
-          <FormContent franchiseDetails={franchiseDetails} datenow={datenow} />
+          <FormContent
+            franchiseDetails={franchiseDetails}
+            datenow={datenow}
+            total={total}
+          />
           <Typography
             color="red"
             fontWeight="bold"
@@ -606,7 +621,11 @@ class MayorPermitPrintable extends Component {
             }}
           />
 
-          <FormContent franchiseDetails={franchiseDetails} datenow={datenow} />
+          <FormContent
+            franchiseDetails={franchiseDetails}
+            datenow={datenow}
+            total={total}
+          />
           <Typography
             color="red"
             fontWeight="bold"
