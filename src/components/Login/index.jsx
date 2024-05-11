@@ -184,6 +184,7 @@ const LoginComponenet = () => {
           >
             <img
               src={spc_seal_logo}
+              alt="spc_seal_logo"
               draggable={false}
               style={{
                 height: "85px",
@@ -192,6 +193,7 @@ const LoginComponenet = () => {
             />
             <img
               src={ctmo_logo}
+              alt="ctmo_logo"
               draggable={false}
               style={{
                 height: "85px",
@@ -251,6 +253,9 @@ const LoginComponenet = () => {
                       disabled={formDisabled}
                       edge="end"
                       onClick={() => setPwdVisible(!pwdVisible)}
+                      aria-label="eye-btn"
+                      aria-labelledby="eye-btn"
+                      className="eye-btn"
                     >
                       {pwdVisible ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
