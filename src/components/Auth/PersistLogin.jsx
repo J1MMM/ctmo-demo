@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import ctmo_logo from "../../assets/images/logo2.png";
-import loading_bg from "../../assets/images/loading-bg.jpg";
+import loading_bg from "../../assets/images/loading-bg.webp";
 
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
