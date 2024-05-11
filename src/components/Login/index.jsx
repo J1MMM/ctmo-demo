@@ -264,18 +264,18 @@ const LoginComponenet = () => {
                 label="Password"
               />
             </FormControl>
-            <Link
-              variant="subtitle2"
+            <Button
+              size="small"
               sx={{
-                cursor: "pointer",
                 textDecoration: "none",
                 color: formDisabled ? "lightgray" : "primary",
                 pointerEvents: formDisabled && "none",
+                p: 0,
               }}
               onClick={() => setfgpModal(true)}
             >
               Forgot password?
-            </Link>
+            </Button>
 
             <Button
               variant="contained"
