@@ -124,7 +124,15 @@ class CashierFranchiseReceiptPrintable extends Component {
       );
     }
     return (
-      <BorderBox sx={{ p: 1, border: "none", maxWidth: 450 }}>
+      <BorderBox
+        sx={{
+          p: 1,
+          border: "none",
+          maxWidth: 450,
+          marginLeft: "5rem",
+          marginTop: "3rem",
+        }}
+      >
         <BorderBox sx={{ flexDirection: "column", border: "none" }}>
           <BorderBox
             sx={{
@@ -169,6 +177,7 @@ class CashierFranchiseReceiptPrintable extends Component {
                     style={{
                       color: "transparent",
                       userSelect: "none",
+                      paddingTop: "8rem",
                     }}
                   >
                     No.
@@ -292,8 +301,9 @@ class CashierFranchiseReceiptPrintable extends Component {
               {receiptDataHaha.map((item, index) => {
                 return (
                   <tr key={index}>
-                    <td className="td ">{item?.label}</td>
-                    <td className="td "></td>
+                    <td className="td " style={{ minWidth: 150 }}>
+                      {item?.label}
+                    </td>
                     <td className="td ">
                       {item?.price.toLocaleString("en-PH", {
                         style: "currency",
@@ -306,7 +316,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               <tr>
                 <th
                   className="th"
-                  colSpan={2}
+                  colSpan={1}
                   style={{
                     color: "transparent",
                     userSelect: "none",
@@ -315,14 +325,31 @@ class CashierFranchiseReceiptPrintable extends Component {
                   Total
                 </th>
 
-                <th className="th" style={{ textAlign: "start" }}>
-                  {totalAmount.toLocaleString("en-PH", {
-                    style: "currency",
-                    currency: "PHP",
-                  })}
-                </th>
+                <th className="th" style={{ textAlign: "start" }}></th>
               </tr>
-
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <p
+            style={{
+              textAlign: "end",
+              fontFamily: "monospace",
+              marginRight: "8rem",
+            }}
+          >
+            {totalAmount.toLocaleString("en-PH", {
+              style: "currency",
+              currency: "PHP",
+            })}
+          </p>
+          <table
+            className="table noOutline"
+            style={{ display: "block", mariginTop: "10rem" }}
+          >
+            <tbody>
               <tr>
                 <td
                   className="td"
@@ -331,26 +358,20 @@ class CashierFranchiseReceiptPrintable extends Component {
                     userSelect: "none",
                   }}
                 >
-                  Amount in words:
+                  Amount
                 </td>
                 <td
                   className="td"
                   style={{ borderLeft: "none", textAlign: "start" }}
                   colSpan={2}
-                >
-                  <b> {numberToWords(totalAmount)?.toUpperCase()}</b>
-                </td>
+                ></td>
               </tr>
             </tbody>
           </table>
 
-          <table className="table noOutline">
-            <tbody>
-              <tr>
-                <td className="td p-3"></td>
-              </tr>
-            </tbody>
-          </table>
+          <p style={{ fontFamily: "monospace", marginLeft: "1rem" }}>
+            <b> {numberToWords(totalAmount)?.toUpperCase()}</b>
+          </p>
 
           <table className="table noOutline">
             <tbody>
@@ -478,15 +499,14 @@ class CashierFranchiseReceiptPrintable extends Component {
                   <div className="container">
                     <p
                       style={{
-                        textAlign: "center",
+                        textAlign: "start",
                         marginBottom: "-5px",
-                        marginTop: "-10px",
+                        marginTop: "-50px",
                         fontWeight: "500",
                         fontSize: "larger",
+                        minWidth: 200,
                       }}
-                    >
-                      {fullname}
-                    </p>
+                    ></p>
 
                     <p
                       style={{
@@ -504,7 +524,15 @@ class CashierFranchiseReceiptPrintable extends Component {
               </tr>
             </tbody>
           </table>
-
+          <p
+            style={{
+              marginLeft: "8rem",
+              fontFamily: "monospace",
+              marginTop: "-2rem",
+            }}
+          >
+            <b>{fullname}</b>
+          </p>
           <table className="table noOutline">
             <tbody>
               <tr>

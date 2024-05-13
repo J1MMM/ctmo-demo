@@ -515,7 +515,7 @@ const ClientInfo = ({
             </Collapse>
           ) : null}
 
-          {admin || ctmo2 ? (
+          {admin || ctmo1 ? (
             <Collapse in={printable && !updateForm && !transferForm}>
               <Button
                 variant="outlined"
@@ -528,7 +528,7 @@ const ClientInfo = ({
               </Button>
             </Collapse>
           ) : null}
-          {admin || ctmo2 ? (
+          {admin || ctmo1 ? (
             <Collapse in={printable && !updateForm && !transferForm}>
               <Button
                 variant="outlined"

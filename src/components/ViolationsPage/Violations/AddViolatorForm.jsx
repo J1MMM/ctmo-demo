@@ -249,7 +249,6 @@ const AddViolators = ({ open, onClose }) => {
             <OutlinedTextField
               disabled={disable}
               label="Plate No."
-              required
               value={violationDetails.plateNo}
               onChange={(e) =>
                 setViolationDetails((prev) => ({

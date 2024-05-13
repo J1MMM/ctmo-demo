@@ -308,7 +308,7 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
                 <Typography
                   fontWeight="bold"
                   fontFamily={"Arial"}
-                  fontSize={14}
+                  fontSize={10}
                   ml={1}
                 >
                   {franchiseDetails?.motorno}
