@@ -213,10 +213,12 @@ class CashierViolationReceipt extends Component {
                     </td>
                     <td className="td"></td>
                     <td className="td">
-                      {item?.price?.toLocaleString("en-PH", {
-                        style: "currency",
-                        currency: "PHP",
-                      })}
+                      {" "}
+                      {item?.displayPrice ||
+                        item?.price?.toLocaleString("en-PH", {
+                          style: "currency",
+                          currency: "PHP",
+                        })}
                     </td>
                   </tr>
                 );

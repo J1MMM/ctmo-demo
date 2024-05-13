@@ -319,11 +319,13 @@ class CashierFranchiseReceiptPrintable extends Component {
                     <td className="td" style={{ minWidth: 150 }}>
                       {item?.label ? item?.label : <p className="invi">.</p>}
                     </td>
-                    <td className="td ">
-                      {item?.price.toLocaleString("en-PH", {
-                        style: "currency",
-                        currency: "PHP",
-                      })}
+                    <td className="td">
+                      {" "}
+                      {item?.displayPrice ||
+                        item?.price?.toLocaleString("en-PH", {
+                          style: "currency",
+                          currency: "PHP",
+                        })}
                     </td>
                   </tr>
                 );

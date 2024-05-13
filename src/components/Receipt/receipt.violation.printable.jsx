@@ -302,11 +302,13 @@ class ReceiptViolationPrintable extends Component {
                         <p className="invi">.</p>
                       )}
                     </td>
-                    <td className="td ">
-                      {item?.price.toLocaleString("en-PH", {
-                        style: "currency",
-                        currency: "PHP",
-                      })}
+                    <td className="td">
+                      {" "}
+                      {item?.displayPrice ||
+                        item?.price?.toLocaleString("en-PH", {
+                          style: "currency",
+                          currency: "PHP",
+                        })}
                     </td>
                   </tr>
                 );
