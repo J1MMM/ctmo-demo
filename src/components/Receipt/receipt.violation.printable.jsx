@@ -106,7 +106,15 @@ class ReceiptViolationPrintable extends Component {
     }
 
     return (
-      <BorderBox sx={{ p: 1, border: "none", maxWidth: 450 }}>
+      <BorderBox
+        sx={{
+          p: 1,
+          border: "none",
+          maxWidth: 450,
+          marginLeft: "5rem",
+          marginTop: "3rem",
+        }}
+      >
         <BorderBox sx={{ flexDirection: "column", border: "none" }}>
           <BorderBox
             sx={{
@@ -145,22 +153,32 @@ class ReceiptViolationPrintable extends Component {
                   Official Receipt of the Republic of the Philippines
                 </Typography>
               </BorderBox>
-              <BorderBox
-                sx={{
-                  border: "none",
+              <p
+                style={{
+                  position: "absolute",
+                  right: "8.5rem",
+                  top: "5.5rem",
                 }}
               >
-                <Typography fontFamily={"monospace"} m={1}>
+                {violationDetails?.or}
+              </p>
+              <BorderBox sx={{ border: "none", position: "relative" }}>
+                <Typography
+                  fontFamily={"monospace"}
+                  m={1}
+                  ml={4}
+                  sx={{ color: "transparent", userSelect: "none" }}
+                >
                   <b
                     style={{
                       color: "transparent",
                       userSelect: "none",
-                      marginRight: "24px",
+                      paddingTop: "8rem",
                     }}
                   >
                     No.
                   </b>
-                  {violationDetails?.or}
+                  {violationDetails?.paymentOr}
                 </Typography>
               </BorderBox>
               <BorderBox sx={{ borderBottom: "none", border: "none" }}>
@@ -172,14 +190,14 @@ class ReceiptViolationPrintable extends Component {
                     }}
                   >
                     Date:
-                  </b>{" "}
+                  </b>
                   {dayjs(datenow).format("MMMM D, YYYY")}
                 </Typography>
               </BorderBox>
             </BorderBox>
           </BorderBox>
 
-          <table className={"noOutline"}>
+          <table className="table noOutline">
             <tbody>
               <tr>
                 <td className="td w-75">
@@ -193,21 +211,12 @@ class ReceiptViolationPrintable extends Component {
                   </b>{" "}
                   SPC CTMO
                 </td>
-                <td className="td w-25">
-                  <b
-                    style={{
-                      color: "transparent",
-                      userSelect: "none",
-                    }}
-                  >
-                    Fund:{" "}
-                  </b>
-                </td>
+                <td className="td w-25"></td>
               </tr>
             </tbody>
           </table>
 
-          <table className={"noOutline"}>
+          <table className="table noOutline">
             <tbody>
               <tr>
                 <td
@@ -223,18 +232,17 @@ class ReceiptViolationPrintable extends Component {
                     style={{
                       color: "transparent",
                       userSelect: "none",
-                      marginRight: "8px",
+                      marginLeft: "8px",
                     }}
                   >
-                    Payor:
+                    Payor:{" "}
                   </b>
                   {violationDetails?.name}
                 </td>
               </tr>
             </tbody>
           </table>
-
-          <table className={"noOutline"}>
+          <table className="table noOutline" style={{ marginTop: "1rem" }}>
             <tbody>
               <tr>
                 <th className="th">
@@ -287,16 +295,15 @@ class ReceiptViolationPrintable extends Component {
               {receiptData?.map((item, index) => {
                 return (
                   <tr key={index}>
-                    <td className="td ">
+                    <td className="td" style={{ minWidth: 150 }}>
                       {item?.violation ? (
                         item?.violation
                       ) : (
                         <p className="invi">.</p>
                       )}
                     </td>
-                    <td className="td"></td>
-                    <td className="td">
-                      {item?.price?.toLocaleString("en-PH", {
+                    <td className="td ">
+                      {item?.price.toLocaleString("en-PH", {
                         style: "currency",
                         currency: "PHP",
                       })}
@@ -304,13 +311,11 @@ class ReceiptViolationPrintable extends Component {
                   </tr>
                 );
               })}
-
               <tr>
                 <th
                   className="th"
-                  colSpan={2}
+                  colSpan={1}
                   style={{
-                    textAlign: "start",
                     color: "transparent",
                     userSelect: "none",
                   }}
@@ -318,58 +323,66 @@ class ReceiptViolationPrintable extends Component {
                   Total
                 </th>
 
-                <th className="th" style={{ textAlign: "start" }}>
-                  {totalAmount.toLocaleString("en-PH", {
-                    style: "currency",
-                    currency: "PHP",
-                  })}
-                </th>
+                <th className="th" style={{ textAlign: "start" }}></th>
               </tr>
-
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <p
+            style={{
+              textAlign: "end",
+              fontFamily: "monospace",
+              marginRight: "8rem",
+              marginTop: "-1.2rem",
+            }}
+          >
+            {totalAmount.toLocaleString("en-PH", {
+              style: "currency",
+              currency: "PHP",
+            })}
+          </p>
+          <table
+            className="table noOutline"
+            style={{ display: "block", mariginTop: "10rem" }}
+          >
+            <tbody>
               <tr>
                 <td
                   className="td"
                   style={{
-                    borderRight: "none",
                     color: "transparent",
                     userSelect: "none",
                   }}
                 >
-                  Amount in words:
+                  Amount
                 </td>
                 <td
                   className="td"
                   style={{ borderLeft: "none", textAlign: "start" }}
                   colSpan={2}
-                >
-                  <b>{numberToWords(totalAmount)?.toUpperCase()}</b>
-                </td>
+                ></td>
               </tr>
             </tbody>
           </table>
 
-          <table className={"noOutline"}>
-            <tbody>
-              <tr>
-                <td className="td p-3"></td>
-              </tr>
-            </tbody>
-          </table>
+          <p
+            style={{
+              fontFamily: "monospace",
+              marginLeft: "2rem",
+              // marginTop: ".5rem",
+            }}
+          >
+            <b> {numberToWords(totalAmount)?.toUpperCase()}</b>
+          </p>
 
-          <table className={"noOutline"}>
+          <table className="table noOutline">
             <tbody>
               <tr>
                 <td className="td">
                   <div style={{ display: "flex", gap: "8px" }}>
-                    <label
-                      htmlFor="cash"
-                      style={{
-                        color: "transparent",
-                        userSelect: "none",
-                      }}
-                    >
-                      Cash
-                    </label>
                     <label
                       htmlFor="cash"
                       style={{
@@ -421,15 +434,6 @@ class ReceiptViolationPrintable extends Component {
                     >
                       Check
                     </label>
-                    <label
-                      htmlFor="check"
-                      style={{
-                        color: "transparent",
-                        userSelect: "none",
-                      }}
-                    >
-                      Check
-                    </label>
                   </div>
                 </td>
                 <td className="td">
@@ -446,20 +450,7 @@ class ReceiptViolationPrintable extends Component {
                     }}
                   />
                 </td>
-                <td className="td">
-                  <input
-                    type="text"
-                    style={{
-                      width: "100%",
-                      margin: 0,
-                      padding: 0,
-                      border: "none",
-                      fontSize: "larger",
-                      outline: "none",
-                      fontFamily: "monospace",
-                    }}
-                  />
-                </td>
+                <td className="td"></td>
                 <td className="td">
                   <input
                     type="text"
@@ -479,20 +470,11 @@ class ReceiptViolationPrintable extends Component {
                 <td className="td" colSpan={2}>
                   <div style={{ display: "flex", gap: "8px" }}>
                     <label
-                      htmlFor="money"
                       style={{
                         color: "transparent",
                         userSelect: "none",
                       }}
-                    >
-                      Money Order
-                    </label>
-                    <label
                       htmlFor="money"
-                      style={{
-                        color: "transparent",
-                        userSelect: "none",
-                      }}
                     >
                       Money Order
                     </label>
@@ -504,7 +486,7 @@ class ReceiptViolationPrintable extends Component {
             </tbody>
           </table>
 
-          <table className={"noOutline"}>
+          <table className="table noOutline">
             <tbody>
               <tr>
                 <td
@@ -522,25 +504,19 @@ class ReceiptViolationPrintable extends Component {
                   <div className="container">
                     <p
                       style={{
-                        textAlign: "center",
+                        textAlign: "start",
                         marginBottom: "-5px",
-                        marginTop: "-10px",
+                        marginTop: "-50px",
                         fontWeight: "500",
                         fontSize: "larger",
+                        minWidth: 200,
                       }}
-                    >
-                      {fullname}
-                    </p>
-                    <div
-                      className="broken-line"
-                      style={{
-                        color: "transparent",
-                        userSelect: "none",
-                      }}
-                    />
+                    ></p>
+
                     <p
                       style={{
                         textAlign: "center",
+
                         marginTop: "-3px",
                         color: "transparent",
                         userSelect: "none",
@@ -553,8 +529,16 @@ class ReceiptViolationPrintable extends Component {
               </tr>
             </tbody>
           </table>
-
-          <table className={"noOutline"}>
+          <p
+            style={{
+              marginLeft: "8rem",
+              fontFamily: "monospace",
+              marginTop: "2rem",
+            }}
+          >
+            <b>{fullname}</b>
+          </p>
+          <table className="table noOutline">
             <tbody>
               <tr>
                 <td

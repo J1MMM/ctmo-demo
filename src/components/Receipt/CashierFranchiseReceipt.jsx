@@ -110,10 +110,11 @@ function numberToWords(number) {
 class CashierFranchiseReceipt extends Component {
   render() {
     const { fullname, franchiseDetails, receiptData } = this.props;
-    const receiptDataHaha =
+    let receiptDataHaha =
       receiptData?.length > 0
         ? [...receiptData]
         : [...franchiseDetails?.receiptData];
+
     const datenow = new Date();
     let totalAmount = 0;
 
@@ -121,6 +122,12 @@ class CashierFranchiseReceipt extends Component {
       totalAmount = receiptDataHaha?.reduce(
         (total, obj) => total + obj?.price,
         0
+      );
+
+      receiptDataHaha = receiptDataHaha?.concat(
+        Array.from({
+          length: Math.max(0, 8 - receiptDataHaha.length),
+        })
       );
     }
     return (
@@ -223,7 +230,10 @@ class CashierFranchiseReceipt extends Component {
               {receiptDataHaha.map((item, index) => {
                 return (
                   <tr key={index}>
-                    <td className="td ">{item?.label}</td>
+                    <td className="td ">
+                      {item?.label ? item?.label : <p className="invi">.</p>}
+                    </td>
+
                     <td className="td "></td>
                     <td className="td ">
                       {item?.price.toLocaleString("en-PH", {

@@ -291,12 +291,14 @@ input:-webkit-autofill,
 
 table.noOutline {
   border: none !important;
-
+  padding: 3px;
   th {
     border: none;
+    padding: 3px;
   }
   td {
     border: none;
+    padding: 3px;
   }
 }
 

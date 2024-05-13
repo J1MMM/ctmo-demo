@@ -110,7 +110,7 @@ function numberToWords(number) {
 class CashierFranchiseReceiptPrintable extends Component {
   render() {
     const { fullname, franchiseDetails, receiptData } = this.props;
-    const receiptDataHaha =
+    let receiptDataHaha =
       receiptData?.length > 0
         ? [...receiptData]
         : [...franchiseDetails?.receiptData];
@@ -121,6 +121,12 @@ class CashierFranchiseReceiptPrintable extends Component {
       totalAmount = receiptDataHaha?.reduce(
         (total, obj) => total + obj?.price,
         0
+      );
+
+      receiptDataHaha = receiptDataHaha?.concat(
+        Array.from({
+          length: Math.max(0, 8 - receiptDataHaha.length),
+        })
       );
     }
     return (
@@ -171,8 +177,18 @@ class CashierFranchiseReceiptPrintable extends Component {
                   Official Receipt of the Republic of the Philippines
                 </Typography>
               </BorderBox>
-              <BorderBox sx={{ border: "none" }}>
-                <Typography fontFamily={"monospace"} m={1} ml={4}>
+              <p
+                style={{ position: "absolute", right: "8.5rem", top: "5.5rem" }}
+              >
+                {franchiseDetails?.paymentOr}
+              </p>
+              <BorderBox sx={{ border: "none", position: "relative" }}>
+                <Typography
+                  fontFamily={"monospace"}
+                  m={1}
+                  ml={4}
+                  sx={{ color: "transparent", userSelect: "none" }}
+                >
                   <b
                     style={{
                       color: "transparent",
@@ -247,8 +263,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               </tr>
             </tbody>
           </table>
-
-          <table className="table noOutline">
+          <table className="table noOutline" style={{ marginTop: "1rem" }}>
             <tbody>
               <tr>
                 <th className="th">
@@ -301,8 +316,8 @@ class CashierFranchiseReceiptPrintable extends Component {
               {receiptDataHaha.map((item, index) => {
                 return (
                   <tr key={index}>
-                    <td className="td " style={{ minWidth: 150 }}>
-                      {item?.label}
+                    <td className="td" style={{ minWidth: 150 }}>
+                      {item?.label ? item?.label : <p className="invi">.</p>}
                     </td>
                     <td className="td ">
                       {item?.price.toLocaleString("en-PH", {
@@ -338,6 +353,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               textAlign: "end",
               fontFamily: "monospace",
               marginRight: "8rem",
+              marginTop: "-1.1rem",
             }}
           >
             {totalAmount.toLocaleString("en-PH", {
@@ -369,7 +385,13 @@ class CashierFranchiseReceiptPrintable extends Component {
             </tbody>
           </table>
 
-          <p style={{ fontFamily: "monospace", marginLeft: "1rem" }}>
+          <p
+            style={{
+              fontFamily: "monospace",
+              marginLeft: "2rem",
+              // marginTop: ".5rem",
+            }}
+          >
             <b> {numberToWords(totalAmount)?.toUpperCase()}</b>
           </p>
 
@@ -528,7 +550,7 @@ class CashierFranchiseReceiptPrintable extends Component {
             style={{
               marginLeft: "8rem",
               fontFamily: "monospace",
-              marginTop: "-2rem",
+              marginTop: "2rem",
             }}
           >
             <b>{fullname}</b>
