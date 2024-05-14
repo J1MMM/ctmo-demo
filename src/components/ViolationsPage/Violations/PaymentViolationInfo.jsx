@@ -147,11 +147,11 @@ const PaymentViolationsInfo = ({
                 unmountOnExit
               >
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   size="small"
                   onClick={() => setReceiptModalOpen(true)}
                 >
-                  generate receipt
+                  view receipt
                 </Button>
               </Collapse>
             </>

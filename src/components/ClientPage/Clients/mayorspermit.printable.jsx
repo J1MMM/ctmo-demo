@@ -234,7 +234,7 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
                   fontSize={14}
                   ml={1}
                 >
-                  {/* {franchiseDetails?.model} */}
+                  {franchiseDetails?.model}
                 </Typography>
               </Box>
             </Box>
@@ -251,7 +251,7 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
                 <Typography
                   fontWeight="bold"
                   fontFamily={"Arial"}
-                  fontSize={14}
+                  fontSize={12}
                   ml={1}
                 >
                   {franchiseDetails?.chassisno}
@@ -270,7 +270,7 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
                   fontSize={14}
                   ml={1}
                 >
-                  {franchiseDetails?.model}
+                  {/* {franchiseDetails?.model} */}
                 </Typography>
               </Box>
             </Box>
@@ -308,7 +308,7 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
                 <Typography
                   fontWeight="bold"
                   fontFamily={"Arial"}
-                  fontSize={10}
+                  fontSize={12}
                   ml={1}
                 >
                   {franchiseDetails?.motorno}

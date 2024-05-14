@@ -107,10 +107,11 @@ class RenewFranchise extends Component {
                     {item?.label}
                   </Typography>
                   <Typography variant="h6" fontFamily="monospace">
-                    {item?.price?.toLocaleString("en", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                    {item?.displayPrice ||
+                      item?.price?.toLocaleString("en", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
                   </Typography>
                 </BorderBox>
               );
