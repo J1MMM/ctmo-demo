@@ -45,8 +45,8 @@ class FranchiseFormPrintable extends Component {
                   textDecoration: "underline",
                 }}
               >
-                {franchiseDetails?.lname} {franchiseDetails?.mi}{" "}
-                {franchiseDetails?.fname}
+                {franchiseDetails?.fname} {franchiseDetails?.mi}{" "}
+                {franchiseDetails?.lname}
               </Typography>
             </Box>
             <Box display="flex" flexDirection="row" gap={1}>

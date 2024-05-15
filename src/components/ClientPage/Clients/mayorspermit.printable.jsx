@@ -221,6 +221,7 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
           bgcolor="white"
           boxSizing={"border-box"}
           p={1}
+          minWidth={450}
         >
           <Box display="grid" gridTemplateColumns={"50% 50%"}>
             <Box display={"flex"}>
