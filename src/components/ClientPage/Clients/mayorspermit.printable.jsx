@@ -589,7 +589,7 @@ class MayorPermitPrintable extends Component {
             style={{
               position: "absolute",
               right: 0,
-              top: 0,
+              top: 10,
               objectFit: "contain",
               height: "2.88in",
               width: "3.19in",
@@ -602,7 +602,7 @@ class MayorPermitPrintable extends Component {
             style={{
               position: "absolute",
               right: 30,
-              top: 0,
+              top: 10,
               objectFit: "contain",
               height: "1.77in",
               width: "1.77in",
@@ -677,7 +677,7 @@ class MayorPermitPrintable extends Component {
             style={{
               position: "absolute",
               right: 30,
-              top: 0,
+              top: 5,
               objectFit: "contain",
               height: "1.77in",
               width: "1.77in",
