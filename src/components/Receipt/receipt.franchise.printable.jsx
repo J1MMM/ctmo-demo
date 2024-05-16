@@ -135,8 +135,8 @@ class CashierFranchiseReceiptPrintable extends Component {
           p: 1,
           border: "none",
           maxWidth: 450,
-          marginLeft: "3rem",
-          marginTop: "3.4rem",
+          marginLeft: "2.7rem",
+          marginTop: "3.1rem",
         }}
       >
         <BorderBox sx={{ flexDirection: "column", border: "none" }}>
