@@ -355,7 +355,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               textAlign: "end",
               fontFamily: "monospace",
               marginRight: "8rem",
-              marginTop: "-1.2rem",
+              marginTop: "-1.1rem",
             }}
           >
             {totalAmount.toLocaleString("en-PH", {
@@ -392,7 +392,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               fontFamily: "monospace",
               marginLeft: "1rem",
               fontSize: 10,
-              marginTop: ".1rem",
+              // marginTop: ".5rem",
             }}
           >
             <b> {numberToWords(totalAmount)?.toUpperCase()}</b>

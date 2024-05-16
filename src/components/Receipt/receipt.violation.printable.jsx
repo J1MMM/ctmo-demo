@@ -338,7 +338,7 @@ class ReceiptViolationPrintable extends Component {
               textAlign: "end",
               fontFamily: "monospace",
               marginRight: "8rem",
-              marginTop: "-1.3rem",
+              marginTop: "-1.2rem",
             }}
           >
             {totalAmount.toLocaleString("en-PH", {
@@ -376,7 +376,7 @@ class ReceiptViolationPrintable extends Component {
               marginLeft: "2rem",
               fontSize: 10,
 
-              marginTop: ".1rem",
+              // marginTop: ".5rem",
             }}
           >
             <b> {numberToWords(totalAmount)?.toUpperCase()}</b>
