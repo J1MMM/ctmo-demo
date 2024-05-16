@@ -316,7 +316,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               {receiptDataHaha.map((item, index) => {
                 return (
                   <tr key={index}>
-                    <td className="td" style={{ minWidth: 150 }}>
+                    <td className="td" style={{ minWidth: 155 }}>
                       {item?.label ? item?.label : <p className="invi">.</p>}
                     </td>
                     <td className="td">
@@ -355,7 +355,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               textAlign: "end",
               fontFamily: "monospace",
               marginRight: "8rem",
-              marginTop: "-1.1rem",
+              marginTop: "-1.2rem",
             }}
           >
             {totalAmount.toLocaleString("en-PH", {
@@ -392,7 +392,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               fontFamily: "monospace",
               marginLeft: "1rem",
               fontSize: 10,
-              // marginTop: ".5rem",
+              marginTop: ".1rem",
             }}
           >
             <b> {numberToWords(totalAmount)?.toUpperCase()}</b>

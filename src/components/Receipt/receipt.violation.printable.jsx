@@ -295,7 +295,7 @@ class ReceiptViolationPrintable extends Component {
               {receiptData?.map((item, index) => {
                 return (
                   <tr key={index}>
-                    <td className="td" style={{ minWidth: 150 }}>
+                    <td className="td" style={{ minWidth: 155 }}>
                       {item?.violation ? (
                         item?.violation
                       ) : (
@@ -338,7 +338,7 @@ class ReceiptViolationPrintable extends Component {
               textAlign: "end",
               fontFamily: "monospace",
               marginRight: "8rem",
-              marginTop: "-1.2rem",
+              marginTop: "-1.3rem",
             }}
           >
             {totalAmount.toLocaleString("en-PH", {
@@ -376,7 +376,7 @@ class ReceiptViolationPrintable extends Component {
               marginLeft: "2rem",
               fontSize: 10,
 
-              // marginTop: ".5rem",
+              marginTop: ".1rem",
             }}
           >
             <b> {numberToWords(totalAmount)?.toUpperCase()}</b>
