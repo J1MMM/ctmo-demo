@@ -111,7 +111,7 @@ class ReceiptViolationPrintable extends Component {
           p: 1,
           border: "none",
           maxWidth: 450,
-          marginLeft: "5rem",
+          marginLeft: "1rem",
           marginTop: "3rem",
         }}
       >
