@@ -89,7 +89,12 @@ const FormContent = ({
           DATE ISSUED
         </Typography>
       </Box>
-      <Typography fontFamily="serif" fontWeight="bold" textAlign="center">
+      <Typography
+        fontFamily="serif"
+        fontWeight="bold"
+        textAlign="center"
+        mt={2}
+      >
         Republic of the Philippines
       </Typography>
       <Typography
@@ -109,6 +114,7 @@ const FormContent = ({
         OFFICE OF THE CITY MAYOR
       </Typography>
       <Typography
+        mt={-1}
         variant="h6"
         fontFamily="Arial"
         fontWeight="900"
@@ -156,7 +162,7 @@ const FormContent = ({
         MOTORIZED TRICYCLE OPERATORS PERMIT NUMBER
       </Typography>
 
-      <Box display="flex" mt={2}>
+      <Box display="flex" mt={1}>
         <Typography fontFamily="Arial" fontStyle="italic" minWidth={180}>
           THIS CERTIFIES that
         </Typography>
@@ -169,6 +175,7 @@ const FormContent = ({
           <Typography
             fontFamily="Arial"
             textAlign={"center"}
+            fontSize={15}
             sx={{
               position: "relative",
               "::after": {
@@ -188,6 +195,7 @@ const FormContent = ({
           <Typography
             fontFamily="Arial"
             textAlign={"center"}
+            fontSize={15}
             sx={{
               position: "relative",
               "::after": {
@@ -206,7 +214,7 @@ const FormContent = ({
         </Box>
       </Box>
       <Box
-        mt={1}
+        mt={1.5}
         borderBottom={"1px solid"}
         width="100%"
         display={"flex"}
@@ -215,6 +223,7 @@ const FormContent = ({
         <Typography
           fontFamily="Arial"
           textAlign={"center"}
+          fontSize={15}
           sx={{
             position: "relative",
             "::after": {
@@ -233,6 +242,7 @@ const FormContent = ({
         <Typography
           fontFamily="Arial"
           textAlign={"center"}
+          fontSize={15}
           sx={{
             position: "relative",
             "::after": {
@@ -249,13 +259,18 @@ const FormContent = ({
           {franchiseDetails?.address}
         </Typography>
       </Box>
-      <Typography fontFamily="Arial" fontStyle="italic" mt={2}>
+      <Typography
+        fontFamily="Arial"
+        fontStyle="italic"
+        mt={1.5}
+        lineHeight={"19px"}
+      >
         has been granted PERMIT to operate the Motorized Vehicle herein
         indicated for the year of issue, in compliance to the provisions of
         Ordinance No. 2011-01, as amended. SUBJECT to such other pertinent laws,
         ordinances and related administrative implementary regulations.
       </Typography>
-      <Box display={"flex"} width={"100%"} alignItems={"center"}>
+      <Box display={"flex"} width={"100%"} alignItems={"center"} mt={1}>
         <Box
           border="2px solid #1B98EC"
           bgcolor="white"
@@ -414,7 +429,7 @@ const FormContent = ({
           display={"flex"}
           width={"100%"}
           flexDirection={"column"}
-          gap={8}
+          gap={10}
           mt={3}
         >
           <Box position={"relative"}>
@@ -430,10 +445,10 @@ const FormContent = ({
               src={mayorSign}
               alt="sign"
               style={{
-                maxWidth: 180,
+                maxWidth: 200,
                 position: "absolute",
-                top: -45,
-                left: 55,
+                top: -50,
+                left: 50,
               }}
             />
             <Typography
@@ -483,7 +498,6 @@ const FormContent = ({
         fontSize={8}
         textAlign={"center"}
         borderTop={"1px solid"}
-        mt={1}
         fontFamily={"Arial"}
       >
         Valid until
