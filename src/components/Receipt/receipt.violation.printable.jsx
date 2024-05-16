@@ -112,7 +112,7 @@ class ReceiptViolationPrintable extends Component {
           border: "none",
           maxWidth: 450,
           marginLeft: "5rem",
-          marginTop: "5rem",
+          marginTop: "3.5rem",
         }}
       >
         <BorderBox sx={{ flexDirection: "column", border: "none" }}>
@@ -374,6 +374,8 @@ class ReceiptViolationPrintable extends Component {
             style={{
               fontFamily: "monospace",
               marginLeft: "2rem",
+              fontSize: 10,
+
               // marginTop: ".5rem",
             }}
           >
