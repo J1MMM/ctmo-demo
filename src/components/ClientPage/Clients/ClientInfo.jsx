@@ -95,7 +95,9 @@ const ClientInfo = ({
   const { auth } = useAuth();
   const [receiptModal, setReceiptModal] = useState(false);
   const [transferReceiptModal, setTransferReceiptModal] = useState(false);
+  const [permitModal, setPermitModal] = useState(false);
   const [receiptData, setReceiptData] = useState([]);
+  const [model, setModel] = useState("");
 
   const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
   const ctmo1 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO1));
@@ -535,7 +537,7 @@ const ClientInfo = ({
                 sx={{ mb: 2, py: 1 }}
                 startIcon={<ListAltOutlined />}
                 size="small"
-                onClick={handlePrintPermit}
+                onClick={() => setPermitModal(true)}
               >
                 Mayor's permit
               </Button>
@@ -1254,6 +1256,167 @@ const ClientInfo = ({
         </DialogForm>
       )}
 
+      {!archiveMode && (
+        <DialogForm
+          open={permitModal}
+          onClose={() => {
+            setPermitModal(false);
+            setFranchiseDetails(initialFormInfo);
+          }}
+          title="Mayor's Permit"
+          actions={
+            <>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => {
+                  setFranchiseDetails(initialFormInfo);
+                  setPermitModal(false);
+                }}
+              >
+                close
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                startIcon={<PrintOutlined />}
+                onClick={handlePrintPermit}
+              >
+                Print
+              </Button>
+            </>
+          }
+        >
+          <FlexRow>
+            <OutlinedTextField
+              label="Firstname"
+              value={franchiseDetails?.fname}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  fname: e.target.value,
+                }))
+              }
+            />
+            <OutlinedTextField
+              label="Firstname"
+              value={franchiseDetails?.mi}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  mi: e.target.value,
+                }))
+              }
+            />
+            <OutlinedTextField
+              label="Firstname"
+              value={franchiseDetails?.lname}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  lname: e.target.value,
+                }))
+              }
+            />
+          </FlexRow>
+          <FlexRow>
+            <OutlinedTextField
+              label="TODA"
+              value={franchiseDetails?.toda}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  toda: e.target.value,
+                }))
+              }
+            />
+            <OutlinedTextField
+              label="Address"
+              value={franchiseDetails?.address}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  address: e.target.value,
+                }))
+              }
+            />
+          </FlexRow>
+          <FlexRow>
+            <OutlinedTextField
+              label="Make"
+              value={franchiseDetails?.model}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  model: e.target.value,
+                }))
+              }
+            />
+            <OutlinedTextField
+              label="Chassis no"
+              value={franchiseDetails?.chassisno}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  chassisno: e.target.value,
+                }))
+              }
+            />
+          </FlexRow>
+          <FlexRow>
+            <OutlinedTextField
+              label="Model"
+              value={model}
+              onChange={(e) => setModel(e.target.value)}
+            />
+            <OutlinedTextField
+              label="Plate no"
+              value={franchiseDetails?.plateno}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  plateno: e.target.value,
+                }))
+              }
+            />
+          </FlexRow>
+          <FlexRow>
+            <OutlinedTextField
+              label="Motor no"
+              value={franchiseDetails?.motorno}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  motorno: e.target.value,
+                }))
+              }
+            />
+            <OutlinedTextField
+              label="Kind Business/Occupation"
+              value={franchiseDetails?.kindofBusiness}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  kindofBusiness: e.target.value,
+                }))
+              }
+            />
+          </FlexRow>
+          <FlexRow>
+            <OutlinedTextField
+              label="Remarks"
+              value={franchiseDetails?.remarks}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  remarks: e.target.value,
+                }))
+              }
+            />
+          </FlexRow>
+        </DialogForm>
+      )}
+
       <Box display="none">
         <PrintableReport
           ref={reportComp}
@@ -1267,6 +1430,7 @@ const ClientInfo = ({
         <MayorPermitPrintable
           ref={permitRef}
           franchiseDetails={franchiseDetails}
+          model={model}
         />
       </Box>
     </>

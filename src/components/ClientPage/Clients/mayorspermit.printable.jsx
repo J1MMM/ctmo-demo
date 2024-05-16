@@ -6,8 +6,48 @@ import bg from "../../../assets/images/mayors-permit-bg.png";
 import flag from "../../../assets/images/mayors-permit-flag.png";
 import sun from "../../../assets/images/mayors-permit-sun.png";
 import logo from "../../../assets/images/mayors-permit-logo.png";
+import mayorSign from "../../../assets/images/mayor-sign.png";
 
-const FormContent = ({ franchiseDetails, datenow, total }) => {
+function getMonthName(monthNumber) {
+  const monthNames = [
+    "Oct", // 0 maps to October
+    "Jan", // 1 maps to January
+    "Feb", // 2 maps to February
+    "Mar", // 3 maps to March
+    "Apr", // 4 maps to April
+    "May", // 5 maps to May
+    "Jun", // 6 maps to June
+    "Jul", // 7 maps to July
+    "Aug", // 8 maps to August
+    "Sept", // 9 maps to September
+  ];
+
+  if (monthNumber < 0 || monthNumber > 9) {
+    return "Invalid month number";
+  }
+
+  return `${monthNames[monthNumber]}`;
+}
+
+function getLastDigit(plateNumber) {
+  // Iterate from the end of the string to the beginning
+  for (let i = plateNumber.length - 1; i >= 0; i--) {
+    // Check if the current character is a digit
+    if (!isNaN(plateNumber[i]) && plateNumber[i] !== " ") {
+      return plateNumber[i];
+    }
+  }
+  // If no digit is found, return an appropriate message or value
+  return "No digit found";
+}
+
+const FormContent = ({
+  franchiseDetails,
+  datenow,
+  total,
+  validDate,
+  model,
+}) => {
   return (
     <Box my={1} mx={5} position="relative">
       <Typography
@@ -34,7 +74,7 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
           fontWeight="bold"
           width={100}
         >
-          {dayjs(datenow).format("DD/MM/YYYY")}
+          {dayjs(datenow).format("MM/DD/YYYY")}
         </Typography>
         <Typography
           fontFamily="Arial"
@@ -81,13 +121,13 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
         border="2px solid #1B98EC"
         borderRadius={2}
         boxSizing="border-box"
-        p={1}
+        p={0.5}
         width={100}
         ml="auto"
         mr="auto"
       >
         <Typography
-          fontSize={12}
+          fontSize={18}
           fontFamily="Arial"
           textAlign="center"
           fontWeight="bold"
@@ -225,14 +265,14 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
         >
           <Box display="grid" gridTemplateColumns={"50% 50%"}>
             <Box display={"flex"}>
-              <Typography fontWeight="bold" fontFamily={"Arial"} fontSize={14}>
+              <Typography fontWeight="bold" fontFamily={"Arial"} fontSize={12}>
                 MAKE:
               </Typography>
               <Box borderBottom={"1px solid"} width={"100%"}>
                 <Typography
                   fontWeight="bold"
                   fontFamily={"Arial"}
-                  fontSize={14}
+                  fontSize={12}
                   ml={1}
                 >
                   {franchiseDetails?.model}
@@ -243,8 +283,8 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
               <Typography
                 fontWeight="bold"
                 fontFamily={"Arial"}
-                fontSize={14}
-                minWidth={100}
+                fontSize={12}
+                minWidth={80}
               >
                 CHASSIS NO:
               </Typography>
@@ -261,17 +301,18 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
             </Box>
 
             <Box display={"flex"}>
-              <Typography fontWeight="bold" fontFamily={"Arial"} fontSize={14}>
+              <Typography fontWeight="bold" fontFamily={"Arial"} fontSize={12}>
                 MODEL:
               </Typography>
               <Box borderBottom={"1px solid"} width={"100%"}>
                 <Typography
                   fontWeight="bold"
                   fontFamily={"Arial"}
-                  fontSize={14}
+                  fontSize={12}
                   ml={1}
                 >
                   {/* {franchiseDetails?.model} */}
+                  {model}
                 </Typography>
               </Box>
             </Box>
@@ -279,8 +320,8 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
               <Typography
                 fontWeight="bold"
                 fontFamily={"Arial"}
-                fontSize={14}
-                minWidth={80}
+                fontSize={12}
+                minWidth={70}
               >
                 PLATE NO:
               </Typography>
@@ -288,8 +329,7 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
                 <Typography
                   fontWeight="bold"
                   fontFamily={"Arial"}
-                  fontSize={14}
-                  ml={1}
+                  fontSize={12}
                 >
                   {franchiseDetails?.plateno}
                 </Typography>
@@ -300,8 +340,8 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
               <Typography
                 fontWeight="bold"
                 fontFamily={"Arial"}
-                fontSize={14}
-                minWidth={90}
+                fontSize={12}
+                minWidth={75}
               >
                 MOTOR NO:
               </Typography>
@@ -310,7 +350,6 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
                   fontWeight="bold"
                   fontFamily={"Arial"}
                   fontSize={12}
-                  ml={1}
                 >
                   {franchiseDetails?.motorno}
                 </Typography>
@@ -320,7 +359,7 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
               <Typography
                 fontWeight="bold"
                 fontFamily={"Arial"}
-                fontSize={14}
+                fontSize={12}
                 minWidth={105}
               >
                 AMOUNT PAID:
@@ -329,7 +368,7 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
                 <Typography
                   fontWeight="bold"
                   fontFamily={"Arial"}
-                  fontSize={14}
+                  fontSize={12}
                   ml={1}
                 >
                   {total?.toLocaleString("en-PH", {
@@ -344,31 +383,26 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
             <Typography
               fontWeight="bold"
               fontFamily={"Arial"}
-              fontSize={14}
-              minWidth={220}
+              fontSize={12}
+              minWidth={190}
             >
               KIND BUSINESS/OCCUPATION:
             </Typography>
             <Box borderBottom={"1px solid"} width={"100%"}>
-              <Typography
-                fontWeight="bold"
-                fontFamily={"Arial"}
-                fontSize={14}
-                ml={1}
-              >
+              <Typography fontWeight="bold" fontFamily={"Arial"} fontSize={12}>
                 {franchiseDetails?.kindofBusiness}
               </Typography>
             </Box>
           </Box>
           <Box display={"flex"}>
-            <Typography fontWeight="bold" fontFamily={"Arial"} fontSize={14}>
+            <Typography fontWeight="bold" fontFamily={"Arial"} fontSize={12}>
               REMARKS:
             </Typography>
             <Box borderBottom={"1px solid"} width={"100%"}>
               <Typography
                 fontWeight="bold"
                 fontFamily={"Arial"}
-                fontSize={14}
+                fontSize={12}
                 ml={1}
               >
                 {franchiseDetails?.remarks}
@@ -376,18 +410,35 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
             </Box>
           </Box>
         </Box>
-        <Box display={"flex"} width={"100%"} flexDirection={"column"} gap={4}>
-          <Box>
+        <Box
+          display={"flex"}
+          width={"100%"}
+          flexDirection={"column"}
+          gap={5}
+          mt={3}
+        >
+          <Box position={"relative"}>
             <Typography
               fontFamily={"serif"}
               fontWeight={"bold"}
               textAlign={"center"}
+              fontSize={12}
             >
               HON. VICENTE B. AMANTE
             </Typography>
+            <img
+              src={mayorSign}
+              alt="sign"
+              style={{
+                maxWidth: 200,
+                position: "absolute",
+                top: -38,
+                left: 40,
+              }}
+            />
             <Typography
               mt={-0.5}
-              fontSize={10}
+              fontSize={8}
               fontFamily={"serif"}
               fontWeight={"bold"}
               textAlign={"center"}
@@ -401,11 +452,12 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
               fontFamily={"serif"}
               fontWeight={"bold"}
               textAlign={"center"}
+              fontSize={12}
               sx={{
                 position: "relative",
                 "::before": {
                   content: '""',
-                  width: "80%",
+                  width: "60%",
                   position: "absolute",
                   borderTop: "1px solid",
                   left: "50%",
@@ -417,7 +469,7 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
             </Typography>
             <Typography
               mt={-0.5}
-              fontSize={10}
+              fontSize={8}
               fontFamily={"serif"}
               fontWeight={"bold"}
               textAlign={"center"}
@@ -434,14 +486,16 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
         mt={1}
         fontFamily={"Arial"}
       >
-        Valid until{" "}
+        Valid until
         <span
           style={{
             borderBottom: "1px solid",
             minWidth: 50,
             display: "inline-block",
           }}
-        ></span>{" "}
+        >
+          {validDate}
+        </span>{" "}
         in accordance with the renewal date of the motorcycle under the LTO Law
         following the year of its expiry and every year thereafter.
       </Typography>
@@ -471,8 +525,14 @@ const FormContent = ({ franchiseDetails, datenow, total }) => {
 
 class MayorPermitPrintable extends Component {
   render() {
-    const { franchiseDetails } = this.props;
+    const { franchiseDetails, model } = this.props;
     const datenow = new Date();
+    const nextYear = dayjs(datenow).add(1, "year").format("YYYY");
+    const plateNo = franchiseDetails?.plateno;
+    const lastDigit = getLastDigit(plateNo);
+    const renewMonth = getMonthName(lastDigit);
+
+    const validDate = `${renewMonth} ${nextYear}`;
     let total = 0;
 
     if (franchiseDetails) {
@@ -554,6 +614,8 @@ class MayorPermitPrintable extends Component {
             franchiseDetails={franchiseDetails}
             datenow={datenow}
             total={total}
+            validDate={validDate}
+            model={model}
           />
           <Typography
             color="red"
@@ -626,6 +688,8 @@ class MayorPermitPrintable extends Component {
             franchiseDetails={franchiseDetails}
             datenow={datenow}
             total={total}
+            validDate={validDate}
+            model={model}
           />
           <Typography
             color="red"
