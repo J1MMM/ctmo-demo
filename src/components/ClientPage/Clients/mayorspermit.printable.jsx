@@ -414,7 +414,7 @@ const FormContent = ({
           display={"flex"}
           width={"100%"}
           flexDirection={"column"}
-          gap={5}
+          gap={8}
           mt={3}
         >
           <Box position={"relative"}>
@@ -430,10 +430,10 @@ const FormContent = ({
               src={mayorSign}
               alt="sign"
               style={{
-                maxWidth: 200,
+                maxWidth: 180,
                 position: "absolute",
-                top: -38,
-                left: 40,
+                top: -45,
+                left: 55,
               }}
             />
             <Typography
@@ -591,8 +591,8 @@ class MayorPermitPrintable extends Component {
               right: 0,
               top: 10,
               objectFit: "contain",
-              height: "2.88in",
-              width: "3.19in",
+              height: "2.3in",
+              width: "2.5in",
               zIndex: -1,
             }}
           />
@@ -602,10 +602,10 @@ class MayorPermitPrintable extends Component {
             style={{
               position: "absolute",
               right: 30,
-              top: 10,
+              top: 20,
               objectFit: "contain",
-              height: "1.77in",
-              width: "1.77in",
+              height: "1.30in",
+              width: "1.30in",
               zIndex: -1,
             }}
           />
@@ -665,10 +665,10 @@ class MayorPermitPrintable extends Component {
             style={{
               position: "absolute",
               right: 0,
-              top: 0,
+              top: 5,
               objectFit: "contain",
-              height: "2.88in",
-              width: "3.19in",
+              height: "2.3in",
+              width: "2.6in",
             }}
           />
           <img
@@ -677,10 +677,10 @@ class MayorPermitPrintable extends Component {
             style={{
               position: "absolute",
               right: 30,
-              top: 5,
+              top: 15,
               objectFit: "contain",
-              height: "1.77in",
-              width: "1.77in",
+              height: "1.30in",
+              width: "1.30in",
             }}
           />
 
