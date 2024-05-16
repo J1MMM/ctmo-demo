@@ -1287,11 +1287,6 @@ const ClientInfo = ({
             </>
           }
         >
-          <MayorPermitPrintable
-            ref={permitRef}
-            franchiseDetails={franchiseDetails}
-            model={model}
-          />
           <FlexRow>
             <OutlinedTextField
               label="Firstname"
