@@ -58,7 +58,14 @@ const useArchivedFranchises = () => {
               data.TYPE_OF_FRANCHISE,
               data.KIND_OF_BUSINESS,
               data.ROUTE,
-              data.PAID_VIOLATIONS
+              data.PAID_VIOLATIONS,
+              data.refNo,
+              data.paymentOr,
+              data.paymentOrDate && new Date(data.paymentOrDate),
+              data.pending,
+              data.transaction,
+              data.receiptData,
+              data.LTO_RENEWAL_DATE && new Date(data.LTO_RENEWAL_DATE)
             );
           });
         });

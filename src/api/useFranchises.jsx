@@ -78,7 +78,8 @@ const useFranchises = () => {
               data.paymentOrDate,
               data.pending,
               data.transaction,
-              data.receiptData
+              data.receiptData,
+              data.LTO_RENEWAL_DATE && new Date(data.LTO_RENEWAL_DATE)
             );
           });
         });
@@ -140,7 +141,8 @@ const useFranchises = () => {
               data.paymentOrDate && new Date(data.paymentOrDate),
               data.pending,
               data.transaction,
-              data.receiptData
+              data.receiptData,
+              data.LTO_RENEWAL_DATE && new Date(data.LTO_RENEWAL_DATE)
             );
           });
         });
@@ -202,7 +204,8 @@ const useFranchises = () => {
               data.paymentOrDate && new Date(data.paymentOrDate),
               data.pending,
               data.transaction,
-              data.receiptData
+              data.receiptData,
+              data.LTO_RENEWAL_DATE && new Date(data.LTO_RENEWAL_DATE)
             );
           });
         });

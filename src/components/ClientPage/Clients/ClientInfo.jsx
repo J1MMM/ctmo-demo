@@ -65,6 +65,36 @@ import TransferFranchise from "../../Receipt/TransferFranchise";
 import FranchiseFormPrintable from "./franchise.form.printable";
 import MayorPermitPrintable from "./mayorspermit.printable";
 
+function getRenewalDate(plateNumber, lastRenewalDate = new Date()) {
+  if (!plateNumber || !lastRenewalDate) {
+    return null;
+  }
+  // Extract the last digit from the plate number
+  const lastDigit = plateNumber.match(/\d(?=\D*$)/);
+  if (!lastDigit) {
+    return null;
+  }
+
+  // Map last digit to corresponding month (1-based index)
+  const monthMap = {
+    0: 10, // October
+    1: 1, // January
+    2: 2, // February
+    3: 3, // March
+    4: 4, // April
+    5: 5, // May
+    6: 6, // June
+    7: 7, // July
+    8: 8, // August
+    9: 9, // September
+  };
+
+  const month = monthMap[lastDigit[0]];
+  const renewalBaseDate = new Date(lastRenewalDate);
+  const nextYear = renewalBaseDate.getFullYear() + 1;
+
+  return new Date(nextYear, month - 1); // months are 0-based in JavaScript Date
+}
 const ClientInfo = ({
   open,
   onClose,
@@ -108,7 +138,7 @@ const ClientInfo = ({
   const reportComp = useRef(null);
   const franchiseFormRef = useRef(null);
   const permitRef = useRef(null);
-
+  // console.log(franchiseDetails?.LTO_RENEWAL_DATE);
   const handlePrintFranchiseForm = useReactToPrint({
     content: () => franchiseFormRef.current,
   });
@@ -553,20 +583,36 @@ const ClientInfo = ({
             sx={{ maxWidth: 250 }}
             readOnly={true}
           />
+          <Stack direction="row" gap={1}>
+            {!transferForm && !updateForm ? (
+              <FormControl margin="dense" focused>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    label="LTO Renewal Date"
+                    value={franchiseDetails?.LTO_RENEWAL_DATE}
+                    readOnly={true}
+                    views={["year", "month"]}
+                    format="MMMM yyyy" // This will display the date in the format "Month Year"
+                    slotProps={{ textField: { required: true } }}
+                  />
+                </LocalizationProvider>
+              </FormControl>
+            ) : null}
 
-          <FormControl margin="dense" focused>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Date Renewal"
-                value={franchiseDetails.date}
-                readOnly={readOnly}
-                onChange={(date) =>
-                  setFranchiseDetails((prev) => ({ ...prev, date: date }))
-                }
-                slotProps={{ textField: { required: true } }}
-              />
-            </LocalizationProvider>
-          </FormControl>
+            <FormControl margin="dense" focused>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  label="Date Renewal"
+                  value={franchiseDetails.date}
+                  readOnly={readOnly}
+                  onChange={(date) =>
+                    setFranchiseDetails((prev) => ({ ...prev, date: date }))
+                  }
+                  slotProps={{ textField: { required: true } }}
+                />
+              </LocalizationProvider>
+            </FormControl>
+          </Stack>
         </FlexRow>
         {transferForm && (
           <FormControlLabel
@@ -1202,7 +1248,7 @@ const ClientInfo = ({
             </>
           }
         >
-          <Box display="flex" justifyContent="center">
+          <Box display="flex" justifyContent="center" minWidth={450}>
             <RenewFranchise
               ref={componentRef}
               franchiseDetails={franchiseDetails}

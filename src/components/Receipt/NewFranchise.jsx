@@ -237,7 +237,7 @@ class NewFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography variant="h6" fontFamily="monospace" minWidth={180}>
                   {franchiseDetails?.chassisno}
                 </Typography>
               </td>

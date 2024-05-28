@@ -65,6 +65,7 @@ const initialFranchiseDetails = {
   changeMotor: false,
   changeTODA: false,
   receiptData: [],
+  LTO_RENEWAL_DATE: null,
 };
 
 const clientsColumns = [
@@ -339,7 +340,8 @@ function createClientsData(
   paymentOrDate,
   pending,
   transaction,
-  receiptData
+  receiptData,
+  LTO_RENEWAL_DATE
 ) {
   return {
     id,
@@ -382,6 +384,7 @@ function createClientsData(
     pending,
     transaction,
     receiptData,
+    LTO_RENEWAL_DATE,
   };
 }
 function countTrueValues(obj) {
@@ -463,7 +466,8 @@ const formatFranchise = (franchise) => {
     franchise.paymentOrDate,
     franchise.pending,
     franchise.transaction,
-    franchise.receiptData
+    franchise.receiptData,
+    franchise.LTO_RENEWAL_DATE
   );
 };
 
