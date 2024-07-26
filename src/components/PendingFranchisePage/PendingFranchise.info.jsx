@@ -497,6 +497,13 @@ const PendingFranchiseInfo = ({
           <FlexRow>
             <OutlinedTextField
               required={true}
+              label="Make"
+              value={franchiseDetails?.make}
+              readOnly={true}
+              disabled={!readOnly}
+            />
+            <OutlinedTextField
+              required={true}
               label="Model"
               value={franchiseDetails?.model}
               readOnly={true}

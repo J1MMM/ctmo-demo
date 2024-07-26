@@ -463,11 +463,11 @@ const formatFranchise = (franchise) => {
     franchise.PAID_VIOLATIONS,
     franchise.refNo,
     franchise.paymentOr,
-    franchise.paymentOrDate,
+    franchise.paymentOrDate && new Date(franchise.paymentOrDate),
     franchise.pending,
     franchise.transaction,
     franchise.receiptData,
-    franchise.LTO_RENEWAL_DATE
+    franchise.LTO_RENEWAL_DATE && new Date(franchise.LTO_RENEWAL_DATE)
   );
 };
 

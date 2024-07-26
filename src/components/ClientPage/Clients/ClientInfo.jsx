@@ -874,6 +874,18 @@ const ClientInfo = ({
           <FlexRow>
             <OutlinedTextField
               required={true}
+              label="Make"
+              value={franchiseDetails?.make}
+              readOnly={readOnly}
+              onChange={(e) =>
+                setFranchiseDetails((prev) => ({
+                  ...prev,
+                  make: e.target.value,
+                }))
+              }
+            />
+            <OutlinedTextField
+              required={true}
               label="Model"
               value={franchiseDetails?.model}
               readOnly={readOnly}
