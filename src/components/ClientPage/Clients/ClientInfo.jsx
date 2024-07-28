@@ -567,7 +567,7 @@ const ClientInfo = ({
                 sx={{ mb: 2, py: 1 }}
                 startIcon={<ListAltOutlined />}
                 size="small"
-                onClick={() => setPermitModal(true)}
+                onClick={handlePrintPermit}
               >
                 Mayor's permit
               </Button>
@@ -1407,11 +1407,11 @@ const ClientInfo = ({
           <FlexRow>
             <OutlinedTextField
               label="Make"
-              value={franchiseDetails?.model}
+              value={franchiseDetails?.make}
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  model: e.target.value,
+                  make: e.target.value,
                 }))
               }
             />

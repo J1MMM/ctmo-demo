@@ -128,10 +128,12 @@ const AddFranchiseForm = ({ open, onClose }) => {
         }
       >
         <FlexRow>
-          <FormControl fullWidth margin="dense" sx={{ maxWidth: 250 }}>
+          {/* <FormControl fullWidth margin="dense" sx={{ maxWidth: 250 }}>
             <InputLabel required>
               {availableMTOP.length == 0 ? "no available MTOP" : "MTOP"}
             </InputLabel>
+
+
             <Select
               disabled={availableMTOP.length == 0 || disable}
               label="MTOP"
@@ -147,7 +149,25 @@ const AddFranchiseForm = ({ open, onClose }) => {
             >
               {availableMtopEl}
             </Select>
-          </FormControl>
+          </FormControl> */}
+
+          <Autocomplete
+            sx={{ maxWidth: 250 }}
+            freeSolo={false}
+            clearIcon={false}
+            options={availableMTOP}
+            fullWidth
+            value={franchiseDetails?.mtop}
+            onChange={(_, value) =>
+              setFranchiseDetails((prev) => ({
+                ...prev,
+                mtop: value || "",
+              }))
+            }
+            renderInput={(params) => (
+              <TextField {...params} margin="dense" required label="MTOP" />
+            )}
+          />
 
           <FormControl margin="dense" required>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -214,7 +234,6 @@ const AddFranchiseForm = ({ open, onClose }) => {
               <Select
                 disabled={disable}
                 label="Sex"
-                required
                 fullWidth
                 value={franchiseDetails.ownerSex}
                 onChange={(e) =>
@@ -297,7 +316,6 @@ const AddFranchiseForm = ({ open, onClose }) => {
               <Select
                 disabled={disable}
                 label="Sex"
-                required
                 fullWidth
                 value={franchiseDetails.driverSex}
                 onChange={(e) =>
@@ -361,7 +379,6 @@ const AddFranchiseForm = ({ open, onClose }) => {
               )}
             />
             <OutlinedTextField
-              required={true}
               label="Driver's License no."
               value={franchiseDetails.driverlicenseno}
               onChange={(e) =>
@@ -424,7 +441,6 @@ const AddFranchiseForm = ({ open, onClose }) => {
               }
             />
             <OutlinedTextField
-              required={true}
               label="Stroke"
               value={franchiseDetails.stroke}
               onChange={(e) =>

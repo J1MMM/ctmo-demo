@@ -94,7 +94,7 @@ class FranchiseFormPrintable extends Component {
               <Typography fontFamily="serif" fontWeight="bold" variant="body1">
                 MAKE
               </Typography>
-              <Typography variant="body1">{franchiseDetails?.model}</Typography>
+              <Typography variant="body1">{franchiseDetails?.make}</Typography>
             </Box>
             <Box display="flex" flexDirection="column">
               <Typography fontFamily="serif" fontWeight="bold" variant="body1">

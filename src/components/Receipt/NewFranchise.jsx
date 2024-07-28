@@ -188,7 +188,7 @@ class NewFranchise extends Component {
               </td>
               <td className="td b-0 p-0 ">
                 <Typography variant="h6" fontFamily="monospace">
-                  {franchiseDetails?.model}
+                  {franchiseDetails?.make}
                 </Typography>
               </td>
             </tr>

@@ -42,6 +42,7 @@ import { PrintOutlined } from "@mui/icons-material";
 import { PiGenderFemaleBold, PiGenderMaleBold } from "react-icons/pi";
 import CashierFranchiseReceipt from "../Receipt/CashierFranchiseReceipt";
 import CashierFranchiseReceiptPrintable from "../Receipt/receipt.franchise.printable";
+import dayjs from "dayjs";
 
 const PendingFranchiseInfo = ({
   open,
@@ -69,12 +70,22 @@ const PendingFranchiseInfo = ({
   const [transferConfirmation, setTransferConfirmation] = useState(false);
   const [updateConfirmation, setUpdateConfirmation] = useState(false);
   const [receiptModal, setReceiptModal] = useState(false);
+  const [cancelOrModal, setCancelOrModal] = useState(false);
   const [receiptData, setReceiptData] = useState([]);
   const { auth } = useAuth();
 
   const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
   const ctmo1 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO1));
   const ctmo2 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO2));
+
+  // const createdAt = dayjs(franchiseDetails.createdAt);
+  // const now = dayjs();
+  // const twentyFourHoursAgo = now.subtract(24, "hour");
+  // const allowToCancelOr = createdAt.isAfter(twentyFourHoursAgo);
+
+  // console.log(franchiseDetails);
+  // console.log(createdAt.format());
+  // console.log(allowToCancelOr);
 
   const handleUpdateSubmit = async () => {
     setDisable(true);
@@ -140,6 +151,63 @@ const PendingFranchiseInfo = ({
     setDisable(false);
   };
 
+  const handleCancelOr = async () => {
+    setDisable(true);
+    try {
+      const response = await axiosPrivate.post(
+        "/franchise/cancel",
+        franchiseDetails
+      );
+
+      // setReceiptData(response.data?.receiptData);
+
+      setPendingFranchises((prev) =>
+        prev.filter((franchise) => franchise.id != franchiseDetails.id)
+      );
+
+      const recordExist = franchises.find(
+        (v) => v.mtop == franchiseDetails.mtop
+      );
+
+      console.log(response.data);
+
+      if (recordExist) {
+        setFranchises((prev) => {
+          const newFranchises = prev.map((franchise) => {
+            if (franchise.mtop == franchiseDetails.mtop) {
+              return { ...franchise, pending: false };
+            } else {
+              return franchise;
+            }
+          });
+          return helper.sortData(newFranchises, "mtop");
+        });
+      }
+
+      setUpdateForm(false);
+      setReadOnly(true);
+      setAlertSeverity("success");
+      setAlertMsg(
+        "Franchise cancel OR successfully. Your changes have been saved and are now reflected in the system."
+      );
+      onClose(false);
+    } catch (error) {
+      console.log(error);
+      setAlertSeverity("error");
+      if (error.response?.status == 400) {
+        setAlertMsg(
+          "Franchise transaction failed. " + error.response.data.message
+        );
+      } else {
+        setAlertMsg("franchise transaction failed. Please try again later.");
+      }
+    }
+    // setUpdateConfirmation(false);
+    setCancelOrModal(false);
+    setAlertShown(true);
+    setDisable(false);
+  };
+
   const goBack = () => {
     if (updateForm) {
       setFranchiseDetails(initialFormInfo);
@@ -200,13 +268,22 @@ const PendingFranchiseInfo = ({
                 timeout={readOnly ? 300 : 0}
               >
                 <Box display="flex" gap={1}>
-                  <Button
+                  {/* <Button
                     disabled={disable}
                     variant="outlined"
                     size="small"
-                    onClick={handleCloseOnclick}
+                    onClick={handleCancelOr}
                   >
                     cancel
+                  </Button> */}
+                  <Button
+                    disabled={disable}
+                    color="error"
+                    variant="contained"
+                    size="small"
+                    onClick={() => setCancelOrModal(true)}
+                  >
+                    cancel OR
                   </Button>
                   <Button
                     disabled={disable}
@@ -679,6 +756,15 @@ const PendingFranchiseInfo = ({
         confirm={handleUpdateSubmit}
         title="Payment Confirmation"
         content="Before proceeding, please confirm the payment details below. After confirmation, the updated franchise information will be added to the system."
+        disabled={disable}
+      />
+
+      <ConfirmationDialog
+        open={cancelOrModal}
+        setOpen={setCancelOrModal}
+        confirm={handleCancelOr}
+        title="Cancel OR Confirmation"
+        content="Are you sure you want to cancel? The franchise data will revert to its previous state after cancellation."
         disabled={disable}
       />
 

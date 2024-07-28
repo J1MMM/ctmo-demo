@@ -326,8 +326,7 @@ const FormContent = ({
                   fontSize={12}
                   ml={1}
                 >
-                  {/* {franchiseDetails?.model} */}
-                  {model}
+                  {franchiseDetails?.model}
                 </Typography>
               </Box>
             </Box>
@@ -439,7 +438,7 @@ const FormContent = ({
               textAlign={"center"}
               fontSize={12}
             >
-              HON. VICENTE B. AMANTE
+              HON. VICENTE B. AMANTE PhD
             </Typography>
             <img
               src={mayorSign}

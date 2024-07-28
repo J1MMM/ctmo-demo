@@ -38,6 +38,7 @@ const useArchivedFranchises = () => {
               data.OR,
               data.CR,
               data.DRIVERS_LICENSE_NO,
+              data.MAKE,
               data.MODEL,
               data.MOTOR_NO,
               data.CHASSIS_NO,
