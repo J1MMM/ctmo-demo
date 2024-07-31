@@ -12,7 +12,7 @@ class RenewFranchise extends Component {
     const datenow = new Date();
     let totalAmount = 0;
 
-    if (franchiseDetails && receiptData && receiptData.length > 0) {
+    if (franchiseDetails && receiptData && receiptData?.length > 0) {
       totalAmount = receiptData?.reduce((total, obj) => total + obj?.price, 0);
     }
 
@@ -92,7 +92,7 @@ class RenewFranchise extends Component {
         </BorderBox>
 
         <br />
-        {receiptData.length > 0
+        {receiptData?.length > 0
           ? receiptData?.map((item, index) => {
               return (
                 <BorderBox

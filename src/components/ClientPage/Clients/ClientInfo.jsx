@@ -191,19 +191,24 @@ const ClientInfo = ({
         ...prev,
         refNo: response.data?.refNo,
         pending: true,
+        receiptData: response.data?.receiptData,
+        transaction: "Transfer Franchise"
+
       }));
 
       setinitialFormInfo((prev) => ({
         ...prev,
         refNo: response.data?.refNo,
         pending: true,
+        receiptData: response.data?.receiptData,
+        transaction: "Transfer Franchise"
       }));
 
       setReceiptData(response.data?.receiptData);
       setFranchises((prev) => {
         return prev.map((v) => {
           if (v.id == franchiseDetails.id) {
-            return { ...v, pending: true };
+            return { ...v, pending: true, receiptData: response.data?.receiptData, transaction: "Transfer Franchise" };
           } else {
             return v;
           }
@@ -262,20 +267,25 @@ const ClientInfo = ({
         ...prev,
         refNo: response.data?.refNo,
         pending: true,
+        receiptData:  response.data?.receiptData,
+        transaction: "Franchise Renewal",
       }));
 
       setinitialFormInfo((prev) => ({
         ...prev,
         refNo: response.data?.refNo,
         pending: true,
+        receiptData:  response.data?.receiptData,
+        transaction: "Franchise Renewal",
       }));
 
       setReceiptData(response.data?.receiptData);
+      console.log(response.data?.receiptData);
       // setDummyVariable((prev) => !prev);
       setFranchises((prev) => {
         return prev.map((v) => {
           if (v.id == franchiseDetails.id) {
-            return { ...v, pending: true };
+            return { ...v, pending: true, receiptData:  response.data?.receiptData, transaction: "Franchise Renewal",};
           } else {
             return v;
           }
@@ -413,8 +423,13 @@ const ClientInfo = ({
                         variant="outlined"
                         size="small"
                         onClick={()=>{
-                          setReceiptData(franchiseDetails);
-                          setReceiptModal(true)
+
+                          setReceiptData(franchiseDetails?.receiptData);
+                          if(franchiseDetails?.transaction == "Transfer Franchise"){
+                            setTransferReceiptModal(true)
+                          }else{
+                            setReceiptModal(true)
+                          }
                         }}
                       >
                         View Receipt
