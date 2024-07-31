@@ -390,11 +390,11 @@ class TransferFranchise extends Component {
             sx={{
               flexDirection: "column",
               border: "none",
-              maxWidth: 230,
+              maxWidth: 250,
             }}
           >
             <Typography variant="h6" fontFamily="monospace" textAlign="center">
-              ARJAN V. BABANI
+            LUCIO GERALDO G. CIOLO
             </Typography>
 
             <Typography
@@ -406,7 +406,7 @@ class TransferFranchise extends Component {
                 mt: -1,
               }}
             >
-              ICO-CITY TREASURER
+            ASST. CITY TREASURER
             </Typography>
           </BorderBox>
         </BorderBox>

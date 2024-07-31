@@ -290,7 +290,7 @@ const FormContent = ({
                   fontSize={12}
                   ml={1}
                 >
-                  {franchiseDetails?.model}
+                  {franchiseDetails?.make}
                 </Typography>
               </Box>
             </Box>

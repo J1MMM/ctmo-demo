@@ -408,14 +408,24 @@ const ClientInfo = ({
         actions={
           !archiveMode &&
           (franchiseDetails?.pending ? (
-            <>
+            <Box display={'flex'} gap={1}>
+                     <Button
+                        variant="outlined"
+                        size="small"
+                        onClick={()=>{
+                          setReceiptData(franchiseDetails);
+                          setReceiptModal(true)
+                        }}
+                      >
+                        View Receipt
+                      </Button>
               <Box
                 display="flex"
                 bgcolor="warning.main"
                 gap={1}
                 px={2}
                 py={1}
-                borderRadius={5}
+                borderRadius={1}
                 boxSizing="border-box"
               >
                 <PendingActionsOutlined
@@ -424,7 +434,7 @@ const ClientInfo = ({
                 />
                 <Typography color="#FFF">Pending</Typography>
               </Box>
-            </>
+            </Box>
           ) : (
             <>
               {admin || ctmo1 ? (
