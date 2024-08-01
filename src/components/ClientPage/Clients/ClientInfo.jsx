@@ -64,6 +64,7 @@ import RenewFranchise from "../../Receipt/RenewFranchise";
 import TransferFranchise from "../../Receipt/TransferFranchise";
 import FranchiseFormPrintable from "./franchise.form.printable";
 import MayorPermitPrintable from "./mayorspermit.printable";
+import dayjs from "dayjs";
 
 function getRenewalDate(plateNumber, lastRenewalDate = new Date()) {
   if (!plateNumber || !lastRenewalDate) {
@@ -408,6 +409,28 @@ const ClientInfo = ({
     transferForm ? setTransferConfirmation(true) : setUpdateConfirmation(true);
   };
 
+  const dateNow = new Date();
+  
+  // Create a date object from franchiseDetails.date
+  const franchiseDate = new Date(franchiseDetails?.date);
+
+  // Calculate the renewal date: one year after franchiseDate
+  const renewalDate = new Date(franchiseDate);
+  renewalDate.setFullYear(renewalDate.getFullYear() + 1);
+
+  // Get the current month and year
+  const currentMonth = dateNow.getMonth(); // 0-based index (0 for January, 1 for February, etc.)
+  const currentYear = dateNow.getFullYear();
+
+  // Get the month and year of the renewal date
+  const renewalMonth = renewalDate.getMonth(); // 0-based index
+  const renewalYear = renewalDate.getFullYear();
+
+  // Determine if the button should be disabled
+  // Disable if the current month is earlier than the renewal month
+  // or if it's the same month but the current year is earlier than the renewal year
+  const isButtonDisabled = disable || (currentYear < renewalYear) || (currentYear === renewalYear && currentMonth < renewalMonth);
+
   return (
     <>
       <DialogForm
@@ -542,7 +565,7 @@ const ClientInfo = ({
                         Transfer
                       </Button>
                       <Button
-                        disabled={disable}
+                        disabled={isButtonDisabled}
                         variant="contained"
                         size="small"
                         onClick={handleUpdateClick}
@@ -588,6 +611,7 @@ const ClientInfo = ({
           {admin || ctmo1 ? (
             <Collapse in={printable && !updateForm && !transferForm}>
               <Button
+              
                 variant="outlined"
                 sx={{ mb: 2, py: 1 }}
                 startIcon={<ListAltOutlined />}
