@@ -584,7 +584,7 @@ const ClientInfo = ({
                         Transfer
                       </Button>
                       <Button
-                        disabled={isButtonDisabled}
+                        disabled={isButtonDisabled && !admin}
                         variant="contained"
                         size="small"
                         onClick={handleUpdateClick}
@@ -617,7 +617,7 @@ const ClientInfo = ({
           {admin || ctmo1 ? (
             <Collapse in={printable && !updateForm && !transferForm}>
               <Button
-                disabled={!isPrintableBtnEnable}
+                disabled={!isPrintableBtnEnable && !admin}
                 variant="outlined"
                 sx={{ mb: 2, py: 1 }}
                 startIcon={<ListAltOutlined />}
@@ -631,7 +631,7 @@ const ClientInfo = ({
           {admin || ctmo1 ? (
             <Collapse in={printable && !updateForm && !transferForm}>
               <Button
-                disabled={!isPrintableBtnEnable}
+                disabled={!isPrintableBtnEnable && !admin}
                 variant="outlined"
                 sx={{ mb: 2, py: 1 }}
                 startIcon={<ListAltOutlined />}
