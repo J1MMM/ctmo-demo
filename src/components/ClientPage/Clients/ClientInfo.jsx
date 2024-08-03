@@ -193,8 +193,7 @@ const ClientInfo = ({
         refNo: response.data?.refNo,
         pending: true,
         receiptData: response.data?.receiptData,
-        transaction: "Transfer Franchise"
-
+        transaction: "Transfer Franchise",
       }));
 
       setinitialFormInfo((prev) => ({
@@ -202,14 +201,19 @@ const ClientInfo = ({
         refNo: response.data?.refNo,
         pending: true,
         receiptData: response.data?.receiptData,
-        transaction: "Transfer Franchise"
+        transaction: "Transfer Franchise",
       }));
 
       setReceiptData(response.data?.receiptData);
       setFranchises((prev) => {
         return prev.map((v) => {
           if (v.id == franchiseDetails.id) {
-            return { ...v, pending: true, receiptData: response.data?.receiptData, transaction: "Transfer Franchise" };
+            return {
+              ...v,
+              pending: true,
+              receiptData: response.data?.receiptData,
+              transaction: "Transfer Franchise",
+            };
           } else {
             return v;
           }
@@ -268,7 +272,7 @@ const ClientInfo = ({
         ...prev,
         refNo: response.data?.refNo,
         pending: true,
-        receiptData:  response.data?.receiptData,
+        receiptData: response.data?.receiptData,
         transaction: "Franchise Renewal",
       }));
 
@@ -276,7 +280,7 @@ const ClientInfo = ({
         ...prev,
         refNo: response.data?.refNo,
         pending: true,
-        receiptData:  response.data?.receiptData,
+        receiptData: response.data?.receiptData,
         transaction: "Franchise Renewal",
       }));
 
@@ -286,7 +290,12 @@ const ClientInfo = ({
       setFranchises((prev) => {
         return prev.map((v) => {
           if (v.id == franchiseDetails.id) {
-            return { ...v, pending: true, receiptData:  response.data?.receiptData, transaction: "Franchise Renewal",};
+            return {
+              ...v,
+              pending: true,
+              receiptData: response.data?.receiptData,
+              transaction: "Franchise Renewal",
+            };
           } else {
             return v;
           }
@@ -410,7 +419,7 @@ const ClientInfo = ({
   };
 
   const dateNow = new Date();
-  
+
   // Create a date object from franchiseDetails.date
   const franchiseDate = new Date(franchiseDetails?.date);
 
@@ -426,10 +435,21 @@ const ClientInfo = ({
   const renewalMonth = renewalDate.getMonth(); // 0-based index
   const renewalYear = renewalDate.getFullYear();
 
-  // Determine if the button should be disabled
-  // Disable if the current month is earlier than the renewal month
-  // or if it's the same month but the current year is earlier than the renewal year
-  const isButtonDisabled = disable || (currentYear < renewalYear) || (currentYear === renewalYear && currentMonth < renewalMonth);
+  const dateNow1 = new Date();
+  const renewalDate1 = new Date(franchiseDetails?.date);
+  const twentyFourHoursLater = new Date(renewalDate1);
+  twentyFourHoursLater.setHours(twentyFourHoursLater.getHours() + 24);
+  console.log(dateNow1);
+  console.log(renewalDate1);
+  console.log(twentyFourHoursLater);
+  const isPrintableBtnEnable =
+    dateNow1 >= renewalDate1 && dateNow1 <= twentyFourHoursLater;
+  console.log(dateNow1 >= renewalDate1);
+  console.log(dateNow1 <= twentyFourHoursLater);
+  const isButtonDisabled =
+    disable ||
+    currentYear < renewalYear ||
+    (currentYear === renewalYear && currentMonth < renewalMonth);
 
   return (
     <>
@@ -441,22 +461,21 @@ const ClientInfo = ({
         actions={
           !archiveMode &&
           (franchiseDetails?.pending ? (
-            <Box display={'flex'} gap={1}>
-                     <Button
-                        variant="outlined"
-                        size="small"
-                        onClick={()=>{
-
-                          setReceiptData(franchiseDetails?.receiptData);
-                          if(franchiseDetails?.transaction == "Transfer Franchise"){
-                            setTransferReceiptModal(true)
-                          }else{
-                            setReceiptModal(true)
-                          }
-                        }}
-                      >
-                        View Receipt
-                      </Button>
+            <Box display={"flex"} gap={1}>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => {
+                  setReceiptData(franchiseDetails?.receiptData);
+                  if (franchiseDetails?.transaction == "Transfer Franchise") {
+                    setTransferReceiptModal(true);
+                  } else {
+                    setReceiptModal(true);
+                  }
+                }}
+              >
+                View Receipt
+              </Button>
               <Box
                 display="flex"
                 bgcolor="warning.main"
@@ -598,6 +617,7 @@ const ClientInfo = ({
           {admin || ctmo1 ? (
             <Collapse in={printable && !updateForm && !transferForm}>
               <Button
+                disabled={!isPrintableBtnEnable}
                 variant="outlined"
                 sx={{ mb: 2, py: 1 }}
                 startIcon={<ListAltOutlined />}
@@ -611,7 +631,7 @@ const ClientInfo = ({
           {admin || ctmo1 ? (
             <Collapse in={printable && !updateForm && !transferForm}>
               <Button
-              
+                disabled={!isPrintableBtnEnable}
                 variant="outlined"
                 sx={{ mb: 2, py: 1 }}
                 startIcon={<ListAltOutlined />}
