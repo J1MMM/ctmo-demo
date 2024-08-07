@@ -40,6 +40,10 @@ import useAuth from "../../../hooks/useAuth";
 import ROLES_LIST from "../../common/data/ROLES_LIST";
 import CashierViolationReceipt from "../../Receipt/CashierViolationReceipt";
 import ReceiptViolationPrintable from "../../Receipt/receipt.violation.printable";
+import CashierViolationGeneralF from "../../Receipt/CashierViolationGeneralF";
+import CashierViolationTrustF from "../../Receipt/CashierViolationTrustF";
+import ReceiptViolationPrintableGF from "../../Receipt/receipt.violation.printable.gf";
+import ReceiptViolationPrintableTF from "../../Receipt/receipt.violation.printable.tf";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -124,9 +128,17 @@ const ViolationModal = ({
   const handleSubmitPayment = async () => {
     setDisable(true);
     try {
-      const response = await axiosPrivate.patch("/violation", violationDetails);
+      const response = await axiosPrivate.patch("/violation", {
+        ...violationDetails,
+        collectingOfficer: auth?.fullname,
+      });
+
       console.log(response.data);
-      setViolationDetails((prev) => ({ ...prev, receiptNo: prev.or }));
+      setViolationDetails((prev) => ({
+        ...prev,
+        receiptNo: prev.or,
+        collectingOfficer: auth?.fullname,
+      }));
       setViolations((prev) => {
         return prev?.filter((v) => v._id !== violationDetails._id);
       });
@@ -183,8 +195,13 @@ const ViolationModal = ({
   );
 
   const componentRef = useRef(null);
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
+  const componentRefGF = useRef(null);
+  const componentRefTF = useRef(null);
+  const handlePrintGF = useReactToPrint({
+    content: () => componentRefGF.current,
+  });
+  const handlePrintTF = useReactToPrint({
+    content: () => componentRefTF.current,
   });
 
   return (
@@ -347,13 +364,25 @@ const ViolationModal = ({
               <FlexRow>
                 <OutlinedTextField
                   required={true}
-                  label="OR Number"
+                  label="OR GF"
                   value={violationDetails?.or}
                   readOnly={readOnly || !paymentMode}
                   onChange={(e) =>
                     setViolationDetails((prev) => ({
                       ...prev,
                       or: e.target.value,
+                    }))
+                  }
+                />
+                <OutlinedTextField
+                  required={true}
+                  label="OR TF"
+                  value={violationDetails?.ortf}
+                  readOnly={readOnly || !paymentMode}
+                  onChange={(e) =>
+                    setViolationDetails((prev) => ({
+                      ...prev,
+                      ortf: e.target.value,
                     }))
                   }
                 />
@@ -695,7 +724,7 @@ const ViolationModal = ({
             readOnly={readOnly || !editMode}
           />
 
-          {!paymentMode && (
+          {/* {!paymentMode && (
             <>
               <FlexRow>
                 <OutlinedTextField
@@ -733,7 +762,7 @@ const ViolationModal = ({
                 </FormControl>
               </FlexRow>
             </>
-          )}
+          )} */}
         </Box>
       </DialogForm>
 
@@ -797,30 +826,64 @@ const ViolationModal = ({
               variant="outlined"
               onClick={() => setReceiptModalOpen(false)}
             >
-              cancel
-            </Button>
-            <Button
-              size="small"
-              variant="contained"
-              startIcon={<PrintOutlined />}
-              onClick={handlePrint}
-            >
-              print
+              close
             </Button>
           </>
         }
       >
-        <CashierViolationReceipt
-          violationDetails={violationDetails}
-          fullname={auth?.fullname}
-        />
+        <Box display={"flex"} gap={2}>
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            alignItems={"end"}
+            gap={1}
+          >
+            <CashierViolationGeneralF
+              violationDetails={violationDetails}
+              fullname={violationDetails?.collectingOfficer}
+            />
+            <Button
+              size="small"
+              variant="contained"
+              startIcon={<PrintOutlined />}
+              onClick={handlePrintGF}
+            >
+              print
+            </Button>
+          </Box>
+
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            alignItems={"end"}
+            gap={1}
+          >
+            <CashierViolationTrustF
+              violationDetails={violationDetails}
+              fullname={violationDetails?.collectingOfficer}
+            />
+            <Button
+              size="small"
+              variant="contained"
+              startIcon={<PrintOutlined />}
+              onClick={handlePrintTF}
+            >
+              print
+            </Button>
+          </Box>
+        </Box>
       </DialogForm>
 
       <Box display="none">
-        <ReceiptViolationPrintable
-          ref={componentRef}
+        <ReceiptViolationPrintableGF
+          ref={componentRefGF}
           violationDetails={violationDetails}
-          fullname={auth?.fullname}
+          fullname={violationDetails?.collectingOfficer}
+        />
+        <ReceiptViolationPrintableTF
+          ref={componentRefTF}
+          violationDetails={violationDetails}
+          fullname={violationDetails?.collectingOfficer}
         />
       </Box>
     </>

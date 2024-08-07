@@ -15,11 +15,13 @@ const initialDetails = {
   remarks: "",
   amount: "",
   or: "",
+  ortf: "",
   orDate: null,
   others: "",
   payor: "",
   receiptNo: "",
   datePaid: null,
+  collectingOfficer: "",
 };
 
 export default { initialDetails };

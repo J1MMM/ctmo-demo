@@ -45,47 +45,60 @@ function numberToWords(number) {
     "ninety",
   ];
 
-  function convertToWords(number) {
-    if (number < 10) {
-      return ones[number];
-    } else if (number < 20) {
-      return teens[number - 10];
-    } else if (number < 100) {
+  function convertToWords(num) {
+    if (num < 10) {
+      return ones[num];
+    } else if (num < 20) {
+      return teens[num - 10];
+    } else if (num < 100) {
       return (
-        tens[Math.floor(number / 10)] +
-        (number % 10 !== 0 ? " " + ones[number % 10] : "")
+        tens[Math.floor(num / 10)] +
+        (num % 10 !== 0 ? " " + ones[num % 10] : "")
       );
-    } else if (number < 1000) {
+    } else if (num < 1000) {
       return (
-        ones[Math.floor(number / 100)] +
+        ones[Math.floor(num / 100)] +
         " hundred" +
-        (number % 100 !== 0 ? " " + convertToWords(number % 100) : "")
+        (num % 100 !== 0 ? " and " + convertToWords(num % 100) : "")
       );
-    } else if (number < 1000000) {
+    } else if (num < 1000000) {
       return (
-        convertToWords(Math.floor(number / 1000)) +
+        convertToWords(Math.floor(num / 1000)) +
         " thousand" +
-        (number % 1000 !== 0 ? " " + convertToWords(number % 1000) : "")
+        (num % 1000 !== 0 ? " " + convertToWords(num % 1000) : "")
       );
-    } else if (number < 1000000000) {
+    } else if (num < 1000000000) {
       return (
-        convertToWords(Math.floor(number / 1000000)) +
+        convertToWords(Math.floor(num / 1000000)) +
         " million" +
-        (number % 1000000 !== 0 ? " " + convertToWords(number % 1000000) : "")
+        (num % 1000000 !== 0 ? " " + convertToWords(num % 1000000) : "")
       );
     }
+  }
+
+  function convertDecimalToWords(decimal) {
+    if (decimal === 0) return "";
+    return " and " + convertToWords(decimal) + " centavos";
   }
 
   if (number === 0) {
     return ones[0];
   } else if (number < 0) {
-    return "minus " + convertToWords(Math.abs(number));
+    return (
+      "minus " +
+      convertToWords(Math.abs(Math.floor(number))) +
+      convertDecimalToWords(
+        Math.round((Math.abs(number) - Math.floor(Math.abs(number))) * 100)
+      )
+    );
   } else {
-    return convertToWords(number);
+    const integerPart = Math.floor(number);
+    const decimalPart = Math.round((number - integerPart) * 100);
+    return convertToWords(integerPart) + convertDecimalToWords(decimalPart);
   }
 }
 
-class CashierViolationReceipt extends Component {
+class CashierViolationGeneralF extends Component {
   render() {
     const { violationDetails, fullname } = this.props;
     const datenow = new Date();
@@ -93,10 +106,12 @@ class CashierViolationReceipt extends Component {
     let receiptData = [];
 
     if (violationDetails) {
-      totalAmount = violationDetails?.violation?.reduce(
-        (total, obj) => total + obj?.price,
+      const total = violationDetails?.violation?.reduce(
+        (total, obj) => total + (obj?.price || 0), // Ensure obj?.price defaults to 0 if undefined or null
         0
       );
+
+      totalAmount = (total || 0) * 0.63; // Ensure total defaults to 0 if undefined
 
       receiptData = violationDetails?.violation.concat(
         Array.from({
@@ -162,7 +177,7 @@ class CashierViolationReceipt extends Component {
                   <b>Agency: </b> SPC CTMO
                 </td>
                 <td className="td w-25">
-                  <b>Fund: </b>
+                  <b>Fund: </b> GF
                 </td>
               </tr>
             </tbody>
@@ -215,10 +230,11 @@ class CashierViolationReceipt extends Component {
                     <td className="td">
                       {" "}
                       {item?.displayPrice ||
-                        item?.price?.toLocaleString("en-PH", {
-                          style: "currency",
-                          currency: "PHP",
-                        })}
+                        (item?.price &&
+                          (item?.price * 0.63).toLocaleString("en-PH", {
+                            style: "currency",
+                            currency: "PHP",
+                          }))}
                     </td>
                   </tr>
                 );
@@ -397,4 +413,4 @@ class CashierViolationReceipt extends Component {
   }
 }
 
-export default CashierViolationReceipt;
+export default CashierViolationGeneralF;
