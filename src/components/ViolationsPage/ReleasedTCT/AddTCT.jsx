@@ -37,7 +37,6 @@ const AddTCT = ({ open, onClose }) => {
       setAlertMsg("Released TCT Added Successfully");
       onClose(false);
       setTicketDetails(tctHelper.initialTicketDetails);
-      console.log(response.data);
     } catch (error) {
       setAlertSeverity("error");
       setAlertMsg("Error Adding Data.");

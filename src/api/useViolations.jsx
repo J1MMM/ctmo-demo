@@ -29,9 +29,7 @@ const useViolations = () => {
       setViolationsLoading(true);
       try {
         const response = await axiosPrivate.get("/violation");
-        console.log("Violation");
 
-        console.log(response.data);
         setViolations(response.data);
       } catch (error) {
         console.log(error);
@@ -69,7 +67,6 @@ const useViolations = () => {
       setPaidListLoading(true);
       try {
         const response = await axiosPrivate.get("/violation/paid");
-        console.log(response.data);
         setPaidList(response.data);
       } catch (error) {
         console.log(error);
@@ -87,7 +84,6 @@ const useViolations = () => {
       try {
         const response = await axiosPrivate.get("violation/analytics");
 
-        console.log(response.data);
         setviolationAnalytics(response.data);
       } catch (error) {
         console.log(error);

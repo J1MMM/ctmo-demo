@@ -32,7 +32,6 @@ const useFranchises = () => {
   useEffect(() => {
     const fetchFranchises = async () => {
       setFranchisesLoading(true);
-      console.log("get franchises");
       try {
         const response = await axiosPrivate.get("/franchise");
         setFranchises(() => {
@@ -100,7 +99,6 @@ const useFranchises = () => {
       setPendingFranchisesLoading(true);
       try {
         const response = await axiosPrivate.get("/franchise/pending");
-        console.log(response.data);
         setPendingFranchises(() => {
           return response.data?.map((data) => {
             return helper.createClientsData(
@@ -233,7 +231,6 @@ const useFranchises = () => {
       try {
         const response = await axiosPrivate.get("franchise/analytics");
 
-        console.log(response.data);
         setfranchiseAnalytics(response.data);
       } catch (error) {
         console.log(error);

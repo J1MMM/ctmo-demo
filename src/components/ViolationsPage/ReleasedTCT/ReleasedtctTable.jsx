@@ -32,7 +32,6 @@ const ReleasedtctTable = () => {
 
   const handleDoubleClick = (e) => {
     const foundData = tickets.find((v) => v._id == e.id);
-    console.log(foundData);
     setTicketDetails(foundData);
     setEditModalShow(true);
   };

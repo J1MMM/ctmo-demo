@@ -49,8 +49,6 @@ const PendingFranchisePaid = () => {
   const handleRowDoubleClick = (e) => {
     setClientInfo(true);
     let foundFranchise = pendingFranchisesPaid.find((v) => v.id == e.id);
-    console.log("foundFranchise");
-    console.log(foundFranchise);
 
     setFranchiseDetails(foundFranchise);
     setinitialFormInfo(foundFranchise);

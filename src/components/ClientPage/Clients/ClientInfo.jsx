@@ -290,7 +290,6 @@ const ClientInfo = ({
       }));
 
       setReceiptData(response.data?.receiptData);
-      console.log(response.data?.receiptData);
       // setDummyVariable((prev) => !prev);
       setFranchises((prev) => {
         return prev.map((v) => {
@@ -445,13 +444,10 @@ const ClientInfo = ({
   const renewalDate1 = new Date(franchiseDetails?.date);
   const twentyFourHoursLater = new Date(renewalDate1);
   twentyFourHoursLater.setHours(twentyFourHoursLater.getHours() + 24);
-  console.log(dateNow1);
-  console.log(renewalDate1);
-  console.log(twentyFourHoursLater);
+
   const isPrintableBtnEnable =
     dateNow1 >= renewalDate1 && dateNow1 <= twentyFourHoursLater;
-  console.log(dateNow1 >= renewalDate1);
-  console.log(dateNow1 <= twentyFourHoursLater);
+
   const isButtonDisabled =
     disable ||
     currentYear < renewalYear ||

@@ -63,7 +63,6 @@ const ResetPassword = () => {
         token: token,
         pwd: pwd2,
       });
-      console.log(response);
       setErrMsg(response.data?.message);
       setSnackActive(true);
       setSnackSev("success");

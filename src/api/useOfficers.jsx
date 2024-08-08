@@ -20,7 +20,6 @@ const useOfficers = () => {
   useEffect(() => {
     const fetchOfficers = async () => {
       setOfficersLoading(true);
-      console.log("get officers");
       try {
         const response = await axiosPrivate.get("/officers");
         setOfficers(response.data);

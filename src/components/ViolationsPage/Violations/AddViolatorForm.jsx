@@ -81,7 +81,6 @@ const AddViolators = ({ open, onClose }) => {
     setDisable(true);
     try {
       const response = await axiosPrivate.post("violation", violationDetails);
-      console.log(response.data);
 
       setViolations((prev) => {
         const oldArr = [...prev];

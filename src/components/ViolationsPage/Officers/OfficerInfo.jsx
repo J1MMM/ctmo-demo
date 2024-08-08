@@ -69,7 +69,6 @@ const OfficerInfo = ({ open, onClose, officerInfo, setOfficerInfo }) => {
     setDisable(true);
     try {
       const response = await axiosPrivate.put("/officers", officerInfo);
-      console.log(response.data);
       setOfficers((prev) => {
         const updatedOfficers = prev.map((data) => {
           if (data._id == response.data?._id) {

@@ -113,7 +113,6 @@ const AddUserDialog = ({
         email: accountDetails.email,
       });
 
-      console.log(result.data);
       if (result.data?.length > 0) {
         setResMsg("Email address is already use");
         setSeverity("error");

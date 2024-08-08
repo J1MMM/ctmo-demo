@@ -47,7 +47,6 @@ const ViolationsTable = () => {
         return foundObject;
       });
     }
-    console.log(foundviolations);
     setVioModalShown(true);
     setViolationsDetails(foundviolations);
     setInitialViolationsDetails(foundviolations);

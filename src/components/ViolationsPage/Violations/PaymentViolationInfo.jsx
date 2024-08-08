@@ -90,7 +90,6 @@ const PaymentViolationsInfo = ({
     setDisable(true);
     try {
       const response = await axiosPrivate.patch("/violation", violationDetails);
-      console.log(response.data);
       setViolationDetails((prev) => ({ ...prev, receiptNo: response.data }));
       setViolations((prev) => {
         return prev?.filter((v) => v._id !== violationDetails._id);

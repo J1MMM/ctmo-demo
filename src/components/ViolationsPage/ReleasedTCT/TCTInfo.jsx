@@ -42,7 +42,6 @@ const TCTInfo = ({ open, onClose, ticketDetails, setTicketDetails }) => {
       setAlertMsg("Released TCT Updated Successfully");
       onClose(false);
       setTicketDetails(tctHelper.initialTicketDetails);
-      console.log(response.data);
     } catch (error) {
       setAlertSeverity("error");
       setAlertMsg("Error Updating Data.");

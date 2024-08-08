@@ -98,7 +98,6 @@ const UserArchive = () => {
       if (response.data.filter((user) => user.archive == true).length == 0) {
         setIsEmpty(true);
       }
-      console.log(response.data.length);
       setResMsg("User restored successfully");
       setSeverity("success");
       setSnack(true);

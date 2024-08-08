@@ -83,10 +83,6 @@ const PendingFranchiseInfo = ({
   // const twentyFourHoursAgo = now.subtract(24, "hour");
   // const allowToCancelOr = createdAt.isAfter(twentyFourHoursAgo);
 
-  // console.log(franchiseDetails);
-  // console.log(createdAt.format());
-  // console.log(allowToCancelOr);
-
   const handleUpdateSubmit = async () => {
     setDisable(true);
     try {
@@ -94,8 +90,6 @@ const PendingFranchiseInfo = ({
         ...franchiseDetails,
         collectingOfficer: auth?.fullname,
       });
-
-      console.log(auth?.fullname);
 
       setFranchiseDetails((prev) => ({
         ...prev,
@@ -114,7 +108,6 @@ const PendingFranchiseInfo = ({
         ...response.data?.newFranchiseData,
         collectingOfficer: auth?.fullname,
       });
-      console.log(response.data);
 
       if (recordExist) {
         setFranchises((prev) => {
@@ -173,8 +166,6 @@ const PendingFranchiseInfo = ({
       const recordExist = franchises.find(
         (v) => v.mtop == franchiseDetails.mtop
       );
-
-      console.log(response.data);
 
       if (recordExist) {
         setFranchises((prev) => {

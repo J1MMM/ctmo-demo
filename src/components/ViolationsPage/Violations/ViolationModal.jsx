@@ -99,7 +99,6 @@ const ViolationModal = ({
     setDisable(true);
     try {
       const response = await axiosPrivate.put("/violation", violationDetails);
-      console.log(response.data);
       setViolations((prev) => {
         return prev?.map((obj) => {
           if (obj._id == violationDetails._id) {
@@ -133,7 +132,6 @@ const ViolationModal = ({
         collectingOfficer: auth?.fullname,
       });
 
-      console.log(response.data);
       setViolationDetails((prev) => ({
         ...prev,
         receiptNo: prev.or,
@@ -176,7 +174,6 @@ const ViolationModal = ({
     const selectedOthers = violationDetails.violation?.filter(
       (v) => v.violation == "OTHERS"
     );
-    console.log(selectedOthers);
     if (violationDetails.others?.trim() == "" && selectedOthers.length > 0) {
       setAlertMsg("violations field cannot be empty.");
       setAlertSeverity("error");

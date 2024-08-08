@@ -11,7 +11,6 @@ const useTickets = () => {
   useEffect(() => {
     const fetchData = async () => {
       setTicketLoading(true);
-      console.log("get tickets");
       try {
         const response = await axiosPrivate.get("/ticket");
 

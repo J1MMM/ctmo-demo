@@ -55,8 +55,6 @@ const AddOfficer = ({ open, onClose }) => {
       setAlertMsg("Officer Added Successfully");
       onClose(false);
       setOfficerDetails(initialDetails);
-
-      console.log(response.data);
     } catch (error) {
       setAlertSeverity("error");
       setAlertMsg("Error Adding Officer.");
