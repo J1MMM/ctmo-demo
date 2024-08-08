@@ -184,16 +184,17 @@ const ClientInfo = ({
   const handleTransferSubmit = async () => {
     setDisable(true);
     try {
-      const response = await axiosPrivate.post(
-        "/franchise/transfer",
-        franchiseDetails
-      );
+      const response = await axiosPrivate.post("/franchise/transfer", {
+        ...franchiseDetails,
+        processedBy: auth?.fullname,
+      });
       setFranchiseDetails((prev) => ({
         ...prev,
         refNo: response.data?.refNo,
         pending: true,
         receiptData: response.data?.receiptData,
         transaction: "Transfer Franchise",
+        processedBy: auth?.fullname,
       }));
 
       setinitialFormInfo((prev) => ({
@@ -202,6 +203,7 @@ const ClientInfo = ({
         pending: true,
         receiptData: response.data?.receiptData,
         transaction: "Transfer Franchise",
+        processedBy: auth?.fullname,
       }));
 
       setReceiptData(response.data?.receiptData);
@@ -213,6 +215,7 @@ const ClientInfo = ({
               pending: true,
               receiptData: response.data?.receiptData,
               transaction: "Transfer Franchise",
+              processedBy: auth?.fullname,
             };
           } else {
             return v;
@@ -259,10 +262,10 @@ const ClientInfo = ({
   const handleUpdateSubmit = async () => {
     setDisable(true);
     try {
-      const response = await axiosPrivate.post(
-        "/franchise/update",
-        franchiseDetails
-      );
+      const response = await axiosPrivate.post("/franchise/update", {
+        ...franchiseDetails,
+        processedBy: auth?.fullname,
+      });
 
       // setFranchiseDetails({
       //   ...initialFormInfo,
@@ -274,6 +277,7 @@ const ClientInfo = ({
         pending: true,
         receiptData: response.data?.receiptData,
         transaction: "Franchise Renewal",
+        processedBy: auth?.fullname,
       }));
 
       setinitialFormInfo((prev) => ({
@@ -282,6 +286,7 @@ const ClientInfo = ({
         pending: true,
         receiptData: response.data?.receiptData,
         transaction: "Franchise Renewal",
+        processedBy: auth?.fullname,
       }));
 
       setReceiptData(response.data?.receiptData);
@@ -295,6 +300,7 @@ const ClientInfo = ({
               pending: true,
               receiptData: response.data?.receiptData,
               transaction: "Franchise Renewal",
+              processedBy: auth?.fullname,
             };
           } else {
             return v;
@@ -1333,7 +1339,7 @@ const ClientInfo = ({
             <RenewFranchise
               ref={componentRef}
               franchiseDetails={franchiseDetails}
-              fullname={auth?.fullname}
+              fullname={franchiseDetails?.processedBy}
               receiptData={receiptData}
             />
           </Box>
@@ -1375,7 +1381,7 @@ const ClientInfo = ({
             <TransferFranchise
               ref={transferRecieptRef}
               franchiseDetails={franchiseDetails}
-              fullname={auth?.fullname}
+              fullname={franchiseDetails?.processedBy}
               receiptData={receiptData}
               initialFormInfo={initialFormInfo}
             />

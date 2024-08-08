@@ -67,6 +67,8 @@ const initialFranchiseDetails = {
   changeTODA: false,
   receiptData: [],
   LTO_RENEWAL_DATE: null,
+  processedBy: "",
+  collectingOfficer: "",
 };
 
 const clientsColumns = [
@@ -350,7 +352,9 @@ function createClientsData(
   pending,
   transaction,
   receiptData,
-  LTO_RENEWAL_DATE
+  LTO_RENEWAL_DATE,
+  processedBy,
+  collectingOfficer
 ) {
   return {
     id,
@@ -395,6 +399,8 @@ function createClientsData(
     transaction,
     receiptData,
     LTO_RENEWAL_DATE,
+    processedBy,
+    collectingOfficer,
   };
 }
 function countTrueValues(obj) {
@@ -478,7 +484,9 @@ const formatFranchise = (franchise) => {
     franchise.pending,
     franchise.transaction,
     franchise.receiptData,
-    franchise.LTO_RENEWAL_DATE && new Date(franchise.LTO_RENEWAL_DATE)
+    franchise.LTO_RENEWAL_DATE && new Date(franchise.LTO_RENEWAL_DATE),
+    franchise.processedBy,
+    franchise.collectingOfficer
   );
 };
 

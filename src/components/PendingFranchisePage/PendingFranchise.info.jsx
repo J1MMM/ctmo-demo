@@ -90,13 +90,18 @@ const PendingFranchiseInfo = ({
   const handleUpdateSubmit = async () => {
     setDisable(true);
     try {
-      const response = await axiosPrivate.post(
-        "/franchise/pending",
-        franchiseDetails
-      );
+      const response = await axiosPrivate.post("/franchise/pending", {
+        ...franchiseDetails,
+        collectingOfficer: auth?.fullname,
+      });
 
+      console.log(auth?.fullname);
+
+      setFranchiseDetails((prev) => ({
+        ...prev,
+        collectingOfficer: auth?.fullname,
+      }));
       setReceiptData(response.data?.receiptData);
-
       setPendingFranchises((prev) =>
         prev.filter((franchise) => franchise.id != franchiseDetails.id)
       );
@@ -105,10 +110,10 @@ const PendingFranchiseInfo = ({
         (v) => v.mtop == franchiseDetails.mtop
       );
 
-      const formattedData = helper.formatFranchise(
-        response.data?.newFranchiseData
-      );
-      console.log("response.data");
+      const formattedData = helper.formatFranchise({
+        ...response.data?.newFranchiseData,
+        collectingOfficer: auth?.fullname,
+      });
       console.log(response.data);
 
       if (recordExist) {
@@ -782,7 +787,7 @@ const PendingFranchiseInfo = ({
                 setReceiptModal(false);
               }}
             >
-              cancel
+              close
             </Button>
             <Button
               disabled={disable}
@@ -797,7 +802,7 @@ const PendingFranchiseInfo = ({
         }
       >
         <CashierFranchiseReceipt
-          fullname={auth?.fullname}
+          fullname={franchiseDetails?.collectingOfficer}
           franchiseDetails={franchiseDetails}
           receiptData={receiptData}
         />
@@ -805,7 +810,7 @@ const PendingFranchiseInfo = ({
       <Box display="none">
         <CashierFranchiseReceiptPrintable
           ref={componentRef}
-          fullname={auth?.fullname}
+          fullname={franchiseDetails?.collectingOfficer}
           franchiseDetails={franchiseDetails}
           receiptData={receiptData}
         />
