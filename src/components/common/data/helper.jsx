@@ -69,6 +69,8 @@ const initialFranchiseDetails = {
   LTO_RENEWAL_DATE: null,
   processedBy: "",
   collectingOfficer: "",
+  MPreceiptData: [],
+  MPpaymentOr: "",
 };
 
 const clientsColumns = [
@@ -354,7 +356,9 @@ function createClientsData(
   receiptData,
   LTO_RENEWAL_DATE,
   processedBy,
-  collectingOfficer
+  collectingOfficer,
+  MPreceiptData,
+  MPpaymentOr
 ) {
   return {
     id,
@@ -401,6 +405,8 @@ function createClientsData(
     LTO_RENEWAL_DATE,
     processedBy,
     collectingOfficer,
+    MPreceiptData,
+    MPpaymentOr,
   };
 }
 function countTrueValues(obj) {
@@ -486,7 +492,9 @@ const formatFranchise = (franchise) => {
     franchise.receiptData,
     franchise.LTO_RENEWAL_DATE && new Date(franchise.LTO_RENEWAL_DATE),
     franchise.processedBy,
-    franchise.collectingOfficer
+    franchise.collectingOfficer,
+    franchise.MPreceiptData,
+    franchise.MPpaymentOr
   );
 };
 

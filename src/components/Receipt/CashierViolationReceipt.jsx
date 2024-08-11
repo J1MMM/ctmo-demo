@@ -360,10 +360,9 @@ class CashierViolationReceipt extends Component {
                         marginBottom: "-5px",
                         marginTop: "-10px",
                         fontWeight: "500",
-                        fontSize: "larger",
                       }}
                     >
-                      {fullname}
+                      Lucio Geraldo G. Ciolo
                     </p>
                     <div className="broken-line" />
                     <p

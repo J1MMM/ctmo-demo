@@ -125,7 +125,7 @@ class ReceiptViolationPrintableTF extends Component {
           p: 1,
           border: "none",
           maxWidth: 450,
-          marginLeft: "2.7rem",
+          marginLeft: "2.6rem",
           marginTop: "2.8rem",
         }}
       >
@@ -555,7 +555,7 @@ class ReceiptViolationPrintableTF extends Component {
               marginTop: "2rem",
             }}
           >
-            <b>{fullname}</b>
+            <b>Lucio Geraldo G. Ciolo</b>
           </p>
           <table className="table noOutline">
             <tbody>

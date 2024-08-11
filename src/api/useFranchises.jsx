@@ -81,7 +81,9 @@ const useFranchises = () => {
               data.receiptData,
               data.LTO_RENEWAL_DATE && new Date(data.LTO_RENEWAL_DATE),
               data.processedBy || "",
-              data.collectingOfficer || ""
+              data.collectingOfficer || "",
+              data.MPreceiptData,
+              data.MPpaymentOr
             );
           });
         });
@@ -146,7 +148,9 @@ const useFranchises = () => {
               data.receiptData,
               data.LTO_RENEWAL_DATE && new Date(data.LTO_RENEWAL_DATE),
               data.processedBy || "",
-              data.collectingOfficer || ""
+              data.collectingOfficer || "",
+              data.MPreceiptData,
+              data.MPpaymentOr
             );
           });
         });
@@ -212,7 +216,9 @@ const useFranchises = () => {
               data.receiptData,
               data.LTO_RENEWAL_DATE && new Date(data.LTO_RENEWAL_DATE),
               data.processedBy || "",
-              data.collectingOfficer || ""
+              data.collectingOfficer || "",
+              data.MPreceiptData,
+              data.MPpaymentOr
             );
           });
         });

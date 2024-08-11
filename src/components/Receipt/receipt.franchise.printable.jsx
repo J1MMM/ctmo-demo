@@ -135,7 +135,7 @@ class CashierFranchiseReceiptPrintable extends Component {
           p: 1,
           border: "none",
           maxWidth: 450,
-          marginLeft: "2.7rem",
+          marginLeft: "2.6rem",
           marginTop: "2.8rem",
         }}
       >

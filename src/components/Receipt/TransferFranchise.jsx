@@ -394,7 +394,7 @@ class TransferFranchise extends Component {
             }}
           >
             <Typography variant="h6" fontFamily="monospace" textAlign="center">
-            LUCIO GERALDO G. CIOLO
+              LUCIO GERALDO G. CIOLO
             </Typography>
 
             <Typography
@@ -406,7 +406,7 @@ class TransferFranchise extends Component {
                 mt: -1,
               }}
             >
-            ASST. CITY TREASURER
+              ASST. CITY TREASURER
             </Typography>
           </BorderBox>
         </BorderBox>

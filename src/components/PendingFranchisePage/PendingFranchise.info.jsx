@@ -793,7 +793,7 @@ const PendingFranchiseInfo = ({
         }
       >
         <CashierFranchiseReceipt
-          fullname={franchiseDetails?.collectingOfficer}
+          fullname={"Lucio Geraldo G. Ciolo"}
           franchiseDetails={franchiseDetails}
           receiptData={receiptData}
         />
@@ -801,7 +801,7 @@ const PendingFranchiseInfo = ({
       <Box display="none">
         <CashierFranchiseReceiptPrintable
           ref={componentRef}
-          fullname={franchiseDetails?.collectingOfficer}
+          fullname={"Lucio Geraldo G. Ciolo"}
           franchiseDetails={franchiseDetails}
           receiptData={receiptData}
         />

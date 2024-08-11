@@ -586,7 +586,7 @@ const ClientInfo = ({
                         Transfer
                       </Button>
                       <Button
-                        disabled={isButtonDisabled && !admin}
+                        disabled={disable}
                         variant="contained"
                         size="small"
                         onClick={handleUpdateClick}
@@ -633,7 +633,7 @@ const ClientInfo = ({
           {admin || ctmo1 ? (
             <Collapse in={printable && !updateForm && !transferForm}>
               <Button
-                disabled={!isPrintableBtnEnable && !admin}
+                disabled={disable}
                 variant="outlined"
                 sx={{ mb: 2, py: 1 }}
                 startIcon={<ListAltOutlined />}
@@ -655,7 +655,7 @@ const ClientInfo = ({
             readOnly={true}
           />
           <Stack direction="row" gap={1}>
-            {!transferForm && !updateForm ? (
+            {/* {!transferForm && !updateForm ? (
               <FormControl margin="dense" focused>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
@@ -668,7 +668,7 @@ const ClientInfo = ({
                   />
                 </LocalizationProvider>
               </FormControl>
-            ) : null}
+            ) : null} */}
 
             <FormControl margin="dense" focused>
               <LocalizationProvider dateAdapter={AdapterDateFns}>

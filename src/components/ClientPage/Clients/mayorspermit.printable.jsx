@@ -57,7 +57,7 @@ const FormContent = ({
         fontFamily="Arial"
         sx={{ position: "absolute" }}
       >
-        OR # {franchiseDetails?.paymentOr}
+        OR # {franchiseDetails?.MPpaymentOr}
       </Typography>
       <Box
         border="2px solid #1B98EC"
@@ -74,7 +74,7 @@ const FormContent = ({
           fontWeight="bold"
           width={100}
         >
-          {dayjs(franchiseDetails?.paymentOrDate).format("MM/DD/YYYY")}
+          {dayjs().format("MM/DD/YYYY")}
         </Typography>
         <Typography
           fontFamily="Arial"
@@ -549,7 +549,7 @@ class MayorPermitPrintable extends Component {
     let total = 0;
 
     if (franchiseDetails) {
-      total = franchiseDetails?.receiptData?.reduce(
+      total = franchiseDetails?.MPreceiptData?.reduce(
         (total, obj) => total + obj?.price,
         0
       );
