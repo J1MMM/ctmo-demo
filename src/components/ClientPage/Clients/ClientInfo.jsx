@@ -806,6 +806,10 @@ const ClientInfo = ({
                   margin="dense"
                   required
                   label="Address"
+                  inputProps={{
+                    ...params.inputProps,
+                    style: { textTransform: "uppercase" }, // This will force the text to be uppercase
+                  }}
                 />
               )}
             />
@@ -892,6 +896,7 @@ const ClientInfo = ({
           <FlexRow>
             <Autocomplete
               readOnly={readOnly}
+              autoComplete
               freeSolo
               clearIcon={false}
               options={spcbrgy}
@@ -909,6 +914,10 @@ const ClientInfo = ({
                   margin="dense"
                   required
                   label="Address"
+                  inputProps={{
+                    ...params.inputProps,
+                    style: { textTransform: "uppercase" }, // This will force the text to be uppercase
+                  }}
                 />
               )}
             />
