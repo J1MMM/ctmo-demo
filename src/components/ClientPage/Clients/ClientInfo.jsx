@@ -619,7 +619,6 @@ const ClientInfo = ({
           {admin || ctmo1 ? (
             <Collapse in={printable && !updateForm && !transferForm}>
               <Button
-                disabled={!isPrintableBtnEnable && !admin}
                 variant="outlined"
                 sx={{ mb: 2, py: 1 }}
                 startIcon={<ListAltOutlined />}
@@ -630,6 +629,7 @@ const ClientInfo = ({
               </Button>
             </Collapse>
           ) : null}
+
           {admin || ctmo1 ? (
             <Collapse in={printable && !updateForm && !transferForm}>
               <Button
