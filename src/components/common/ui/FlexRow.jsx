@@ -13,6 +13,8 @@ const FlexRow = ({ children }) => {
         },
         justifyContent: "space-between",
         alignItems: "center",
+        justifyItems: "center",
+        alignContent: "center",
       }}
     >
       {children}

@@ -669,6 +669,24 @@ const ClientInfo = ({
                 </LocalizationProvider>
               </FormControl>
             ) : null} */}
+            <Button
+              disabled={readOnly}
+              disableFocusRipple
+              variant="outlined"
+              size="small"
+              sx={{
+                px: 2,
+                py: 1,
+                height: "2.5rem",
+                my: "auto",
+              }}
+              onClick={() => {
+                const date = new Date();
+                setFranchiseDetails((prev) => ({ ...prev, date: date }));
+              }}
+            >
+              now na
+            </Button>
 
             <FormControl margin="dense" focused>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
