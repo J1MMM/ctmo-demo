@@ -292,6 +292,10 @@ const AddFranchiseForm = ({ open, onClose }) => {
                   margin="dense"
                   required
                   label="Address"
+                  inputProps={{
+                    ...params.inputProps,
+                    style: { textTransform: "uppercase" }, // This will force the text to be uppercase
+                  }}
                 />
               )}
             />
@@ -375,6 +379,10 @@ const AddFranchiseForm = ({ open, onClose }) => {
                   margin="dense"
                   required
                   label="Address"
+                  inputProps={{
+                    ...params.inputProps,
+                    style: { textTransform: "uppercase" }, // This will force the text to be uppercase
+                  }}
                 />
               )}
             />
