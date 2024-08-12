@@ -685,7 +685,7 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({ ...prev, date: date }));
               }}
             >
-              now na
+              today
             </Button>
 
             <FormControl margin="dense" focused>
