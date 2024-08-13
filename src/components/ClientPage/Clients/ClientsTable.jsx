@@ -24,6 +24,7 @@ import OutlinedButton from "../../common/ui/OutlinedButton";
 import FilterButton from "../../common/ui/FilterButton";
 import useAuth from "../../../hooks/useAuth";
 import ROLES_LIST from "../../common/data/ROLES_LIST";
+import ExportButton from "../../common/ui/ExportButton";
 
 const ClientsTable = memo(() => {
   const axiosPrivate = useAxiosPrivate();
@@ -76,6 +77,7 @@ const ClientsTable = memo(() => {
             description="Efficiently monitor client status and details"
             actionButtons={
               <>
+                {admin && <ExportButton />}
                 <FilterButton />
                 {admin || ctmo1 ? (
                   <ContainedButton

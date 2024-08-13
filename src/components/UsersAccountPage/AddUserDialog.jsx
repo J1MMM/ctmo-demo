@@ -311,17 +311,21 @@ const AddUserDialog = ({
         </FlexRow>
 
         <FlexRow>
-          <OutlinedTextField
-            error={error}
+          <TextField
             disabled={disabled}
-            required
-            type="email"
+            error={error}
+            margin="dense"
+            type={"email"}
+            variant="outlined"
             label="Email Address"
             value={accountDetails.email}
             onChange={(e) =>
               setAccountDetails((prev) => ({ ...prev, email: e.target.value }))
             }
+            fullWidth
+            required
           />
+
           <FormControl margin="dense" fullWidth>
             <InputLabel id="demo-simple-select-label">Station</InputLabel>
             <Select
