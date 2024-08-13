@@ -727,7 +727,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  fname: e.target.value,
+                  fname: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -738,7 +738,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  mi: e.target.value,
+                  mi: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -750,7 +750,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  lname: e.target.value,
+                  lname: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -815,7 +815,7 @@ const ClientInfo = ({
               onInputChange={(_, value) => {
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  address: value || "",
+                  address: value.toUpperCase() || "",
                 }));
               }}
               renderInput={(params) => (
@@ -859,7 +859,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  drivername: e.target.value,
+                  drivername: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -923,7 +923,7 @@ const ClientInfo = ({
               onInputChange={(_, value) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  driveraddress: value || "",
+                  driveraddress: value.toUpperCase() || "",
                 }))
               }
               renderInput={(params) => (
@@ -946,7 +946,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  driverlicenseno: e.target.value,
+                  driverlicenseno: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -978,7 +978,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  make: e.target.value,
+                  make: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -990,7 +990,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  model: e.target.value,
+                  model: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1002,7 +1002,7 @@ const ClientInfo = ({
               onChange={(v) => {
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  plateno: v.target.value,
+                  plateno: v.target.value.toUpperCase(),
                 }));
               }}
             />
@@ -1016,7 +1016,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  motorno: e.target.value,
+                  motorno: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1027,7 +1027,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  stroke: e.target.value,
+                  stroke: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1041,7 +1041,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  chassisno: e.target.value,
+                  chassisno: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1052,7 +1052,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  fuelDisp: e.target.value,
+                  fuelDisp: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1066,7 +1066,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  or: e.target.value,
+                  or: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1078,7 +1078,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  cr: e.target.value,
+                  cr: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1091,7 +1091,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  tplProvider: e.target.value,
+                  tplProvider: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1164,7 +1164,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  typeofFranchise: e.target.value,
+                  typeofFranchise: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1176,7 +1176,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  kindofBusiness: e.target.value,
+                  kindofBusiness: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1191,7 +1191,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  toda: e.target.value,
+                  toda: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1203,7 +1203,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  route: e.target.value,
+                  route: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -1232,7 +1232,7 @@ const ClientInfo = ({
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  remarks: e.target.value,
+                  remarks: e.target.value.toUpperCase(),
                 }))
               }
             />

@@ -168,21 +168,39 @@ const AddFranchiseForm = ({ open, onClose }) => {
               <TextField {...params} margin="dense" required label="MTOP" />
             )}
           />
+          <Box display={"flex"} gap={1}>
+            <Button
+              disableFocusRipple
+              variant="outlined"
+              size="small"
+              sx={{
+                px: 2,
+                py: 1,
+                height: "2.5rem",
+                my: "auto",
+              }}
+              onClick={() => {
+                const date = new Date();
+                setFranchiseDetails((prev) => ({ ...prev, date: date }));
+              }}
+            >
+              today
+            </Button>
 
-          <FormControl margin="dense" required>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Date Renewal"
-                value={franchiseDetails.date}
-                onChange={(date) =>
-                  setFranchiseDetails((prev) => ({ ...prev, date: date }))
-                }
-                slotProps={{ textField: { required: true } }}
-              />
-            </LocalizationProvider>
-          </FormControl>
+            <FormControl margin="dense" required>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  label="Date Renewal"
+                  value={franchiseDetails.date}
+                  onChange={(date) =>
+                    setFranchiseDetails((prev) => ({ ...prev, date: date }))
+                  }
+                  slotProps={{ textField: { required: true } }}
+                />
+              </LocalizationProvider>
+            </FormControl>
+          </Box>
         </FlexRow>
-
         <Fieldset legend="Owner's Information">
           <Box
             display="flex"
@@ -201,7 +219,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  fname: e.target.value,
+                  fname: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -211,7 +229,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  mi: e.target.value,
+                  mi: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -222,7 +240,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  lname: e.target.value,
+                  lname: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -283,7 +301,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onInputChange={(_, value) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  address: value || "",
+                  address: value.toUpperCase() || "",
                 }))
               }
               renderInput={(params) => (
@@ -311,7 +329,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  drivername: e.target.value,
+                  drivername: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -370,7 +388,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onInputChange={(_, value) => {
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  driveraddress: value || "",
+                  driveraddress: value.toUpperCase() || "",
                 }));
               }}
               renderInput={(params) => (
@@ -392,7 +410,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  driverlicenseno: e.target.value,
+                  driverlicenseno: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -408,7 +426,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  make: e.target.value,
+                  make: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -419,7 +437,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  model: e.target.value,
+                  model: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -430,7 +448,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  plateno: e.target.value,
+                  plateno: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -444,7 +462,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  motorno: e.target.value,
+                  motorno: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -454,7 +472,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  stroke: e.target.value,
+                  stroke: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -468,7 +486,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  chassisno: e.target.value,
+                  chassisno: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -479,7 +497,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  fuelDisp: e.target.value,
+                  fuelDisp: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -492,7 +510,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  or: e.target.value,
+                  or: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -503,7 +521,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  cr: e.target.value,
+                  cr: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -526,7 +544,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  tplProvider: e.target.value,
+                  tplProvider: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -581,7 +599,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  typeofFranchise: e.target.value,
+                  typeofFranchise: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -591,7 +609,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  kindofBusiness: e.target.value,
+                  kindofBusiness: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -605,7 +623,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  toda: e.target.value,
+                  toda: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -615,7 +633,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  route: e.target.value,
+                  route: e.target.value.toUpperCase(),
                 }))
               }
             />
@@ -641,7 +659,7 @@ const AddFranchiseForm = ({ open, onClose }) => {
               onChange={(e) =>
                 setFranchiseDetails((prev) => ({
                   ...prev,
-                  remarks: e.target.value,
+                  remarks: e.target.value.toUpperCase(),
                 }))
               }
             />

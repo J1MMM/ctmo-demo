@@ -26,7 +26,7 @@ function OutlinedTextField({
       onChange={onChange}
       inputProps={{
         readOnly: readOnly,
-        style: { textTransform: "uppercase" },
+        // style: { textTransform: "uppercase" },
       }}
       fullWidth
       required={required}
