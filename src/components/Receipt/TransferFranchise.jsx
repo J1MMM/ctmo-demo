@@ -338,6 +338,23 @@ class TransferFranchise extends Component {
                   fontFamily={"monospace"}
                   fontWeight="bold"
                 >
+                  TO:
+                </Typography>
+              </td>
+              <td className="td b-0 p-0">
+                <Typography variant="h6" fontFamily="monospace">
+                  {initialFormInfo?.fname} {initialFormInfo?.mi}{" "}
+                  {initialFormInfo?.lname}
+                </Typography>
+              </td>
+            </tr>
+            <tr>
+              <td className="td b-0 p-0">
+                <Typography
+                  variant="h6"
+                  fontFamily={"monospace"}
+                  fontWeight="bold"
+                >
                   Processed by:
                 </Typography>
               </td>

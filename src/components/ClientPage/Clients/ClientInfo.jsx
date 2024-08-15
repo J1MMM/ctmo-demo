@@ -413,7 +413,7 @@ const ClientInfo = ({
   };
 
   const handleUpdateClick = () => {
-    setFranchiseDetails((prev) => ({ ...prev, date: dateNow }));
+    // setFranchiseDetails((prev) => ({ ...prev, date: dateNow }));
 
     setFormTitle("Franchise Renewal");
     setReadOnly(false);
