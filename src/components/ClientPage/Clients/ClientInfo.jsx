@@ -402,7 +402,7 @@ const ClientInfo = ({
   };
 
   const handleTransferClick = () => {
-    setFranchiseDetails((prev) => ({ ...prev, date: dateNow }));
+    // setFranchiseDetails((prev) => ({ ...prev, date: dateNow }));
 
     setFormTitle("Transfer Franchise");
     setReadOnly(false);
@@ -413,7 +413,7 @@ const ClientInfo = ({
   };
 
   const handleUpdateClick = () => {
-    // setFranchiseDetails((prev) => ({ ...prev, date: dateNow }));
+    setFranchiseDetails((prev) => ({ ...prev, date: dateNow }));
 
     setFormTitle("Franchise Renewal");
     setReadOnly(false);
