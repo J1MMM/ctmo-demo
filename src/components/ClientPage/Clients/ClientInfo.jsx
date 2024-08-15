@@ -402,6 +402,8 @@ const ClientInfo = ({
   };
 
   const handleTransferClick = () => {
+    setFranchiseDetails((prev) => ({ ...prev, date: dateNow }));
+
     setFormTitle("Transfer Franchise");
     setReadOnly(false);
     setTransferForm(true);
@@ -411,6 +413,8 @@ const ClientInfo = ({
   };
 
   const handleUpdateClick = () => {
+    setFranchiseDetails((prev) => ({ ...prev, date: dateNow }));
+
     setFormTitle("Franchise Renewal");
     setReadOnly(false);
     setUpdateForm(true);
@@ -669,7 +673,7 @@ const ClientInfo = ({
                 </LocalizationProvider>
               </FormControl>
             ) : null} */}
-            <Button
+            {/* <Button
               disabled={readOnly}
               disableFocusRipple
               variant="outlined"
@@ -686,7 +690,7 @@ const ClientInfo = ({
               }}
             >
               today
-            </Button>
+            </Button> */}
 
             <FormControl margin="dense" focused>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
