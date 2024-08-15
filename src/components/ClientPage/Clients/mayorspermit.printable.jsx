@@ -74,7 +74,7 @@ const FormContent = ({
           fontWeight="bold"
           width={100}
         >
-          {dayjs().format("MM/DD/YYYY")}
+          {dayjs(franchiseDetails.date).format("MM/DD/YYYY")}
         </Typography>
         <Typography
           fontFamily="Arial"
