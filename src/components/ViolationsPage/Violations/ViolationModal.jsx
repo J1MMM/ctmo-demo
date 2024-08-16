@@ -88,6 +88,8 @@ const ViolationModal = ({
   const ctmo3 = auth.roleCode === ROLES_LIST.CTMO3;
   const isCashier = auth.roleCode === ROLES_LIST.Cashier;
 
+  const dateNow = new Date();
+
   const handleChange = (event) => {
     const {
       target: { value },
@@ -245,6 +247,11 @@ const ViolationModal = ({
                             variant="contained"
                             size="small"
                             onClick={() => {
+                              setViolationDetails((prev) => ({
+                                ...prev,
+                                orDate: dateNow,
+                              }));
+
                               helper.handleScrollToTop();
                               setReadOnly(false);
                               setPaymentMode(true);
