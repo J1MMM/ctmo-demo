@@ -71,6 +71,10 @@ const initialFranchiseDetails = {
   collectingOfficer: "",
   MPreceiptData: [],
   MPpaymentOr: "",
+  newOwner: "",
+  newDriver: "",
+  newMotor: "",
+  newToda: "",
 };
 
 const clientsColumns = [
@@ -358,7 +362,11 @@ function createClientsData(
   processedBy,
   collectingOfficer,
   MPreceiptData,
-  MPpaymentOr
+  MPpaymentOr,
+  newOwner,
+  newDriver,
+  newMotor,
+  newToda
 ) {
   return {
     id,
@@ -407,6 +415,10 @@ function createClientsData(
     collectingOfficer,
     MPreceiptData,
     MPpaymentOr,
+    newOwner,
+    newDriver,
+    newMotor,
+    newToda,
   };
 }
 function countTrueValues(obj) {
@@ -494,7 +506,11 @@ const formatFranchise = (franchise) => {
     franchise.processedBy,
     franchise.collectingOfficer,
     franchise.MPreceiptData,
-    franchise.MPpaymentOr
+    franchise.MPpaymentOr,
+    franchise.newOwner,
+    franchise.newDriver,
+    franchise.newMotor,
+    franchise.newToda
   );
 };
 

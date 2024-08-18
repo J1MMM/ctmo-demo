@@ -117,7 +117,8 @@ const ClientInfo = ({
   const [closingAlert, setClosingAlert] = useState(false);
   const [readOnly, setReadOnly] = useState(true);
   const [formTitle, setFormTitle] = useState("Franchise Details");
-  const { setFranchises, setDummyVariable } = useData();
+  const { setFranchises, setDummyVariable, franchises, setPendingFranchises } =
+    useData();
   const [alertShown, setAlertShown] = useState(false);
   const [alertMsg, setAlertMsg] = useState("");
   const [alertSeverity, setAlertSeverity] = useState("success");
@@ -127,6 +128,7 @@ const ClientInfo = ({
   const [receiptModal, setReceiptModal] = useState(false);
   const [transferReceiptModal, setTransferReceiptModal] = useState(false);
   const [permitModal, setPermitModal] = useState(false);
+  const [cancelOrModal, setCancelOrModal] = useState(false);
   const [receiptData, setReceiptData] = useState([]);
   const [model, setModel] = useState("");
 
@@ -160,6 +162,61 @@ const ClientInfo = ({
     content: () => reportComp.current,
   });
 
+  const handleCancelOr = async () => {
+    setDisable(true);
+    try {
+      const response = await axiosPrivate.post(
+        "/franchise/cancel",
+        franchiseDetails
+      );
+
+      // setReceiptData(response.data?.receiptData);
+
+      setPendingFranchises((prev) =>
+        prev.filter((franchise) => franchise.id != franchiseDetails.id)
+      );
+
+      const recordExist = franchises.find(
+        (v) => v.mtop == franchiseDetails.mtop
+      );
+
+      if (recordExist) {
+        setFranchises((prev) => {
+          const newFranchises = prev.map((franchise) => {
+            if (franchise.mtop == franchiseDetails.mtop) {
+              return { ...franchise, pending: false };
+            } else {
+              return franchise;
+            }
+          });
+          return helper.sortData(newFranchises, "mtop");
+        });
+      }
+
+      // setUpdateForm(false);
+      setReadOnly(true);
+      setAlertSeverity("success");
+      setAlertMsg(
+        "Franchise cancel OR successfully. Your changes have been saved and are now reflected in the system."
+      );
+      onClose(false);
+    } catch (error) {
+      console.log(error);
+      setAlertSeverity("error");
+      if (error.response?.status == 400) {
+        setAlertMsg(
+          "Franchise transaction failed. " + error.response.data.message
+        );
+      } else {
+        setAlertMsg("franchise transaction failed. Please try again later.");
+      }
+    }
+    // setUpdateConfirmation(false);
+    setCancelOrModal(false);
+    setAlertShown(true);
+    setDisable(false);
+  };
+
   const handleFranchiseRevoke = async () => {
     setDisable(true);
     const id = franchiseDetails?.id;
@@ -183,11 +240,41 @@ const ClientInfo = ({
 
   const handleTransferSubmit = async () => {
     setDisable(true);
+
+    let newOwner = "";
+    let newDriver = "";
+    let newMotor = "";
+    let newToda = "";
+
+    if (
+      franchiseDetails.fname !== initialFormInfo.fname ||
+      franchiseDetails.lname !== initialFormInfo.lname
+    ) {
+      newOwner = `${franchiseDetails.fname} ${franchiseDetails.mi} ${franchiseDetails.lname}`;
+    }
+
+    if (franchiseDetails.drivername !== initialFormInfo.drivername) {
+      newDriver = franchiseDetails.drivername;
+    }
+
+    if (franchiseDetails.motorno !== initialFormInfo.motorno) {
+      newMotor = franchiseDetails.motorno;
+    }
+
+    if (franchiseDetails.toda !== initialFormInfo.toda) {
+      newToda = franchiseDetails.toda;
+    }
+
     try {
       const response = await axiosPrivate.post("/franchise/transfer", {
         ...franchiseDetails,
         processedBy: auth?.fullname,
+        newOwner: newOwner,
+        newDriver: newDriver,
+        newMotor: newMotor,
+        newToda: newToda,
       });
+
       setFranchiseDetails((prev) => ({
         ...prev,
         refNo: response.data?.refNo,
@@ -195,6 +282,10 @@ const ClientInfo = ({
         receiptData: response.data?.receiptData,
         transaction: "Transfer Franchise",
         processedBy: auth?.fullname,
+        newOwner: newOwner,
+        newDriver: newDriver,
+        newMotor: newMotor,
+        newToda: newToda,
       }));
 
       setinitialFormInfo((prev) => ({
@@ -204,6 +295,10 @@ const ClientInfo = ({
         receiptData: response.data?.receiptData,
         transaction: "Transfer Franchise",
         processedBy: auth?.fullname,
+        newOwner: newOwner,
+        newDriver: newDriver,
+        newMotor: newMotor,
+        newToda: newToda,
       }));
 
       setReceiptData(response.data?.receiptData);
@@ -216,6 +311,10 @@ const ClientInfo = ({
               receiptData: response.data?.receiptData,
               transaction: "Transfer Franchise",
               processedBy: auth?.fullname,
+              newOwner: newOwner,
+              newDriver: newDriver,
+              newMotor: newMotor,
+              newToda: newToda,
             };
           } else {
             return v;
@@ -254,6 +353,7 @@ const ClientInfo = ({
         setAlertMsg("Failed to transfer Franchise. Please try again later.");
       }
     }
+
     setTransferConfirmation(false);
     setAlertShown(true);
     setDisable(false);
@@ -468,6 +568,14 @@ const ClientInfo = ({
           !archiveMode &&
           (franchiseDetails?.pending ? (
             <Box display={"flex"} gap={1}>
+              <Button
+                variant="outlined"
+                color="error"
+                size="small"
+                onClick={() => setCancelOrModal(true)}
+              >
+                cancel or
+              </Button>
               <Button
                 variant="outlined"
                 size="small"
@@ -709,32 +817,41 @@ const ClientInfo = ({
         </FlexRow>
         {transferForm && (
           <FormControlLabel
-            control={<Checkbox />}
+            control={
+              <Checkbox
+                checked={
+                  franchiseDetails.changeOwner ||
+                  initialFormInfo.fname !== franchiseDetails.fname ||
+                  initialFormInfo.lname !== franchiseDetails.lname
+                }
+                onChange={(e) => {
+                  setFranchiseDetails((prev) => ({
+                    ...prev,
+                    changeOwner: e.target.checked,
+                  }));
+                }}
+              />
+            }
             label="Change Owner"
             sx={{ mt: 1, mb: -1 }}
-            value={franchiseDetails.changeOwner}
-            onChange={(e) =>
-              setFranchiseDetails((prev) => ({
-                ...prev,
-                changeOwner: e.target.checked,
-              }))
-            }
           />
         )}
         <Fieldset legend="Owner's Information">
           <FlexRow>
             <OutlinedTextField
-              required={true}
+              required
               label="Firstname"
               readOnly={readOnly}
-              value={franchiseDetails?.fname}
-              onChange={(e) =>
+              value={franchiseDetails?.fname || ""} // Ensure value is always a string
+              onChange={(e) => {
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   fname: e.target.value.toUpperCase(),
-                }))
-              }
+                  changeOwner: true,
+                }));
+              }}
             />
+
             <OutlinedTextField
               label="MI"
               value={franchiseDetails?.mi}
@@ -755,6 +872,7 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   lname: e.target.value.toUpperCase(),
+                  changeOwner: true,
                 }))
               }
             />
@@ -840,10 +958,16 @@ const ClientInfo = ({
 
         {transferForm && (
           <FormControlLabel
-            control={<Checkbox />}
+            control={
+              <Checkbox
+                checked={
+                  franchiseDetails.changeDriver ||
+                  franchiseDetails.drivername !== initialFormInfo.drivername
+                }
+              />
+            }
             label="Change Driver"
             sx={{ mt: 1, mb: -1 }}
-            value={franchiseDetails.changeDriver}
             onChange={(e) =>
               setFranchiseDetails((prev) => ({
                 ...prev,
@@ -864,6 +988,7 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   drivername: e.target.value.toUpperCase(),
+                  changeDriver: true,
                 }))
               }
             />
@@ -959,10 +1084,23 @@ const ClientInfo = ({
 
         {transferForm && (
           <FormControlLabel
-            control={<Checkbox />}
+            control={
+              <Checkbox
+                checked={
+                  franchiseDetails.changeMotor ||
+                  initialFormInfo.make !== franchiseDetails.make ||
+                  initialFormInfo.model !== franchiseDetails.model ||
+                  initialFormInfo.plateno !== franchiseDetails.plateno ||
+                  initialFormInfo.motorno !== franchiseDetails.motorno ||
+                  initialFormInfo.chassisno !== franchiseDetails.chassisno ||
+                  initialFormInfo.or !== franchiseDetails.or ||
+                  initialFormInfo.cr !== franchiseDetails.cr ||
+                  initialFormInfo.cr !== franchiseDetails.cr
+                }
+              />
+            }
             label="Change Motor"
             sx={{ mt: 1, mb: -1 }}
-            value={franchiseDetails.changeMotor}
             onChange={(e) =>
               setFranchiseDetails((prev) => ({
                 ...prev,
@@ -983,6 +1121,7 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   make: e.target.value.toUpperCase(),
+                  changeMotor: true,
                 }))
               }
             />
@@ -995,6 +1134,7 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   model: e.target.value.toUpperCase(),
+                  changeMotor: true,
                 }))
               }
             />
@@ -1007,6 +1147,7 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   plateno: v.target.value.toUpperCase(),
+                  changeMotor: true,
                 }));
               }}
             />
@@ -1021,6 +1162,7 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   motorno: e.target.value.toUpperCase(),
+                  changeMotor: true,
                 }))
               }
             />
@@ -1046,6 +1188,7 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   chassisno: e.target.value.toUpperCase(),
+                  changeMotor: true,
                 }))
               }
             />
@@ -1071,6 +1214,7 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   or: e.target.value.toUpperCase(),
+                  changeMotor: true,
                 }))
               }
             />
@@ -1083,6 +1227,7 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   cr: e.target.value.toUpperCase(),
+                  changeMotor: true,
                 }))
               }
             />
@@ -1146,10 +1291,16 @@ const ClientInfo = ({
 
         {transferForm && (
           <FormControlLabel
-            control={<Checkbox />}
+            control={
+              <Checkbox
+                checked={
+                  franchiseDetails.changeTODA ||
+                  franchiseDetails.toda !== initialFormInfo.toda
+                }
+              />
+            }
             label="Change TODA"
             sx={{ mt: 1, mb: -1 }}
-            value={franchiseDetails.changeTODA}
             onChange={(e) =>
               setFranchiseDetails((prev) => ({
                 ...prev,
@@ -1196,6 +1347,7 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   toda: e.target.value.toUpperCase(),
+                  changeTODA: true,
                 }))
               }
             />
@@ -1292,6 +1444,15 @@ const ClientInfo = ({
         msg="This form is for updating franchise information and renewal. Please ensure that the data you enter is accurate before submitting."
         severity={"info"}
         position={{ horizontal: "center", vertical: "top" }}
+      />
+
+      <ConfirmationDialog
+        open={cancelOrModal}
+        setOpen={setCancelOrModal}
+        confirm={handleCancelOr}
+        title="Cancel OR Confirmation"
+        content="Are you sure you want to cancel? The franchise data will revert to its previous state after cancellation."
+        disabled={disable}
       />
 
       <ConfirmationDialog

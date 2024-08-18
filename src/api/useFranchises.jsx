@@ -83,7 +83,11 @@ const useFranchises = () => {
               data.processedBy || "",
               data.collectingOfficer || "",
               data.MPreceiptData,
-              data.MPpaymentOr
+              data.MPpaymentOr,
+              data.newOwner,
+              data.newDriver,
+              data.newMotor,
+              data.newToda
             );
           });
         });
@@ -150,7 +154,11 @@ const useFranchises = () => {
               data.processedBy || "",
               data.collectingOfficer || "",
               data.MPreceiptData,
-              data.MPpaymentOr
+              data.MPpaymentOr,
+              data.newOwner,
+              data.newDriver,
+              data.newMotor,
+              data.newToda
             );
           });
         });
@@ -218,7 +226,11 @@ const useFranchises = () => {
               data.processedBy || "",
               data.collectingOfficer || "",
               data.MPreceiptData,
-              data.MPpaymentOr
+              data.MPpaymentOr,
+              data.newOwner,
+              data.newDriver,
+              data.newMotor,
+              data.newToda
             );
           });
         });

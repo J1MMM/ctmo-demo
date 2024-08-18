@@ -19,6 +19,7 @@ class TransferFranchise extends Component {
   render() {
     const { franchiseDetails, fullname, receiptData, initialFormInfo } =
       this.props;
+    console.log(franchiseDetails);
     const datenow = new Date();
     let totalAmount = 0;
 
@@ -326,8 +327,16 @@ class TransferFranchise extends Component {
               </td>
               <td className="td b-0 p-0">
                 <Typography variant="h6" fontFamily="monospace">
-                  {initialFormInfo?.fname} {initialFormInfo?.mi}{" "}
-                  {initialFormInfo?.lname}
+                  {franchiseDetails?.newOwner != "" &&
+                    `${initialFormInfo?.fname} ${initialFormInfo?.mi}
+                  ${initialFormInfo?.lname}`}
+
+                  {franchiseDetails.newDriver != "" &&
+                    ` ${initialFormInfo.drivername}`}
+                  {franchiseDetails.newMotor !== "" &&
+                    ` ${initialFormInfo.motorno}`}
+                  {franchiseDetails.newToda !== "" &&
+                    ` ${initialFormInfo.toda}`}
                 </Typography>
               </td>
             </tr>
@@ -343,8 +352,10 @@ class TransferFranchise extends Component {
               </td>
               <td className="td b-0 p-0">
                 <Typography variant="h6" fontFamily="monospace">
-                  {initialFormInfo?.fname} {initialFormInfo?.mi}{" "}
-                  {initialFormInfo?.lname}
+                  {franchiseDetails.newOwner}
+                  {franchiseDetails.newDriver}
+                  {franchiseDetails.newMotor}
+                  {franchiseDetails.newToda}
                 </Typography>
               </td>
             </tr>

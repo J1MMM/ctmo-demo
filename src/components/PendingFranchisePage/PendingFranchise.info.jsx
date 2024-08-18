@@ -78,6 +78,7 @@ const PendingFranchiseInfo = ({
   const ctmo1 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO1));
   const ctmo2 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO2));
 
+  const dateNow = new Date();
   // const createdAt = dayjs(franchiseDetails.createdAt);
   // const now = dayjs();
   // const twentyFourHoursAgo = now.subtract(24, "hour");
@@ -272,7 +273,7 @@ const PendingFranchiseInfo = ({
                   >
                     cancel
                   </Button> */}
-                  <Button
+                  {/* <Button
                     disabled={disable}
                     color="error"
                     variant="contained"
@@ -280,12 +281,16 @@ const PendingFranchiseInfo = ({
                     onClick={() => setCancelOrModal(true)}
                   >
                     cancel OR
-                  </Button>
+                  </Button> */}
                   <Button
                     disabled={disable}
                     variant="contained"
                     size="small"
                     onClick={() => {
+                      setFranchiseDetails((prev) => ({
+                        ...prev,
+                        paymentOrDate: dateNow,
+                      }));
                       setReadOnly(false);
                       setUpdateForm(true);
                     }}

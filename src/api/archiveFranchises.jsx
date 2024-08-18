@@ -67,7 +67,11 @@ const useArchivedFranchises = () => {
               data.receiptData,
               data.LTO_RENEWAL_DATE && new Date(data.LTO_RENEWAL_DATE),
               data.MPreceiptData,
-              data.MPpaymentOr
+              data.MPpaymentOr,
+              data.newOwner,
+              data.newDriver,
+              data.newMotor,
+              data.newToda
             );
           });
         });
