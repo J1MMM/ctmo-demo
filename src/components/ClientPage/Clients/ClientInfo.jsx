@@ -819,11 +819,7 @@ const ClientInfo = ({
           <FormControlLabel
             control={
               <Checkbox
-                checked={
-                  franchiseDetails.changeOwner ||
-                  initialFormInfo.fname !== franchiseDetails.fname ||
-                  initialFormInfo.lname !== franchiseDetails.lname
-                }
+                checked={franchiseDetails.changeOwner}
                 onChange={(e) => {
                   setFranchiseDetails((prev) => ({
                     ...prev,
@@ -958,14 +954,7 @@ const ClientInfo = ({
 
         {transferForm && (
           <FormControlLabel
-            control={
-              <Checkbox
-                checked={
-                  franchiseDetails.changeDriver ||
-                  franchiseDetails.drivername !== initialFormInfo.drivername
-                }
-              />
-            }
+            control={<Checkbox checked={franchiseDetails.changeDriver} />}
             label="Change Driver"
             sx={{ mt: 1, mb: -1 }}
             onChange={(e) =>
@@ -1084,21 +1073,7 @@ const ClientInfo = ({
 
         {transferForm && (
           <FormControlLabel
-            control={
-              <Checkbox
-                checked={
-                  franchiseDetails.changeMotor ||
-                  initialFormInfo.make !== franchiseDetails.make ||
-                  initialFormInfo.model !== franchiseDetails.model ||
-                  initialFormInfo.plateno !== franchiseDetails.plateno ||
-                  initialFormInfo.motorno !== franchiseDetails.motorno ||
-                  initialFormInfo.chassisno !== franchiseDetails.chassisno ||
-                  initialFormInfo.or !== franchiseDetails.or ||
-                  initialFormInfo.cr !== franchiseDetails.cr ||
-                  initialFormInfo.cr !== franchiseDetails.cr
-                }
-              />
-            }
+            control={<Checkbox checked={franchiseDetails.changeMotor} />}
             label="Change Motor"
             sx={{ mt: 1, mb: -1 }}
             onChange={(e) =>
@@ -1291,14 +1266,7 @@ const ClientInfo = ({
 
         {transferForm && (
           <FormControlLabel
-            control={
-              <Checkbox
-                checked={
-                  franchiseDetails.changeTODA ||
-                  franchiseDetails.toda !== initialFormInfo.toda
-                }
-              />
-            }
+            control={<Checkbox checked={franchiseDetails.changeTODA} />}
             label="Change TODA"
             sx={{ mt: 1, mb: -1 }}
             onChange={(e) =>
