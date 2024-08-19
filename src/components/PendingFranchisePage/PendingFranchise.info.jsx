@@ -154,7 +154,7 @@ const PendingFranchiseInfo = ({
     setDisable(true);
     try {
       const response = await axiosPrivate.post(
-        "/franchise/cancel",
+        "/franchise/cashier-cancel-pending",
         franchiseDetails
       );
 
@@ -273,7 +273,7 @@ const PendingFranchiseInfo = ({
                   >
                     cancel
                   </Button> */}
-                  {/* <Button
+                  <Button
                     disabled={disable}
                     color="error"
                     variant="contained"
@@ -281,7 +281,7 @@ const PendingFranchiseInfo = ({
                     onClick={() => setCancelOrModal(true)}
                   >
                     cancel OR
-                  </Button> */}
+                  </Button>
                   <Button
                     disabled={disable}
                     variant="contained"
