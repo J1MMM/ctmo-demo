@@ -547,8 +547,14 @@ class MayorPermitPrintable extends Component {
 
     const validDate = `${renewMonth} ${nextYear}`;
     let total = 0;
+    console.log(franchiseDetails);
 
-    if (franchiseDetails) {
+    if (
+      franchiseDetails &&
+      franchiseDetails.MPreceiptData != null &&
+      franchiseDetails.MPreceiptData != "" &&
+      typeof franchiseDetails.MPreceiptData == "object"
+    ) {
       total = franchiseDetails?.MPreceiptData?.reduce(
         (total, obj) => total + obj?.price,
         0

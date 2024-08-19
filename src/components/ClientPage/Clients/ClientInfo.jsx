@@ -246,22 +246,19 @@ const ClientInfo = ({
     let newMotor = "";
     let newToda = "";
 
-    if (
-      franchiseDetails.fname !== initialFormInfo.fname ||
-      franchiseDetails.lname !== initialFormInfo.lname
-    ) {
+    if (franchiseDetails.changeOwner) {
       newOwner = `${franchiseDetails.fname} ${franchiseDetails.mi} ${franchiseDetails.lname}`;
     }
 
-    if (franchiseDetails.drivername !== initialFormInfo.drivername) {
+    if (franchiseDetails.changeDriver) {
       newDriver = franchiseDetails.drivername;
     }
 
-    if (franchiseDetails.motorno !== initialFormInfo.motorno) {
+    if (franchiseDetails.changeMotor) {
       newMotor = franchiseDetails.motorno;
     }
 
-    if (franchiseDetails.toda !== initialFormInfo.toda) {
+    if (franchiseDetails.changeTODA) {
       newToda = franchiseDetails.toda;
     }
 
@@ -843,7 +840,6 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   fname: e.target.value.toUpperCase(),
-                  changeOwner: true,
                 }));
               }}
             />
@@ -868,7 +864,6 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   lname: e.target.value.toUpperCase(),
-                  changeOwner: true,
                 }))
               }
             />
@@ -977,7 +972,6 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   drivername: e.target.value.toUpperCase(),
-                  changeDriver: true,
                 }))
               }
             />
@@ -1096,7 +1090,6 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   make: e.target.value.toUpperCase(),
-                  changeMotor: true,
                 }))
               }
             />
@@ -1109,7 +1102,6 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   model: e.target.value.toUpperCase(),
-                  changeMotor: true,
                 }))
               }
             />
@@ -1122,7 +1114,6 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   plateno: v.target.value.toUpperCase(),
-                  changeMotor: true,
                 }));
               }}
             />
@@ -1137,7 +1128,6 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   motorno: e.target.value.toUpperCase(),
-                  changeMotor: true,
                 }))
               }
             />
@@ -1163,7 +1153,6 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   chassisno: e.target.value.toUpperCase(),
-                  changeMotor: true,
                 }))
               }
             />
@@ -1189,7 +1178,6 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   or: e.target.value.toUpperCase(),
-                  changeMotor: true,
                 }))
               }
             />
@@ -1202,7 +1190,6 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   cr: e.target.value.toUpperCase(),
-                  changeMotor: true,
                 }))
               }
             />
@@ -1315,7 +1302,6 @@ const ClientInfo = ({
                 setFranchiseDetails((prev) => ({
                   ...prev,
                   toda: e.target.value.toUpperCase(),
-                  changeTODA: true,
                 }))
               }
             />
