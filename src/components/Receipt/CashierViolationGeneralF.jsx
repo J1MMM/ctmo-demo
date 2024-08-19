@@ -363,6 +363,9 @@ class CashierViolationGeneralF extends Component {
           </table>
 
           <table className="table">
+            <p style={{ position: "absolute", left: 10, bottom: 80 }}>
+              MTOP: {violationDetails.franchiseNo}
+            </p>
             <tbody>
               <tr>
                 <td className="td b-0">Received the amount stated above.</td>

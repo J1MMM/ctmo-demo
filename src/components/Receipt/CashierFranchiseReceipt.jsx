@@ -179,7 +179,6 @@ class CashierFranchiseReceipt extends Component {
               </BorderBox>
             </BorderBox>
           </BorderBox>
-
           <table className="table">
             <tbody>
               <tr>
@@ -192,7 +191,6 @@ class CashierFranchiseReceipt extends Component {
               </tr>
             </tbody>
           </table>
-
           <table className="table">
             <tbody>
               <tr>
@@ -212,7 +210,6 @@ class CashierFranchiseReceipt extends Component {
               </tr>
             </tbody>
           </table>
-
           <table className="table">
             <tbody>
               <tr>
@@ -272,7 +269,6 @@ class CashierFranchiseReceipt extends Component {
               </tr>
             </tbody>
           </table>
-
           <table className="table">
             <tbody>
               <tr>
@@ -280,7 +276,6 @@ class CashierFranchiseReceipt extends Component {
               </tr>
             </tbody>
           </table>
-
           <table className="table">
             <tbody>
               <tr>
@@ -366,8 +361,10 @@ class CashierFranchiseReceipt extends Component {
               </tr>
             </tbody>
           </table>
-
           <table className="table">
+            <p style={{ position: "absolute", left: 10, bottom: 80 }}>
+              MTOP: {franchiseDetails.mtop}
+            </p>
             <tbody>
               <tr>
                 <td className="td b-0">Received the amount stated above.</td>
@@ -400,7 +397,6 @@ class CashierFranchiseReceipt extends Component {
               </tr>
             </tbody>
           </table>
-
           <table className="table">
             <tbody>
               <tr>

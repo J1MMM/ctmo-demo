@@ -125,7 +125,7 @@ class ReceiptViolationPrintableTF extends Component {
           p: 1,
           border: "none",
           maxWidth: 450,
-          marginLeft: "2.6rem",
+          marginLeft: "2.5rem",
           marginTop: "2.8rem",
         }}
       >
@@ -548,6 +548,16 @@ class ReceiptViolationPrintableTF extends Component {
               </tr>
             </tbody>
           </table>
+          <p
+            style={{
+              position: "absolute",
+              fontFamily: "monospace",
+              bottom: "2.3rem",
+              left: "1.5rem",
+            }}
+          >
+            {violationDetails.franchiseNo}
+          </p>
           <p
             style={{
               marginLeft: "8rem",

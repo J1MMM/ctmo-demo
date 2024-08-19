@@ -135,7 +135,7 @@ class CashierFranchiseReceiptPrintable extends Component {
           p: 1,
           border: "none",
           maxWidth: 450,
-          marginLeft: "2.6rem",
+          marginLeft: "2.5rem",
           marginTop: "2.8rem",
         }}
       >
@@ -549,6 +549,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               </tr>
             </tbody>
           </table>
+
           <p
             style={{
               marginLeft: "8rem",
@@ -556,6 +557,15 @@ class CashierFranchiseReceiptPrintable extends Component {
               marginTop: "2rem",
             }}
           >
+            <p
+              style={{
+                display: "block",
+                marginLeft: "-5rem",
+                marginBottom: "-.8rem",
+              }}
+            >
+              {franchiseDetails.mtop}
+            </p>
             <b>{fullname}</b>
           </p>
           <table className="table noOutline">
