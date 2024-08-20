@@ -98,7 +98,7 @@ const useFranchises = () => {
       }
     };
     fetchFranchises();
-  }, [axiosPrivate, violations]); // Ensure axiosPrivate is included as a dependency
+  }, [axiosPrivate]); // Ensure axiosPrivate is included as a dependency
 
   useEffect(() => {
     const fetchFranchises = async () => {
