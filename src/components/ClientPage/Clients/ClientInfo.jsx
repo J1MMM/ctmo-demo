@@ -677,15 +677,17 @@ const ClientInfo = ({
                     timeout={!transferForm && !updateForm ? 300 : 0}
                   >
                     <Box display="flex" gap={1}>
-                      <Button
-                        disabled={disable}
-                        variant="contained"
-                        size="small"
-                        color="error"
-                        onClick={() => setDropConfirm(true)}
-                      >
-                        REVOKE
-                      </Button>
+                      {admin && (
+                        <Button
+                          disabled={disable}
+                          variant="contained"
+                          size="small"
+                          color="error"
+                          onClick={() => setDropConfirm(true)}
+                        >
+                          REVOKE
+                        </Button>
+                      )}
                       <Button
                         disabled={disable}
                         variant="contained"
