@@ -66,7 +66,7 @@ const Navbar = ({ navOpen }) => {
 
         {!isSuperAdmin && (
           <>
-            {!ctmo3 && !cashier && (
+            {!cashier && (
               <NavLink to="clients" className={navOpen ? "open" : ""}>
                 <PiUserList size={26} style={{ minWidth: 26 }} />
                 <Typography

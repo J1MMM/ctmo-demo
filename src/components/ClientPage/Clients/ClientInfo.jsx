@@ -135,6 +135,7 @@ const ClientInfo = ({
   const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
   const ctmo1 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO1));
   const ctmo2 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO2));
+  const ctmo3 = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.CTMO3));
 
   const componentRef = useRef(null);
   const transferRecieptRef = useRef(null);
@@ -713,7 +714,7 @@ const ClientInfo = ({
         }
       >
         <Box display="flex" gap={1}>
-          {admin || ctmo2 ? (
+          {admin || ctmo2 || ctmo3 ? (
             <Collapse in={printable && !updateForm && !transferForm}>
               <Button
                 variant="outlined"
