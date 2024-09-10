@@ -262,7 +262,7 @@ const ViolationModal = ({
                           </Button>
                         </>
                       ) : null}
-                      {isAdmin || ctmo3 || ctmo1 ? (
+                      {isAdmin || ctmo3 ? (
                         <>
                           <Button
                             variant="outlined"
