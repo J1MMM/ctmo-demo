@@ -7,8 +7,8 @@ class PrintableReport extends Component {
   render() {
     const { franchiseDetails, paidViolations } = this.props;
 
-    const date_released = franchiseDetails?.daterelease
-      ? dayjs(franchiseDetails?.daterelease).format("MM/DD/YYYY")
+    const date_released = franchiseDetails?.date
+      ? dayjs(franchiseDetails?.date).format("MM/DD/YYYY")
       : "";
 
     const complaintsEl =
