@@ -75,6 +75,18 @@ class PrintableReport extends Component {
                   <b>NAME OF DRIVER</b>
                 </td>
               </tr>
+              <tr>
+                <td className="td center" colSpan={2}>
+                  {franchiseDetails?.address}
+                  <br />
+                  <b>OWNER'S ADDRESS</b>
+                </td>
+                <td className="td center" colSpan={2}>
+                  {franchiseDetails.driveraddress}
+                  <br />
+                  <b>DRIVER'S ADDRESS</b>
+                </td>
+              </tr>
 
               <tr>
                 <td className="td center" colSpan={4}>
