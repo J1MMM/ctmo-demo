@@ -28,17 +28,28 @@ import ExportButton from "../../common/ui/ExportButton";
 
 const ClientsTable = memo(() => {
   const axiosPrivate = useAxiosPrivate();
-  const { franchises, setFranchises, franchisesLoading } = useData();
+  const {
+    franchises,
+    setFranchises,
+    franchisesLoading,
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
+    rowCount,
+    setRowCount,
+    filterModel,
+    setFilterModel,
+    filters,
+    setFranchisesLoading,
+  } = useData();
   const [franchiseDetails, setFranchiseDetails] = useState(
     helper.initialFranchiseDetails
   );
   const [initialFormInfo, setinitialFormInfo] = useState({});
-  const [noResponse, setNoResponse] = useState(false);
   const [clientInfo, setClientInfo] = useState(false);
   const [addclient, setAddclient] = useState(false);
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(100);
-  const [totalRows, setTotalRows] = useState(0);
+
   const [paidViolations, setPaidViolations] = useState([]);
   const { auth } = useAuth();
 
@@ -68,6 +79,98 @@ const ClientsTable = memo(() => {
     return ""; // Return an empty string for rows without highlighting
   };
 
+  function removeEmptyStrings(array) {
+    const filteredArray = array.filter((item) => item.trim() !== "");
+
+    return filteredArray;
+  }
+
+  const handleFilterChange = (model) => {
+    setFilterModel(model);
+    setPage(0); // Reset to first page on filter change
+  };
+
+  const fetchFilteredFranchises = async () => {
+    setFranchisesLoading(true);
+    const safeFilters = filterModel || {};
+    try {
+      const response = await axiosPrivate.get("/franchise/filter", {
+        params: {
+          page,
+          pageSize,
+          filters: JSON.stringify(safeFilters),
+        },
+      });
+
+      // setFranchises(response.data.rows);
+      setFranchises(() => {
+        return response.data?.rows.map((data) => {
+          return helper.createClientsData(
+            data._id || "",
+            data.MTOP || "",
+            data.LASTNAME || "",
+            data.FIRSTNAME || "",
+            data.MI || "",
+            data.ADDRESS || "",
+            data.OWNER_NO?.replace(/-/g, "").replace(/^0+/g, ""),
+            data.DRIVERS_NO?.replace(/-/g, "").replace(/^0+/g, ""),
+            data.TODA || "",
+            data.DRIVERS_NAME || "",
+            data.DRIVERS_ADDRESS || "",
+            data.OR || "",
+            data.CR || "",
+            data.DRIVERS_LICENSE_NO || "",
+            data.MAKE || "",
+            data.MODEL || "",
+            data.MOTOR_NO || "",
+            data.CHASSIS_NO || "",
+            data.PLATE_NO || "",
+            data.STROKE || "",
+            data.DATE_RENEWAL && new Date(data.DATE_RENEWAL),
+            data.REMARKS || "",
+            data.DATE_RELEASE_OF_ST_TP && new Date(data.DATE_RELEASE_OF_ST_TP),
+            removeEmptyStrings(data.COMPLAINT),
+            data.DATE_ARCHIVED || "",
+            data.OWNER_SEX || "",
+            data.DRIVERS_SEX || "",
+            data.TPL_PROVIDER || "",
+            data.TPL_DATE_1 && new Date(data.TPL_DATE_1),
+            data.TPL_DATE_2 && new Date(data.TPL_DATE_2),
+            data.FUEL_DISP || "",
+            data.TYPE_OF_FRANCHISE || "",
+            data.KIND_OF_BUSINESS || "",
+            data.ROUTE || "",
+            data.PAID_VIOLATIONS,
+            data.refNo,
+            data.paymentOr,
+            data.paymentOrDate,
+            data.pending,
+            data.transaction,
+            data.receiptData,
+            data.LTO_RENEWAL_DATE && new Date(data.LTO_RENEWAL_DATE),
+            data.processedBy || "",
+            data.collectingOfficer || "",
+            data.MPreceiptData,
+            data.MPpaymentOr,
+            data.newOwner,
+            data.newDriver,
+            data.newMotor,
+            data.newToda
+          );
+        });
+      });
+      setRowCount(response.data.totalRows);
+    } catch (error) {
+      console.error("Error fetching filtered data:", error);
+    } finally {
+      setFranchisesLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchFilteredFranchises();
+  }, [axiosPrivate, filterModel]);
+
   return (
     <>
       <DataTable
@@ -92,18 +195,18 @@ const ClientsTable = memo(() => {
         )}
         columns={helper.clientsColumns}
         rows={franchises}
-        rowCount={totalRows}
+        rowCount={rowCount}
         page={page}
         pageSize={pageSize}
         onCellDoubleClick={(e) => handleRowDoubleClick(e)}
-        onFilterModelChange={() => setPage(0)}
+        onFilterModelChange={(model) => handleFilterChange(model)}
         onPaginationModelChange={(e) => {
           setPage(e.page);
           setPageSize(e.pageSize);
         }}
-        onStateChange={(e) =>
-          setTotalRows(helper.countTrueValues(e?.visibleRowsLookup))
-        }
+        // onStateChange={(e) =>
+        //   setTotalRows(helper.countTrueValues(e?.visibleRowsLookup))
+        // }
         loading={franchisesLoading}
         getRowClassName={getRowClassName}
       />

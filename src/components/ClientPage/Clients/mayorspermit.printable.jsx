@@ -547,7 +547,6 @@ class MayorPermitPrintable extends Component {
 
     const validDate = `${renewMonth} ${nextYear}`;
     let total = 0;
-    console.log(franchiseDetails);
 
     if (
       franchiseDetails &&

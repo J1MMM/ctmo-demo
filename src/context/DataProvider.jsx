@@ -44,6 +44,12 @@ export const DataProvider = ({ children }) => {
 
   const [headerShadow, setHeaderShadow] = useState(false);
   const [dummyVariable, setDummyVariable] = useState(false);
+
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(100);
+  const [rowCount, setRowCount] = useState(0);
+  const [filterModel, setFilterModel] = useState({ items: [] });
+
   return (
     <DataContext.Provider
       value={{
@@ -101,6 +107,14 @@ export const DataProvider = ({ children }) => {
         setPendingFranchisesPaid,
         pendingFranchisesLoadingPaid,
         setPendingFranchisesPaidLoading,
+        rowCount,
+        setRowCount,
+        pageSize,
+        setPageSize,
+        page,
+        setPage,
+        filterModel,
+        setFilterModel,
       }}
     >
       {children}
