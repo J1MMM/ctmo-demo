@@ -39,7 +39,9 @@ const AlertDialog = ({ open, setOpen, title, content, confirm, disabled }) => {
       <DialogContent component={"span"} dividers>
         <DialogContentText component={"span"} id="alert-dialog-description">
           <Alert component={"span"} sx={{ maxWidth: "500px" }} severity="info">
-            <Typography variant="body1">{content}</Typography>
+            <Typography component={"span"} variant="body1">
+              {content}
+            </Typography>
           </Alert>
         </DialogContentText>
       </DialogContent>

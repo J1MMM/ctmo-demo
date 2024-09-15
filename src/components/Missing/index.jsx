@@ -25,13 +25,23 @@ const Missing = () => {
         }}
       >
         <Box maxWidth={500}>
-          <Typography color="#6C63FF" fontWeight={"bold"} variant="h5">
+          <Typography
+            component={"span"}
+            color="#6C63FF"
+            fontWeight={"bold"}
+            variant="h5"
+          >
             404 Error
           </Typography>
-          <Typography variant="h2" fontWeight={500}>
+          <Typography component={"span"} variant="h2" fontWeight={500}>
             Page not found
           </Typography>
-          <Typography variant="body1" color={"#3F3D56"} mt={1}>
+          <Typography
+            component={"span"}
+            variant="body1"
+            color={"#3F3D56"}
+            mt={1}
+          >
             Sorry, the page you are looking for could not be found or has been
             removed
           </Typography>

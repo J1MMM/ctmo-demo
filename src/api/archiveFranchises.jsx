@@ -83,7 +83,7 @@ const useArchivedFranchises = () => {
     };
 
     fetchArchived();
-  }, [axiosPrivate, franchises, dummyVariable]); // Ensure axiosPrivate is included as a dependency
+  }, []); // Ensure axiosPrivate is included as a dependency
 
   return { archivedFanchises, archivedFranchisesLoading, error };
 };

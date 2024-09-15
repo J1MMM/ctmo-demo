@@ -27,13 +27,23 @@ const Unauthorized = () => {
         }}
       >
         <Box maxWidth={500}>
-          <Typography color="#6C63FF" fontWeight={"bold"} variant="h5">
+          <Typography
+            component={"span"}
+            color="#6C63FF"
+            fontWeight={"bold"}
+            variant="h5"
+          >
             403 Error
           </Typography>
-          <Typography variant="h3" fontWeight={500}>
+          <Typography component={"span"} variant="h3" fontWeight={500}>
             Access forbidden
           </Typography>
-          <Typography variant="body1" color={"#3F3D56"} mt={1}>
+          <Typography
+            component={"span"}
+            variant="body1"
+            color={"#3F3D56"}
+            mt={1}
+          >
             You tired to access a page you did not have prior authorize for
           </Typography>
 

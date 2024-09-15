@@ -51,6 +51,7 @@ const FormContent = ({
   return (
     <Box my={1} mx={5} position="relative">
       <Typography
+        component={"span"}
         fontSize={12}
         color="red"
         fontStyle="italic"
@@ -163,7 +164,12 @@ const FormContent = ({
       </Typography>
 
       <Box display="flex" mt={1}>
-        <Typography fontFamily="Arial" fontStyle="italic" minWidth={180}>
+        <Typography
+          component={"span"}
+          fontFamily="Arial"
+          fontStyle="italic"
+          minWidth={180}
+        >
           THIS CERTIFIES that
         </Typography>
         <Box
@@ -280,7 +286,12 @@ const FormContent = ({
         >
           <Box display="grid" gridTemplateColumns={"50% 50%"}>
             <Box display={"flex"}>
-              <Typography fontWeight="bold" fontFamily={"Arial"} fontSize={12}>
+              <Typography
+                component={"span"}
+                fontWeight="bold"
+                fontFamily={"Arial"}
+                fontSize={12}
+              >
                 MAKE:
               </Typography>
               <Box borderBottom={"1px solid"} width={"100%"}>
@@ -316,7 +327,12 @@ const FormContent = ({
             </Box>
 
             <Box display={"flex"}>
-              <Typography fontWeight="bold" fontFamily={"Arial"} fontSize={12}>
+              <Typography
+                component={"span"}
+                fontWeight="bold"
+                fontFamily={"Arial"}
+                fontSize={12}
+              >
                 MODEL:
               </Typography>
               <Box borderBottom={"1px solid"} width={"100%"}>
@@ -403,13 +419,23 @@ const FormContent = ({
               KIND BUSINESS/OCCUPATION:
             </Typography>
             <Box borderBottom={"1px solid"} width={"100%"}>
-              <Typography fontWeight="bold" fontFamily={"Arial"} fontSize={12}>
+              <Typography
+                component={"span"}
+                fontWeight="bold"
+                fontFamily={"Arial"}
+                fontSize={12}
+              >
                 {franchiseDetails?.kindofBusiness}
               </Typography>
             </Box>
           </Box>
           <Box display={"flex"}>
-            <Typography fontWeight="bold" fontFamily={"Arial"} fontSize={12}>
+            <Typography
+              component={"span"}
+              fontWeight="bold"
+              fontFamily={"Arial"}
+              fontSize={12}
+            >
               REMARKS:
             </Typography>
             <Box borderBottom={"1px solid"} width={"100%"}>
@@ -529,7 +555,12 @@ const FormContent = ({
       >
         ANY ALTERATION AND/OR ERASURE WILL INVALID THIS PERMIT
       </Typography>
-      <Typography fontSize={8} textAlign={"center"} fontFamily={"Arial"}>
+      <Typography
+        component={"span"}
+        fontSize={8}
+        textAlign={"center"}
+        fontFamily={"Arial"}
+      >
         Tuloy-tuloy ang Pag-abante
       </Typography>
     </Box>

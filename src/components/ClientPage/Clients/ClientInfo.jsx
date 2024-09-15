@@ -601,7 +601,9 @@ const ClientInfo = ({
                   sx={{ color: "#FFF" }}
                   fontSize="small"
                 />
-                <Typography color="#FFF">Pending</Typography>
+                <Typography component={"span"} color="#FFF">
+                  Pending
+                </Typography>
               </Box>
             </Box>
           ) : (
@@ -1233,7 +1235,7 @@ const ClientInfo = ({
                     }
                   />
                 </LocalizationProvider>
-                <Typography variant="subtitle1" color="grey">
+                <Typography component={"span"} variant="subtitle1" color="grey">
                   to
                 </Typography>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>

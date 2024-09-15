@@ -155,6 +155,7 @@ class ReceiptViolationPrintableTF extends Component {
                 }}
               >
                 <Typography
+                  component={"span"}
                   fontFamily={"monospace"}
                   textAlign="center"
                   fontWeight="bold"
@@ -178,6 +179,7 @@ class ReceiptViolationPrintableTF extends Component {
               </p>
               <BorderBox sx={{ border: "none", position: "relative" }}>
                 <Typography
+                  component={"span"}
                   fontFamily={"monospace"}
                   m={1}
                   ml={4}
@@ -196,7 +198,7 @@ class ReceiptViolationPrintableTF extends Component {
                 </Typography>
               </BorderBox>
               <BorderBox sx={{ borderBottom: "none", border: "none" }}>
-                <Typography fontFamily={"monospace"} m={1}>
+                <Typography component={"span"} fontFamily={"monospace"} m={1}>
                   <b
                     style={{
                       color: "transparent",

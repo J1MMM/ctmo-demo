@@ -33,7 +33,9 @@ const EmptyRowsOverlay = () => (
       gap={2}
     >
       <img src={emptyImg} alt="" style={{ width: "100%", maxWidth: 100 }} />
-      <Typography color="gray">No data found</Typography>
+      <Typography component={"span"} color="gray">
+        No data found
+      </Typography>
     </Box>
   </GridOverlay>
 );
@@ -47,7 +49,9 @@ const LoadingComp = () => (
       alignItems="center"
       gap={2}
     >
-      <Typography color="primary">Loading...</Typography>
+      <Typography component={"span"} color="primary">
+        Loading...
+      </Typography>
       <LinearProgress sx={{ width: 200 }} />
     </Box>
   </GridOverlay>

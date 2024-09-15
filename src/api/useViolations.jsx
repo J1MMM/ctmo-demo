@@ -40,7 +40,7 @@ const useViolations = () => {
     };
 
     fetchData();
-  }, [axiosPrivate]);
+  }, []);
 
   //kind of violation list
   useEffect(() => {
@@ -59,7 +59,7 @@ const useViolations = () => {
     };
 
     fetchData();
-  }, [axiosPrivate]);
+  }, []);
 
   // paid list
   useEffect(() => {
@@ -77,7 +77,7 @@ const useViolations = () => {
     };
 
     fetchData();
-  }, [axiosPrivate, violations]);
+  }, []);
 
   useEffect(() => {
     const update = async () => {
@@ -90,7 +90,7 @@ const useViolations = () => {
       }
     };
     update();
-  }, [violations]);
+  }, []);
 
   return { violationsList, violationsListLoading, error };
 };

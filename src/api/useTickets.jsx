@@ -24,7 +24,7 @@ const useTickets = () => {
     };
 
     fetchData();
-  }, [axiosPrivate]);
+  }, []);
 
   return { tickets, ticketLoading, error };
 };

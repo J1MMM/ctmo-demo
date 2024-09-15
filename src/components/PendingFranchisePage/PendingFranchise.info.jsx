@@ -667,7 +667,7 @@ const PendingFranchiseInfo = ({
                     disabled={!readOnly}
                   />
                 </LocalizationProvider>
-                <Typography variant="subtitle1" color="grey">
+                <Typography component={"span"} variant="subtitle1" color="grey">
                   to
                 </Typography>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>

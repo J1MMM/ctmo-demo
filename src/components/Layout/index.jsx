@@ -103,6 +103,7 @@ const Layout = () => {
               <img src={Logo2} />
             </Box>
             <Typography
+              component={"span"}
               variant="h5"
               fontWeight={"500"}
               sx={{
@@ -249,10 +250,10 @@ const Layout = () => {
             border="3px solid #FFF"
             fontSize="2rem"
           />
-          <Typography zIndex="2" variant="h6" mt={1}>
+          <Typography component={"span"} zIndex="2" variant="h6" mt={1}>
             {auth?.fullname}
           </Typography>
-          <Typography zIndex="2" variant="caption">
+          <Typography component={"span"} zIndex="2" variant="caption">
             {auth?.email}
           </Typography>
 
@@ -353,7 +354,7 @@ const Layout = () => {
           <ListItemIcon sx={{ ml: 7 }}>
             <Logout />
           </ListItemIcon>
-          <Typography>Logout </Typography>
+          <Typography component={"span"}>Logout </Typography>
         </MenuItem>
 
         <button

@@ -39,6 +39,7 @@ class TransferFranchise extends Component {
       >
         <BorderBox sx={justifyCenter}>
           <Typography
+            component={"span"}
             variant="h6"
             fontFamily={"monospace"}
             textAlign="center"
@@ -50,6 +51,7 @@ class TransferFranchise extends Component {
         <BorderBox sx={justifyCenter}>
           <Typography
             variant="h6"
+            component={"span"}
             fontFamily={"monospace"}
             textAlign="center"
             fontWeight="bold"
@@ -61,6 +63,7 @@ class TransferFranchise extends Component {
         <BorderBox sx={justifyCenter}>
           <Typography
             variant="h6"
+            component={"span"}
             fontFamily={"monospace"}
             textAlign="center"
             sx={{ textDecoration: "underline", mt: -1 }}
@@ -71,7 +74,12 @@ class TransferFranchise extends Component {
 
         <br />
         <BorderBox sx={justifyStart}>
-          <Typography variant="h6" fontFamily={"monospace"} fontWeight="bold">
+          <Typography
+            component={"span"}
+            variant="h6"
+            fontFamily={"monospace"}
+            fontWeight="bold"
+          >
             NAME:
           </Typography>
         </BorderBox>
@@ -81,13 +89,19 @@ class TransferFranchise extends Component {
             textAlign="center"
             sx={{ mt: -1 }}
             fontFamily={"monospace"}
+            component={"span"}
           >
             {franchiseDetails?.fname} {franchiseDetails?.mi}{" "}
             {franchiseDetails?.lname}
           </Typography>
         </BorderBox>
         <BorderBox sx={justifyStart}>
-          <Typography variant="h6" fontFamily={"monospace"} fontWeight="bold">
+          <Typography
+            component={"span"}
+            variant="h6"
+            fontFamily={"monospace"}
+            fontWeight="bold"
+          >
             ADDRESS:
           </Typography>
         </BorderBox>
@@ -97,6 +111,7 @@ class TransferFranchise extends Component {
             textAlign="center"
             sx={{ mt: -1 }}
             fontFamily={"monospace"}
+            component={"span"}
           >
             {franchiseDetails?.address}
           </Typography>
@@ -104,7 +119,12 @@ class TransferFranchise extends Component {
 
         <br />
         <BorderBox sx={justifyStart}>
-          <Typography variant="h6" fontFamily={"monospace"} fontWeight="bold">
+          <Typography
+            component={"span"}
+            variant="h6"
+            fontFamily={"monospace"}
+            fontWeight="bold"
+          >
             Amendment:
           </Typography>
         </BorderBox>
@@ -119,10 +139,15 @@ class TransferFranchise extends Component {
                     variant="h6"
                     fontFamily={"monospace"}
                     fontWeight="bold"
+                    component={"span"}
                   >
                     {item?.label}
                   </Typography>
-                  <Typography variant="h6" fontFamily="monospace">
+                  <Typography
+                    component={"span"}
+                    variant="h6"
+                    fontFamily="monospace"
+                  >
                     {item?.price?.toLocaleString("en", {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
@@ -143,10 +168,15 @@ class TransferFranchise extends Component {
                 variant="h6"
                 fontFamily={"monospace"}
                 fontWeight="bold"
+                component={"span"}
               >
                 {item?.label}
               </Typography>
-              <Typography variant="h6" fontFamily="monospace">
+              <Typography
+                component={"span"}
+                variant="h6"
+                fontFamily="monospace"
+              >
                 {item?.price?.toLocaleString("en", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -162,10 +192,15 @@ class TransferFranchise extends Component {
           <Box borderTop="2px solid #000" width="30%" />
         </BorderBox>
         <BorderBox sx={{ ...justifyStart, justifyContent: "space-between" }}>
-          <Typography variant="h6" fontFamily={"monospace"} fontWeight="bold">
+          <Typography
+            component={"span"}
+            variant="h6"
+            fontFamily={"monospace"}
+            fontWeight="bold"
+          >
             TOTAL
           </Typography>
-          <Typography variant="h6" fontFamily="monospace">
+          <Typography component={"span"} variant="h6" fontFamily="monospace">
             {totalAmount.toLocaleString("en", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
@@ -181,6 +216,7 @@ class TransferFranchise extends Component {
                   variant="h6"
                   fontFamily={"monospace"}
                   fontWeight="bold"
+                  component={"span"}
                 >
                   MTOP
                 </Typography>
@@ -190,12 +226,17 @@ class TransferFranchise extends Component {
                   variant="h6"
                   fontFamily={"monospace"}
                   sx={{ minWidth: 50 }}
+                  component={"span"}
                 >
                   #
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.mtop}
                 </Typography>
               </td>
@@ -203,6 +244,7 @@ class TransferFranchise extends Component {
             <tr>
               <td className="td b-0 p-0">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   fontWeight="bold"
@@ -212,6 +254,7 @@ class TransferFranchise extends Component {
               </td>
               <td className="td b-0 p-0 center">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   sx={{ minWidth: 50 }}
@@ -220,7 +263,11 @@ class TransferFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.make}
                 </Typography>
               </td>
@@ -230,6 +277,7 @@ class TransferFranchise extends Component {
                 <Typography
                   variant="h6"
                   fontFamily={"monospace"}
+                  component={"span"}
                   fontWeight="bold"
                 >
                   Motor
@@ -238,6 +286,7 @@ class TransferFranchise extends Component {
               <td className="td b-0 p-0 center">
                 <Typography
                   variant="h6"
+                  component={"span"}
                   fontFamily={"monospace"}
                   sx={{ minWidth: 50 }}
                 >
@@ -245,7 +294,11 @@ class TransferFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.motorno}
                 </Typography>
               </td>
@@ -255,6 +308,7 @@ class TransferFranchise extends Component {
                 <Typography
                   variant="h6"
                   fontFamily={"monospace"}
+                  component={"span"}
                   fontWeight="bold"
                 >
                   Chassis
@@ -264,13 +318,18 @@ class TransferFranchise extends Component {
                 <Typography
                   variant="h6"
                   fontFamily={"monospace"}
+                  component={"span"}
                   sx={{ minWidth: 50 }}
                 >
                   #
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.chassisno}
                 </Typography>
               </td>
@@ -295,7 +354,11 @@ class TransferFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.plateno}
                 </Typography>
               </td>
@@ -326,7 +389,11 @@ class TransferFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.newOwner != "" &&
                     `${initialFormInfo?.fname} ${initialFormInfo?.mi}
                   ${initialFormInfo?.lname}`}
@@ -351,7 +418,11 @@ class TransferFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails.newOwner}
                   {franchiseDetails.newDriver}
                   {franchiseDetails.newMotor}
@@ -370,7 +441,11 @@ class TransferFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {fullname}
                 </Typography>
               </td>
@@ -386,7 +461,11 @@ class TransferFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {dayjs(datenow).format("MM/DD/YYYY")}
                 </Typography>
               </td>
@@ -402,7 +481,11 @@ class TransferFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 p-0">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.refNo}
                 </Typography>
               </td>
@@ -421,7 +504,12 @@ class TransferFranchise extends Component {
               maxWidth: 250,
             }}
           >
-            <Typography variant="h6" fontFamily="monospace" textAlign="center">
+            <Typography
+              component={"span"}
+              variant="h6"
+              fontFamily="monospace"
+              textAlign="center"
+            >
               LUCIO GERALDO G. CIOLO
             </Typography>
 

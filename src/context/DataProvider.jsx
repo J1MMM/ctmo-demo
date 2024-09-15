@@ -49,6 +49,7 @@ export const DataProvider = ({ children }) => {
   const [pageSize, setPageSize] = useState(100);
   const [rowCount, setRowCount] = useState(0);
   const [filterModel, setFilterModel] = useState({ items: [] });
+  const [sortModel, setSortModel] = useState([]);
 
   return (
     <DataContext.Provider
@@ -115,6 +116,8 @@ export const DataProvider = ({ children }) => {
         setPage,
         filterModel,
         setFilterModel,
+        sortModel,
+        setSortModel,
       }}
     >
       {children}

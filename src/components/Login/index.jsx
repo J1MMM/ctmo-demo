@@ -203,6 +203,7 @@ const LoginComponenet = () => {
           </Box>
 
           <Typography
+            component={"span"}
             align="center"
             variant="h5"
             fontWeight="500"

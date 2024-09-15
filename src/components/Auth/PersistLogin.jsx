@@ -71,6 +71,7 @@ const PersistLogin = () => {
             zIndex={2}
           >
             <Typography
+              component={"span"}
               color="secondary"
               textAlign="center"
               fontWeight={600}
@@ -118,6 +119,7 @@ const PersistLogin = () => {
               gap={1}
             >
               <Typography
+                component={"span"}
                 color="secondary"
                 fontWeight="500"
                 sx={{

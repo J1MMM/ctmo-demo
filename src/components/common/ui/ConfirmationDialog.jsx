@@ -59,7 +59,7 @@ const ConfirmationDialog = ({
             }}
             severity={serverity || "warning"}
           >
-            <Typography variant="body1" textAlign="center">
+            <Typography component={"span"} variant="body1" textAlign="center">
               {content}
             </Typography>
           </Alert>

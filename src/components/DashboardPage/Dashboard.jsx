@@ -67,7 +67,7 @@ const Dashboard = () => {
       title: "Registered Clients",
       data: franchisesLoading ? (
         <Typography
-          component={"div"}
+          component={"span"}
           display="flex"
           alignItems="center"
           gap={2}
@@ -153,7 +153,9 @@ const Dashboard = () => {
           }}
         >
           <Stack direction="row" justifyContent="space-between">
-            <Typography variant="h6">Franchise Overview</Typography>
+            <Typography component={"span"} variant="h6">
+              Franchise Overview
+            </Typography>
             <ButtonGroup size="small">
               <Button
                 key="daily"
@@ -255,7 +257,9 @@ const Dashboard = () => {
             }}
           >
             <Box display="flex" flexDirection="column">
-              <Typography variant="h6">Violators Overview</Typography>
+              <Typography component={"span"} variant="h6">
+                Violators Overview
+              </Typography>
 
               <ul
                 style={{
@@ -267,36 +271,72 @@ const Dashboard = () => {
                 }}
               >
                 <li>
-                  <Typography variant="body1" fontWeight={600} sx={{ mb: -1 }}>
+                  <Typography
+                    component={"span"}
+                    variant="body1"
+                    fontWeight={600}
+                    sx={{ mb: -1 }}
+                  >
                     Total Violators ({violations.length})
                   </Typography>
-                  <Typography variant="caption" color="InactiveCaptionText">
+                  <Typography
+                    component={"span"}
+                    variant="caption"
+                    color="InactiveCaptionText"
+                  >
                     total number of unpaid violators
                   </Typography>
                 </li>
                 <li>
-                  <Typography variant="body1" fontWeight={600} sx={{ mb: -1 }}>
+                  <Typography
+                    component={"span"}
+                    variant="body1"
+                    fontWeight={600}
+                    sx={{ mb: -1 }}
+                  >
                     Recently Paid ({violationAnalytics?.recentlyPaid || 0})
                   </Typography>
-                  <Typography variant="caption" color="InactiveCaptionText">
+                  <Typography
+                    component={"span"}
+                    variant="caption"
+                    color="InactiveCaptionText"
+                  >
                     total number of violators recently paid
                   </Typography>
                 </li>
                 <li>
-                  <Typography variant="body1" fontWeight={600} sx={{ mb: -1 }}>
+                  <Typography
+                    component={"span"}
+                    variant="body1"
+                    fontWeight={600}
+                    sx={{ mb: -1 }}
+                  >
                     Registered ({violationAnalytics?.registeredPercentage || 0}
                     %)
                   </Typography>
-                  <Typography variant="caption" color="InactiveCaptionText">
+                  <Typography
+                    component={"span"}
+                    variant="caption"
+                    color="InactiveCaptionText"
+                  >
                     percentage of registered violators
                   </Typography>
                 </li>
                 <li>
-                  <Typography variant="body1" fontWeight={600} sx={{ mb: -1 }}>
+                  <Typography
+                    component={"span"}
+                    variant="body1"
+                    fontWeight={600}
+                    sx={{ mb: -1 }}
+                  >
                     Unregistered (
                     {violationAnalytics?.unregisteredPercentage || 0}%)
                   </Typography>
-                  <Typography variant="caption" color="InactiveCaptionText">
+                  <Typography
+                    component={"span"}
+                    variant="caption"
+                    color="InactiveCaptionText"
+                  >
                     percentage of unregistered violators
                   </Typography>
                 </li>

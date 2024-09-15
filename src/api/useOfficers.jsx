@@ -32,7 +32,7 @@ const useOfficers = () => {
     };
 
     fetchOfficers();
-  }, [axiosPrivate, violations]);
+  }, []);
 
   useEffect(() => {
     const getOfficersNames = () => {
@@ -43,7 +43,7 @@ const useOfficers = () => {
       });
     };
     getOfficersNames();
-  }, [officers]);
+  }, []);
 
   return { officers, officersLoading, error };
 };

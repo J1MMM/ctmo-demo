@@ -29,7 +29,7 @@ const useMTOP = () => {
     };
 
     fetchMTOP();
-  }, [axiosPrivate, franchises, dummyVariable]); // Ensure axiosPrivate is included as a dependency
+  }, []); // Ensure axiosPrivate is included as a dependency
 
   return { availableMTOP, availableMTOPLoading, error };
 };

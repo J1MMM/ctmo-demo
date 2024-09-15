@@ -165,6 +165,7 @@ class CashierFranchiseReceiptPrintable extends Component {
                 }}
               >
                 <Typography
+                  component={"span"}
                   fontFamily={"monospace"}
                   textAlign="center"
                   fontWeight="bold"
@@ -177,13 +178,14 @@ class CashierFranchiseReceiptPrintable extends Component {
                   Official Receipt of the Republic of the Philippines
                 </Typography>
               </BorderBox>
-              <p
+              <span
                 style={{ position: "absolute", right: "8.5rem", top: "5.5rem" }}
               >
                 {franchiseDetails?.paymentOr}
-              </p>
+              </span>
               <BorderBox sx={{ border: "none", position: "relative" }}>
                 <Typography
+                  component={"span"}
                   fontFamily={"monospace"}
                   m={1}
                   ml={4}
@@ -202,7 +204,7 @@ class CashierFranchiseReceiptPrintable extends Component {
                 </Typography>
               </BorderBox>
               <BorderBox sx={{ borderBottom: "none", border: "none" }}>
-                <Typography fontFamily={"monospace"} m={1}>
+                <Typography component={"span"} fontFamily={"monospace"} m={1}>
                   <b
                     style={{
                       color: "transparent",
@@ -267,40 +269,40 @@ class CashierFranchiseReceiptPrintable extends Component {
             <tbody>
               <tr>
                 <th className="th">
-                  <p
+                  <span
                     style={{
                       color: "transparent",
                       userSelect: "none",
                     }}
                   >
                     Nature of
-                  </p>
-                  <p
+                  </span>
+                  <span
                     style={{
                       color: "transparent",
                       userSelect: "none",
                     }}
                   >
                     Collection
-                  </p>
+                  </span>
                 </th>
                 <th className="th">
-                  <p
+                  <span
                     style={{
                       color: "transparent",
                       userSelect: "none",
                     }}
                   >
                     Account
-                  </p>
-                  <p
+                  </span>
+                  <span
                     style={{
                       color: "transparent",
                       userSelect: "none",
                     }}
                   >
                     Code
-                  </p>
+                  </span>
                 </th>
                 <th
                   className="th"
@@ -317,7 +319,11 @@ class CashierFranchiseReceiptPrintable extends Component {
                 return (
                   <tr key={index}>
                     <td className="td" style={{ minWidth: 155 }}>
-                      {item?.label ? item?.label : <p className="invi">.</p>}
+                      {item?.label ? (
+                        item?.label
+                      ) : (
+                        <span className="invi">.</span>
+                      )}
                     </td>
                     <td className="td">
                       {" "}
@@ -350,7 +356,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               </tr>
             </tbody>
           </table>
-          <p
+          <span
             style={{
               textAlign: "end",
               fontFamily: "monospace",
@@ -362,7 +368,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               style: "currency",
               currency: "PHP",
             })}
-          </p>
+          </span>
           <table
             className="table noOutline"
             style={{ display: "block", mariginTop: "10rem" }}
@@ -387,7 +393,7 @@ class CashierFranchiseReceiptPrintable extends Component {
             </tbody>
           </table>
 
-          <p
+          <span
             style={{
               fontFamily: "monospace",
               marginLeft: "1rem",
@@ -396,7 +402,7 @@ class CashierFranchiseReceiptPrintable extends Component {
             }}
           >
             <b> {numberToWords(totalAmount)?.toUpperCase()}</b>
-          </p>
+          </span>
 
           <table className="table noOutline">
             <tbody>
@@ -522,7 +528,7 @@ class CashierFranchiseReceiptPrintable extends Component {
               <tr>
                 <td className="td b-0">
                   <div className="container">
-                    <p
+                    <span
                       style={{
                         textAlign: "start",
                         marginBottom: "-5px",
@@ -531,9 +537,9 @@ class CashierFranchiseReceiptPrintable extends Component {
                         fontSize: "larger",
                         minWidth: 200,
                       }}
-                    ></p>
+                    ></span>
 
-                    <p
+                    <span
                       style={{
                         textAlign: "center",
 
@@ -543,21 +549,21 @@ class CashierFranchiseReceiptPrintable extends Component {
                       }}
                     >
                       Collecting Officer
-                    </p>
+                    </span>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <p
+          <span
             style={{
               marginLeft: "8rem",
               fontFamily: "monospace",
               marginTop: "2rem",
             }}
           >
-            <p
+            <span
               style={{
                 display: "block",
                 marginLeft: "-5rem",
@@ -565,9 +571,9 @@ class CashierFranchiseReceiptPrintable extends Component {
               }}
             >
               {franchiseDetails.mtop}
-            </p>
+            </span>
             <b>{fullname}</b>
-          </p>
+          </span>
           <table className="table noOutline">
             <tbody>
               <tr>

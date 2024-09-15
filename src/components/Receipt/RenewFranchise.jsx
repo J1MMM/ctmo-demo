@@ -28,6 +28,7 @@ class RenewFranchise extends Component {
       >
         <BorderBox sx={justifyCenter}>
           <Typography
+            component={"span"}
             variant="h6"
             fontFamily={"monospace"}
             textAlign="center"
@@ -38,6 +39,7 @@ class RenewFranchise extends Component {
         </BorderBox>
         <BorderBox sx={justifyCenter}>
           <Typography
+            component={"span"}
             variant="h6"
             fontFamily={"monospace"}
             textAlign="center"
@@ -49,6 +51,7 @@ class RenewFranchise extends Component {
         </BorderBox>
         <BorderBox sx={justifyCenter}>
           <Typography
+            component={"span"}
             variant="h6"
             fontFamily={"monospace"}
             textAlign="center"
@@ -60,12 +63,18 @@ class RenewFranchise extends Component {
 
         <br />
         <BorderBox sx={justifyStart}>
-          <Typography variant="h6" fontFamily={"monospace"} fontWeight="bold">
+          <Typography
+            component={"span"}
+            variant="h6"
+            fontFamily={"monospace"}
+            fontWeight="bold"
+          >
             NAME:
           </Typography>
         </BorderBox>
         <BorderBox sx={justifyCenter}>
           <Typography
+            component={"span"}
             variant="h6"
             textAlign="center"
             sx={{ mt: -1 }}
@@ -76,12 +85,18 @@ class RenewFranchise extends Component {
           </Typography>
         </BorderBox>
         <BorderBox sx={justifyStart}>
-          <Typography variant="h6" fontFamily={"monospace"} fontWeight="bold">
+          <Typography
+            component={"span"}
+            variant="h6"
+            fontFamily={"monospace"}
+            fontWeight="bold"
+          >
             ADDRESS:
           </Typography>
         </BorderBox>
         <BorderBox sx={justifyCenter}>
           <Typography
+            component={"span"}
             variant="h6"
             textAlign="center"
             sx={{ mt: -1 }}
@@ -100,13 +115,18 @@ class RenewFranchise extends Component {
                   sx={{ ...justifyStart, justifyContent: "space-between" }}
                 >
                   <Typography
+                    component={"span"}
                     variant="h6"
                     fontFamily={"monospace"}
                     fontWeight="bold"
                   >
                     {item?.label}
                   </Typography>
-                  <Typography variant="h6" fontFamily="monospace">
+                  <Typography
+                    component={"span"}
+                    variant="h6"
+                    fontFamily="monospace"
+                  >
                     {item?.displayPrice ||
                       item?.price?.toLocaleString("en", {
                         minimumFractionDigits: 2,
@@ -124,10 +144,15 @@ class RenewFranchise extends Component {
           <Box borderTop="2px solid #000" width="30%" />
         </BorderBox>
         <BorderBox sx={{ ...justifyStart, justifyContent: "space-between" }}>
-          <Typography variant="h6" fontFamily={"monospace"} fontWeight="bold">
+          <Typography
+            component={"span"}
+            variant="h6"
+            fontFamily={"monospace"}
+            fontWeight="bold"
+          >
             TOTAL
           </Typography>
-          <Typography variant="h6" fontFamily="monospace">
+          <Typography component={"span"} variant="h6" fontFamily="monospace">
             {totalAmount.toLocaleString("en", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
@@ -140,6 +165,7 @@ class RenewFranchise extends Component {
             <tr>
               <td className="td b-0 p-0 ">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   fontWeight="bold"
@@ -149,6 +175,7 @@ class RenewFranchise extends Component {
               </td>
               <td className="td b-0 p-0 center">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   sx={{ minWidth: 50 }}
@@ -157,7 +184,11 @@ class RenewFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.mtop}
                 </Typography>
               </td>
@@ -165,6 +196,7 @@ class RenewFranchise extends Component {
             <tr>
               <td className="td b-0 p-0">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   fontWeight="bold"
@@ -174,6 +206,7 @@ class RenewFranchise extends Component {
               </td>
               <td className="td b-0 p-0 center">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   sx={{ minWidth: 50 }}
@@ -182,7 +215,11 @@ class RenewFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.make}
                 </Typography>
               </td>
@@ -190,6 +227,7 @@ class RenewFranchise extends Component {
             <tr>
               <td className="td b-0 p-0">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   fontWeight="bold"
@@ -199,6 +237,7 @@ class RenewFranchise extends Component {
               </td>
               <td className="td b-0 p-0 center">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   sx={{ minWidth: 50 }}
@@ -207,7 +246,11 @@ class RenewFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.motorno}
                 </Typography>
               </td>
@@ -215,6 +258,7 @@ class RenewFranchise extends Component {
             <tr>
               <td className="td b-0 p-0">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   fontWeight="bold"
@@ -224,6 +268,7 @@ class RenewFranchise extends Component {
               </td>
               <td className="td b-0 p-0 center">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   sx={{ minWidth: 50 }}
@@ -232,7 +277,11 @@ class RenewFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.chassisno}
                 </Typography>
               </td>
@@ -240,6 +289,7 @@ class RenewFranchise extends Component {
             <tr>
               <td className="td b-0 p-0">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   fontWeight="bold"
@@ -249,6 +299,7 @@ class RenewFranchise extends Component {
               </td>
               <td className="td b-0 p-0 center">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   sx={{ minWidth: 50 }}
@@ -257,7 +308,11 @@ class RenewFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.plateno}
                 </Typography>
               </td>
@@ -280,6 +335,7 @@ class RenewFranchise extends Component {
             <tr>
               <td className="td b-0 p-0">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   fontWeight="bold"
@@ -289,6 +345,7 @@ class RenewFranchise extends Component {
               </td>
               <td className="td b-0 p-0" style={{ textAlign: "start" }}>
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily="monospace"
                   textAlign="center"
@@ -300,6 +357,7 @@ class RenewFranchise extends Component {
             <tr>
               <td className="td b-0 p-0">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   fontWeight="bold"
@@ -308,7 +366,11 @@ class RenewFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 ">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {dayjs(datenow).format("MM/DD/YYYY")}
                 </Typography>
               </td>
@@ -316,6 +378,7 @@ class RenewFranchise extends Component {
             <tr>
               <td className="td b-0 p-0">
                 <Typography
+                  component={"span"}
                   variant="h6"
                   fontFamily={"monospace"}
                   fontWeight="bold"
@@ -324,7 +387,11 @@ class RenewFranchise extends Component {
                 </Typography>
               </td>
               <td className="td b-0 p-0 p-0">
-                <Typography variant="h6" fontFamily="monospace">
+                <Typography
+                  component={"span"}
+                  variant="h6"
+                  fontFamily="monospace"
+                >
                   {franchiseDetails?.refNo}
                 </Typography>
               </td>
@@ -341,14 +408,19 @@ class RenewFranchise extends Component {
               flexDirection: "column",
               border: "none",
               maxWidth: 250,
-              
             }}
           >
-            <Typography variant="h6" fontFamily="monospace" textAlign="center">
-            LUCIO GERALDO G. CIOLO
+            <Typography
+              component={"span"}
+              variant="h6"
+              fontFamily="monospace"
+              textAlign="center"
+            >
+              LUCIO GERALDO G. CIOLO
             </Typography>
 
             <Typography
+              component={"span"}
               variant="h6"
               fontFamily="monospace"
               textAlign="center"
@@ -370,6 +442,7 @@ class RenewFranchise extends Component {
         >
           <Typography
             variant="subtitle1"
+            component={"span"}
             fontFamily="monospace"
             textAlign="center"
             fontWeight="bold"

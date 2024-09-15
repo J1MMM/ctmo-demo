@@ -36,10 +36,16 @@ class FranchiseFormPrintable extends Component {
             justifyContent="space-between"
           >
             <Box display="flex" flexDirection="row" gap={1}>
-              <Typography fontFamily="serif" fontWeight="bold" variant="body1">
+              <Typography
+                component={"span"}
+                fontFamily="serif"
+                fontWeight="bold"
+                variant="body1"
+              >
                 APPLICANT:
               </Typography>
               <Typography
+                component={"span"}
                 variant="body1"
                 sx={{
                   textDecoration: "underline",
@@ -50,10 +56,19 @@ class FranchiseFormPrintable extends Component {
               </Typography>
             </Box>
             <Box display="flex" flexDirection="row" gap={1}>
-              <Typography fontFamily="serif" fontWeight="bold" variant="body1">
+              <Typography
+                component={"span"}
+                fontFamily="serif"
+                fontWeight="bold"
+                variant="body1"
+              >
                 MTOP NO:
               </Typography>
-              <Typography variant="body1" sx={{ textDecoration: "underline" }}>
+              <Typography
+                component={"span"}
+                variant="body1"
+                sx={{ textDecoration: "underline" }}
+              >
                 {franchiseDetails?.mtop}
               </Typography>
             </Box>
@@ -64,10 +79,16 @@ class FranchiseFormPrintable extends Component {
             justifyContent="space-between"
           >
             <Box display="flex" flexDirection="row" gap={1}>
-              <Typography fontFamily="serif" fontWeight="bold" variant="body1">
+              <Typography
+                component={"span"}
+                fontFamily="serif"
+                fontWeight="bold"
+                variant="body1"
+              >
                 ADDRESS:
               </Typography>
               <Typography
+                component={"span"}
                 variant="body1"
                 sx={{
                   textDecoration: "underline",
@@ -79,6 +100,7 @@ class FranchiseFormPrintable extends Component {
           </Box>
 
           <Typography
+            component={"span"}
             fontFamily="serif"
             fontWeight="bold"
             variant="body1"
@@ -91,40 +113,69 @@ class FranchiseFormPrintable extends Component {
 
           <Box display="flex" justifyContent="space-between" mt={1.5}>
             <Box display="flex" flexDirection="column">
-              <Typography fontFamily="serif" fontWeight="bold" variant="body1">
+              <Typography
+                component={"span"}
+                fontFamily="serif"
+                fontWeight="bold"
+                variant="body1"
+              >
                 MAKE
               </Typography>
-              <Typography variant="body1">{franchiseDetails?.make}</Typography>
+              <Typography component={"span"} variant="body1">
+                {franchiseDetails?.make}
+              </Typography>
             </Box>
             <Box display="flex" flexDirection="column">
-              <Typography fontFamily="serif" fontWeight="bold" variant="body1">
+              <Typography
+                component={"span"}
+                fontFamily="serif"
+                fontWeight="bold"
+                variant="body1"
+              >
                 MOTOR NO.
               </Typography>
-              <Typography variant="body1">
+              <Typography component={"span"} variant="body1">
                 {franchiseDetails?.motorno}
               </Typography>
             </Box>
             <Box display="flex" flexDirection="column">
-              <Typography fontFamily="serif" fontWeight="bold" variant="body1">
+              <Typography
+                component={"span"}
+                fontFamily="serif"
+                fontWeight="bold"
+                variant="body1"
+              >
                 CHASSIS NO.
               </Typography>
-              <Typography variant="body1">
+              <Typography component={"span"} variant="body1">
                 {franchiseDetails?.chassisno}
               </Typography>
             </Box>
             <Box display="flex" flexDirection="column">
-              <Typography fontFamily="serif" fontWeight="bold" variant="body1">
+              <Typography
+                component={"span"}
+                fontFamily="serif"
+                fontWeight="bold"
+                variant="body1"
+              >
                 PLATE NO.
               </Typography>
-              <Typography variant="body1">
+              <Typography component={"span"} variant="body1">
                 {franchiseDetails?.plateno}
               </Typography>
             </Box>
             <Box display="flex" flexDirection="column">
-              <Typography fontFamily="serif" fontWeight="bold" variant="body1">
+              <Typography
+                component={"span"}
+                fontFamily="serif"
+                fontWeight="bold"
+                variant="body1"
+              >
                 TINPLATE NO.
               </Typography>
-              <Typography variant="body1">{franchiseDetails?.mtop}</Typography>
+              <Typography component={"span"} variant="body1">
+                {franchiseDetails?.mtop}
+              </Typography>
             </Box>
           </Box>
 
@@ -133,6 +184,7 @@ class FranchiseFormPrintable extends Component {
             fontWeight="bold"
             variant="body1"
             mt={1}
+            component={"span"}
           >
             Subject to the following conditions:
           </Typography>
@@ -191,6 +243,7 @@ class FranchiseFormPrintable extends Component {
           </Box>
 
           <Typography
+            component={"span"}
             mt={4}
             fontFamily="serif"
             fontWeight="bold"
@@ -198,14 +251,24 @@ class FranchiseFormPrintable extends Component {
           >
             SO ORDERED
           </Typography>
-          <Typography fontFamily="serif" fontWeight="bold" variant="body1">
+          <Typography
+            component={"span"}
+            fontFamily="serif"
+            fontWeight="bold"
+            variant="body1"
+          >
             SAN PABLO CITY
           </Typography>
           <Box display="flex" gap={1}>
-            <Typography fontFamily="serif" fontWeight="bold" variant="body1">
+            <Typography
+              component={"span"}
+              fontFamily="serif"
+              fontWeight="bold"
+              variant="body1"
+            >
               DATE:
             </Typography>
-            <Typography sx={{ textDecoration: "underline" }}>
+            <Typography component={"span"} sx={{ textDecoration: "underline" }}>
               {dayjs(franchiseDetails.date).format("MM/DD/YYYY")}
             </Typography>
           </Box>

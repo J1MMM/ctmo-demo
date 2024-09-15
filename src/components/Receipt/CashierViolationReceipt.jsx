@@ -133,6 +133,7 @@ class CashierViolationReceipt extends Component {
                 }}
               >
                 <Typography
+                  component={"span"}
                   fontFamily={"monospace"}
                   textAlign="center"
                   fontWeight="bold"
@@ -142,13 +143,13 @@ class CashierViolationReceipt extends Component {
                 </Typography>
               </BorderBox>
               <BorderBox>
-                <Typography fontFamily={"monospace"} m={1}>
+                <Typography component={"span"} fontFamily={"monospace"} m={1}>
                   <b>No.</b>
                   {violationDetails?.or}
                 </Typography>
               </BorderBox>
               <BorderBox sx={{ borderBottom: "none" }}>
-                <Typography fontFamily={"monospace"} m={1}>
+                <Typography component={"span"} fontFamily={"monospace"} m={1}>
                   <b>Date:</b> {dayjs(datenow).format("MMMM D, YYYY")}
                 </Typography>
               </BorderBox>
