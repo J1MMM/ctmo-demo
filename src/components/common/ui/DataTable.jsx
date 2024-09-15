@@ -53,6 +53,7 @@ const DataTable = ({
   paginationMode,
   sortingMode,
   filterMode,
+  onSortModelChange,
 }) => {
   return (
     <DataGrid
@@ -80,6 +81,7 @@ const DataTable = ({
       paginationMode={paginationMode || "client"}
       sortingMode={sortingMode || "client"}
       filterMode={filterMode || "client"}
+      onSortModelChange={onSortModelChange}
       sx={{
         boxSizing: "border-box",
         maxHeight: "75vh",
