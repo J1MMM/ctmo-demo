@@ -22,6 +22,8 @@ const useOfficers = () => {
       setOfficersLoading(true);
       try {
         const response = await axiosPrivate.get("/officers");
+        console.log(response.data);
+
         setOfficers(response.data);
       } catch (error) {
         console.log(error);
@@ -43,7 +45,7 @@ const useOfficers = () => {
       });
     };
     getOfficersNames();
-  }, []);
+  }, [officers]);
 
   return { officers, officersLoading, error };
 };
