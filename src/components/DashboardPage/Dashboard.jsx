@@ -26,6 +26,7 @@ import { RiUserAddLine } from "react-icons/ri";
 import PieGraph from "./PieGraph";
 import { FaListOl } from "react-icons/fa6";
 import OfficersTable from "./OfficersList";
+import ROLES_LIST from "../common/data/ROLES_LIST";
 
 const percentFormat = (count, total) => {
   if (typeof count == "number" && typeof total == "number") {
@@ -52,6 +53,7 @@ const Dashboard = () => {
   } = useData();
 
   const [selectedBtn, setSelectedBtn] = useState("daily");
+  const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
 
   useEffect(() => {
     document.title = "Dashboard | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
@@ -83,7 +85,7 @@ const Dashboard = () => {
     },
     {
       title: "Available Franchises",
-      data: availableMTOP?.length || 0,
+      data: admin ? `${availableMTOP?.length || 0}` : 0,
       icon: <FaListOl color={"#1A237E"} sx={{ color: "#1A237E" }} size={16} />,
       subText: "Total count of available MTOP",
     },
