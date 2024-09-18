@@ -10,6 +10,9 @@ import helper from "../../common/data/helper";
 import FilterButton from "../../common/ui/FilterButton";
 import ContainedButton from "../../common/ui/ContainedButton";
 import TableToolbar from "../../common/ui/TableToolbar";
+import ROLES_LIST from "../../common/data/ROLES_LIST";
+import useAuth from "../../../hooks/useAuth";
+import ExportButton from "../../common/ui/ExportButton";
 
 const date_archived_column_format = {
   field: "dateArchived",
@@ -39,7 +42,7 @@ const ClientArchived = () => {
   const [franchiseDetails, setFranchiseDetails] = useState(
     helper.initialFranchiseDetails
   );
-
+  const { auth } = useAuth();
   const [isEmpty, setIsEmpty] = useState(false);
   const [noResponse, setNoResponse] = useState(false);
   const [clientInfo, setClientInfo] = useState(false);
@@ -48,6 +51,7 @@ const ClientArchived = () => {
   const [pageSize, setPageSize] = useState(100);
   const [totalRows, setTotalRows] = useState(0);
   const [initialFormInfo, setinitialFormInfo] = useState({});
+  const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
 
   function countTrueValues(obj) {
     let count = 0;
@@ -82,6 +86,8 @@ const ClientArchived = () => {
             description="franchises' records have been revoked"
             actionButtons={
               <>
+                {admin && <ExportButton />}
+
                 <FilterButton />
               </>
             }
