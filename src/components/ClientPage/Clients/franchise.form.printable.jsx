@@ -269,7 +269,7 @@ class FranchiseFormPrintable extends Component {
               DATE:
             </Typography>
             <Typography component={"span"} sx={{ textDecoration: "underline" }}>
-              {dayjs(franchiseDetails.date).format("MM/DD/YYYY")}
+              {dayjs(franchiseDetails?.paymentOrDate).format("MM/DD/YYYY")}
             </Typography>
           </Box>
         </Box>
