@@ -199,7 +199,12 @@ class ReceiptViolationPrintableGF extends Component {
                 </Typography>
               </BorderBox>
               <BorderBox sx={{ borderBottom: "none", border: "none" }}>
-                <Typography component={"span"} fontFamily={"monospace"} m={1}>
+                <Typography
+                  component={"span"}
+                  fontFamily={"monospace"}
+                  m={1}
+                  sx={{ ml: -3 }}
+                >
                   <b
                     style={{
                       color: "transparent",
