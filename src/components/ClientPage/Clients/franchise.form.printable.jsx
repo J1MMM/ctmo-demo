@@ -94,7 +94,7 @@ class FranchiseFormPrintable extends Component {
                   textDecoration: "underline",
                 }}
               >
-                {franchiseDetails?.address} SAN PABLO CITY LAGUNA
+                {franchiseDetails?.address}
               </Typography>
             </Box>
           </Box>
