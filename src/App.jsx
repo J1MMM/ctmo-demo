@@ -25,119 +25,37 @@ import PendingFranchiseTable from "./components/PendingFranchisePage/PendingFran
 import PendingFranchisePaid from "./components/PendingFranchisePage/PendingFranchise.paid";
 
 function App() {
-  const { auth } = useAuth();
-  const isSuperAdmin = Boolean(
-    auth.roles?.find((v) => v == ROLES_LIST.SuperAdmin)
-  );
-
   return (
     <Routes>
-      <Route element={<PersistLogin />}>
-        <Route path="/login" element={<LoginComponenet />} />
-
-        <Route path="/" element={<Layout />}>
-          <Route path="" element={isSuperAdmin ? <Users /> : <Dashboard />} />
-          <Route
-            element={<RequireAuth allowedRoles={[ROLES_LIST.SuperAdmin]} />}
-          >
-            <Route path="user-archive" element={<UserArchive />} />
-          </Route>
-
-          <Route path="clients" element={<ClientsPageLayout />}>
-            <Route
-              element={
-                <RequireAuth
-                  allowedRoles={[
-                    ROLES_LIST.Admin,
-                    ROLES_LIST.CTMO1,
-                    ROLES_LIST.CTMO2,
-                    ROLES_LIST.CTMO3,
-                  ]}
-                />
-              }
-            >
-              <Route path="" element={<ClientsTable />} />
-              <Route path="archive" element={<ClientArchived />} />
-            </Route>
-          </Route>
-
-          <Route path="franchise" element={<PendingPageLayout />}>
-            <Route
-              element={
-                <RequireAuth
-                  allowedRoles={[ROLES_LIST.Admin, ROLES_LIST.Cashier]}
-                />
-              }
-            >
-              <Route path="" element={<PendingFranchiseTable />} />
-              <Route path="paid" element={<PendingFranchisePaid />} />
-            </Route>
-          </Route>
-
-          <Route path="violations" element={<ViolationsPageLayout />}>
-            <Route
-              element={
-                <RequireAuth
-                  allowedRoles={[
-                    ROLES_LIST.Admin,
-                    ROLES_LIST.Cashier,
-                    ROLES_LIST.CTMO1,
-                    ROLES_LIST.CTMO2,
-                    ROLES_LIST.CTMO3,
-                  ]}
-                />
-              }
-            >
-              <Route path="" element={<ViolationsTable />} />
-            </Route>
-
-            <Route
-              element={
-                <RequireAuth
-                  allowedRoles={[
-                    ROLES_LIST.Admin,
-                    ROLES_LIST.CTMO1,
-                    ROLES_LIST.CTMO2,
-                    ROLES_LIST.CTMO3,
-                    ROLES_LIST.Cashier,
-                  ]}
-                />
-              }
-            >
-              <Route path="paid" element={<PaidTable />} />
-            </Route>
-            <Route
-              element={
-                <RequireAuth
-                  allowedRoles={[ROLES_LIST.Admin, ROLES_LIST.CTMO3]}
-                />
-              }
-            >
-              <Route path="released-tct" element={<ReleasedtctTable />} />
-            </Route>
-            <Route
-              element={
-                <RequireAuth
-                  allowedRoles={[
-                    ROLES_LIST.Admin,
-                    ROLES_LIST.CTMO2,
-                    ROLES_LIST.CTMO3,
-                  ]}
-                />
-              }
-            >
-              <Route path="officers" element={<OfficersList />} />
-            </Route>
-          </Route>
+      <Route path="/" element={<Layout />}>
+        <Route path="" element={<Dashboard />} />
+        <Route path="clients" element={<ClientsPageLayout />}>
+          <Route path="" element={<ClientsTable />} />
+          <Route path="archive" element={<ClientArchived />} />
         </Route>
 
-        <Route element={<VerifyResetToken />}>
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="franchise" element={<PendingPageLayout />}>
+          <Route path="" element={<PendingFranchiseTable />} />
+          <Route path="paid" element={<PendingFranchisePaid />} />
         </Route>
 
-        <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route path="*" element={<Missing />} />
+        <Route path="violations" element={<ViolationsPageLayout />}>
+          <Route path="" element={<ViolationsTable />} />
+
+          <Route path="paid" element={<PaidTable />} />
+
+          <Route path="released-tct" element={<ReleasedtctTable />} />
+
+          <Route path="officers" element={<OfficersList />} />
+        </Route>
       </Route>
+
+      <Route element={<VerifyResetToken />}>
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+      </Route>
+
+      <Route path="/unauthorized" element={<Unauthorized />} />
+      <Route path="*" element={<Missing />} />
     </Routes>
   );
 }

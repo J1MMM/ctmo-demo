@@ -64,9 +64,9 @@ const Layout = () => {
     navigate("/login", { replace: true });
   };
 
-  if (!auth?.fullname) {
-    return <Navigate to="/login" />;
-  }
+  // if (!auth?.fullname) {
+  //   return <Navigate to="/login" />;
+  // }
 
   return (
     <div className="layout">
@@ -258,21 +258,7 @@ const Layout = () => {
           </Typography>
 
           <Box mt={2} display="flex" alignItems="center" gap={1}>
-            {auth.roles.map((role, index) => {
-              if (role === 0) return;
-              return (
-                role && (
-                  <Chip
-                    key={index}
-                    label={Object.keys(ROLES_LIST).find(
-                      (key) => ROLES_LIST[key] == role
-                    )}
-                    color="primary"
-                    size="small"
-                  />
-                )
-              );
-            })}
+            <Chip label={"DEMO"} color="primary" size="small" />
           </Box>
         </Box>
 

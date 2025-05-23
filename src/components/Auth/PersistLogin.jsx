@@ -10,24 +10,34 @@ import {
 } from "@mui/material";
 import ctmo_logo from "../../assets/images/logo2.png";
 import loading_bg from "../../assets/images/loading-bg.webp";
+import { useTimeout } from "@mui/x-data-grid/internals";
 
 const PersistLogin = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const refresh = UseRefreshToken();
   const { auth } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
 
+  // useEffect(() => {
+  //   const verifyRefreshToken = async () => {
+  //     try {
+  //       await refresh();
+  //     } catch (error) {
+  //       console.error(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
+  // }, []);
   useEffect(() => {
-    const verifyRefreshToken = async () => {
-      try {
-        await refresh();
-      } catch (error) {
-        console.error(error);
-      } finally {
+    const fn = () => {
+      setTimeout(() => {
         setIsLoading(false);
-      }
+      }, 2000);
     };
-    !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
-  }, []);
+
+    fn();
+  });
 
   return (
     <>
