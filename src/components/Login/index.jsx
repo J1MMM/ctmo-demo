@@ -25,7 +25,7 @@ import ForgotPassModal from "../ResetPassword/ForgotPassModal";
 import ROLES_LIST from "../common/data/ROLES_LIST";
 
 const LoginComponenet = () => {
-  document.title = "LOGIN | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
+  document.title = "LOGIN | Franchise and Permit Management System";
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -218,7 +218,7 @@ const LoginComponenet = () => {
               },
             }}
           >
-            TRICYCLE FRANCHISING AND RENEWAL SYSTEM
+            Franchise and Permit Management System
           </Typography>
 
           <form style={{ width: "100%" }} onSubmit={handleSubmit}>

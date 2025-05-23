@@ -11,7 +11,7 @@ import PaymentViolationsInfo from "../Violations/PaymentViolationInfo";
 import Vhelper from "../Violations/Vhelper";
 
 const PaidTable = () => {
-  document.title = "Paid List | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
+  document.title = "Paid List | Franchise and Permit Management System";
   const axiosPrivate = useAxiosPrivate();
   const { paidList, violationsList } = useData();
 

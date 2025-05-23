@@ -10,15 +10,7 @@ import DataTable from "../../common/ui/DataTable";
 import AddFranchiseForm from "./AddFranchiseForm";
 import { Box, Button, Grow, Stack, Typography } from "@mui/material";
 import helper from "../../common/data/helper";
-import {
-  GridPreferencePanelsValue,
-  GridToolbar,
-  GridToolbarContainer,
-  GridToolbarFilterButton,
-  GridToolbarQuickFilter,
-  gridPreferencePanelStateSelector,
-  useGridApiContext,
-} from "@mui/x-data-grid";
+
 import TableToolbar from "../../common/ui/TableToolbar";
 import OutlinedButton from "../../common/ui/OutlinedButton";
 import FilterButton from "../../common/ui/FilterButton";
@@ -111,13 +103,12 @@ const ClientsTable = memo(() => {
               <>
                 {admin && <ExportButton />}
                 <FilterButton />
-                {admin || ctmo1 ? (
-                  <ContainedButton
-                    title="Add Client"
-                    icon={<Add sx={{ color: "#FFF" }} />}
-                    onClick={() => setAddclient(true)}
-                  />
-                ) : null}
+
+                <ContainedButton
+                  title="Add Client"
+                  icon={<Add sx={{ color: "#FFF" }} />}
+                  onClick={() => setAddclient(true)}
+                />
               </>
             }
           />
@@ -126,7 +117,7 @@ const ClientsTable = memo(() => {
         paginationMode={"server"}
         sortingMode={"server"}
         columns={helper.clientsColumns}
-        rows={franchises}
+        rows={[]}
         rowCount={rowCount}
         page={page}
         pageSize={pageSize}

@@ -87,7 +87,7 @@ const OfficersTable = () => {
           Apprehending Officers
         </Typography>
         <Chip
-          label={`${officers.length} Total Officers`}
+          label={`9 Total Officers`}
           size="small"
           color="primary"
           variant="outlined"
@@ -109,7 +109,93 @@ const OfficersTable = () => {
     <>
       <DataGrid
         columns={helper.officersDashboardColumn}
-        rows={officers.map((data) => ({ ...data, id: data._id }))}
+        rows={[
+          {
+            id: "67454f6d67bb975062b3ef16",
+            callsign: "  729",
+            firstname: "JERSON",
+            lastname: "LANIC",
+            mi: "",
+            fullname: "JERSON LANIC",
+            apprehended: 14,
+          },
+          {
+            id: "66053017cadb1bd7a5d20c24",
+            callsign: "302",
+            lastname: "ZABALA",
+            firstname: "JOEL",
+            mi: "",
+            apprehended: 11,
+            fullname: "JOEL ZABALA",
+          },
+          {
+            id: "66bc154321543bce5ded53fa",
+            callsign: "001",
+            firstname: "PNP",
+            lastname: "SPC",
+            mi: "",
+            fullname: "PNP SPC",
+            apprehended: 6,
+            __v: 0,
+          },
+          {
+            id: "66053017cadb1bd7a5d20c29",
+            callsign: "636",
+            lastname: "ARROGANCIA",
+            firstname: "EMERSON",
+            mi: "",
+            apprehended: 6,
+            fullname: "EMERSON ARROGANCIA",
+          },
+          {
+            id: "6729bd057ec924f4d19a0afc",
+            callsign: "732",
+            firstname: "ROBERTO",
+            lastname: "EVAL",
+            mi: "",
+            fullname: "ROBERTO EVAL",
+            apprehended: 4,
+            __v: 0,
+          },
+          {
+            id: "66053017cadb1bd7a5d20c57",
+            callsign: "635",
+            lastname: "FELICIDARIO",
+            firstname: "MIKEE",
+            mi: "",
+            apprehended: 3,
+            fullname: "MIKEE FELICIDARIO",
+          },
+          {
+            id: "66053017cadb1bd7a5d20c56",
+            callsign: "658",
+            lastname: "FRANCISCO",
+            firstname: "HAZEL",
+            mi: "",
+            apprehended: 3,
+            fullname: "HAZEL FRANCISCO",
+          },
+          {
+            id: "67510cb9c39905830bb6ea38",
+            callsign: "731",
+            firstname: "ELLORD ANGELO ",
+            lastname: "NACINO",
+            mi: "",
+            fullname: "ELLORD ANGELO  NACINO",
+            apprehended: 2,
+            __v: 0,
+          },
+          {
+            id: "66bc0e3121543bce5ded46cb",
+            callsign: "733",
+            firstname: "JESRIEL",
+            lastname: "GARCIA",
+            mi: "",
+            fullname: "JESRIEL GARCIA",
+            apprehended: 0,
+            __v: 0,
+          },
+        ]}
         rowCount={totalRows}
         initialState={{
           pagination: {

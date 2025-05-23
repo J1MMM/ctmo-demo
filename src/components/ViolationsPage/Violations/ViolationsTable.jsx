@@ -15,7 +15,7 @@ import useAuth from "../../../hooks/useAuth";
 
 const ViolationsTable = () => {
   document.title =
-    "Violators Management | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
+    "Violators Management | Franchise and Permit Management System";
 
   const { auth } = useAuth();
 

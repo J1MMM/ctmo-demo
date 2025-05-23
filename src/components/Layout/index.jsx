@@ -98,10 +98,7 @@ const Layout = () => {
                 boxSizing: "border-box",
                 gap: 1,
               }}
-            >
-              <img src={Logo1} />
-              <img src={Logo2} />
-            </Box>
+            ></Box>
             <Typography
               component={"span"}
               variant="h5"
@@ -115,7 +112,7 @@ const Layout = () => {
                 },
               }}
             >
-              TRICYCLE FRANCHISING AND RENEWAL SYSTEM
+              Franchise and Permit Management System
             </Typography>
           </Box>
         </Box>

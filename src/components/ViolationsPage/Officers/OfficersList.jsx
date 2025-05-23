@@ -21,7 +21,7 @@ const initialDetails = {
 };
 
 const OfficersTable = () => {
-  document.title = "Officers List | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
+  document.title = "Officers List | Franchise and Permit Management System";
 
   const { officers, officersLoading } = useData();
   const [officerInfo, setOfficerInfo] = useState(initialDetails);

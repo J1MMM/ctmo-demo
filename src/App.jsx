@@ -27,35 +27,34 @@ import PendingFranchisePaid from "./components/PendingFranchisePage/PendingFranc
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="" element={<Dashboard />} />
-        <Route path="clients" element={<ClientsPageLayout />}>
-          <Route path="" element={<ClientsTable />} />
-          <Route path="archive" element={<ClientArchived />} />
+      <Route element={<PersistLogin />}>
+        <Route path="/" element={<Layout />}>
+          <Route path="" element={<Dashboard />} />
+          <Route path="clients" element={<ClientsPageLayout />}>
+            <Route path="" element={<ClientsTable />} />
+            <Route path="archive" element={<ClientArchived />} />
+          </Route>
+
+          <Route path="franchise" element={<PendingPageLayout />}>
+            <Route path="" element={<PendingFranchiseTable />} />
+            <Route path="paid" element={<PendingFranchisePaid />} />
+          </Route>
+
+          <Route path="violations" element={<ViolationsPageLayout />}>
+            <Route path="" element={<ViolationsTable />} />
+            <Route path="paid" element={<PaidTable />} />
+            <Route path="released-tct" element={<ReleasedtctTable />} />
+            <Route path="officers" element={<OfficersList />} />
+          </Route>
         </Route>
 
-        <Route path="franchise" element={<PendingPageLayout />}>
-          <Route path="" element={<PendingFranchiseTable />} />
-          <Route path="paid" element={<PendingFranchisePaid />} />
+        <Route element={<VerifyResetToken />}>
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
         </Route>
 
-        <Route path="violations" element={<ViolationsPageLayout />}>
-          <Route path="" element={<ViolationsTable />} />
-
-          <Route path="paid" element={<PaidTable />} />
-
-          <Route path="released-tct" element={<ReleasedtctTable />} />
-
-          <Route path="officers" element={<OfficersList />} />
-        </Route>
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="*" element={<Missing />} />
       </Route>
-
-      <Route element={<VerifyResetToken />}>
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
-      </Route>
-
-      <Route path="/unauthorized" element={<Unauthorized />} />
-      <Route path="*" element={<Missing />} />
     </Routes>
   );
 }

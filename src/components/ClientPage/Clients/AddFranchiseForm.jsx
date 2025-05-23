@@ -33,7 +33,7 @@ import { Print, PrintOutlined } from "@mui/icons-material";
 
 const AddFranchiseForm = ({ open, onClose }) => {
   document.title =
-    "Clients Management | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
+    "Clients Management | Franchise and Permit Management System";
   const axiosPrivate = useAxiosPrivate();
   const { setDummyVariable, setFranchises, availableMTOP } = useData();
   const { auth } = useAuth();

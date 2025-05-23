@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-
-import useAuth from "../../hooks/useAuth";
+import { useEffect, useState } from "react";
 
 import {
   Box,
   Button,
   ButtonGroup,
-  CircularProgress,
   Paper,
   Slide,
   Stack,
@@ -16,7 +13,6 @@ import { HiOutlineUserGroup } from "react-icons/hi2";
 
 import { PiWarningCircle } from "react-icons/pi";
 import useData from "../../hooks/useData";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 import OverviewCard from "./OverviewCard";
 import "react-calendar/dist/Calendar.css";
@@ -26,37 +22,14 @@ import { RiUserAddLine } from "react-icons/ri";
 import PieGraph from "./PieGraph";
 import { FaListOl } from "react-icons/fa6";
 import OfficersTable from "./OfficersList";
-import ROLES_LIST from "../common/data/ROLES_LIST";
-
-const percentFormat = (count, total) => {
-  if (typeof count == "number" && typeof total == "number") {
-    const percent = (count / total) * 100;
-    return `${percent.toFixed(0)}%`;
-  } else {
-    return "  ";
-  }
-};
 
 const Dashboard = () => {
-  const axiosPrivate = useAxiosPrivate();
-  const { auth } = useAuth();
-  const {
-    availableMTOP,
-    availableMTOPLoading,
-    franchises,
-    franchisesLoading,
-    headerShadow,
-    setHeaderShadow,
-    violations,
-    franchiseAnalytics,
-    violationAnalytics,
-  } = useData();
+  const { headerShadow, setHeaderShadow, franchiseAnalytics } = useData();
 
   const [selectedBtn, setSelectedBtn] = useState("daily");
-  const admin = Boolean(auth?.roles?.find((role) => role === ROLES_LIST.Admin));
 
   useEffect(() => {
-    document.title = "Dashboard | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
+    document.title = "Dashboard | Franchise and Permit Management System";
     window.scrollTo(0, 0);
 
     return () => {
@@ -67,38 +40,26 @@ const Dashboard = () => {
   const cardData = [
     {
       title: "Registered Clients",
-      data: franchisesLoading ? (
-        <Typography
-          component={"span"}
-          display="flex"
-          alignItems="center"
-          gap={2}
-        >
-          <CircularProgress size={18} color="secondary" />
-          loading...
-        </Typography>
-      ) : (
-        franchiseAnalytics?.franchises || 0
-      ),
+      data: 4358,
       icon: <HiOutlineUserGroup color={"#FFF"} size={18} />,
       subText: "Registered Franchises in San Pablo City",
     },
     {
       title: "Available Franchises",
-      data: admin ? `${availableMTOP?.length || 0}` : 0,
+      data: 548,
       icon: <FaListOl color={"#1A237E"} sx={{ color: "#1A237E" }} size={16} />,
       subText: "Total count of available MTOP",
     },
     {
       title: "Recently Added",
-      data: franchiseAnalytics?.recentlyAdded || 0,
+      data: 145,
       icon: <RiUserAddLine color={"#1A237E"} size={18} />,
       subText: "clients that have been added recently",
     },
 
     {
       title: "Recently Revoked",
-      data: franchiseAnalytics?.recentlyRevoked || 0,
+      data: 18,
       icon: <PiWarningCircle color={"#1A237E"} size={20} />,
       subText: "total count of clients revoked",
     },
@@ -182,7 +143,7 @@ const Dashboard = () => {
               </Button>
             </ButtonGroup>
           </Stack>
-          <BarGraph dataset={franchiseAnalytics?.franchiseAnalytics || []} />
+          <BarGraph dataset={franchiseAnalytics || []} />
         </Paper>
 
         <Box //cards container
@@ -279,7 +240,7 @@ const Dashboard = () => {
                     fontWeight={600}
                     sx={{ mb: -1 }}
                   >
-                    Total Violators ({violations.length})
+                    Total Violators (5,085 )
                   </Typography>
                   <Typography
                     component={"span"}
@@ -296,7 +257,7 @@ const Dashboard = () => {
                     fontWeight={600}
                     sx={{ mb: -1 }}
                   >
-                    Recently Paid ({violationAnalytics?.recentlyPaid || 0})
+                    Recently Paid (32)
                   </Typography>
                   <Typography
                     component={"span"}
@@ -313,7 +274,7 @@ const Dashboard = () => {
                     fontWeight={600}
                     sx={{ mb: -1 }}
                   >
-                    Registered ({violationAnalytics?.registeredPercentage || 0}
+                    Registered ({35}
                     %)
                   </Typography>
                   <Typography
@@ -331,8 +292,7 @@ const Dashboard = () => {
                     fontWeight={600}
                     sx={{ mb: -1 }}
                   >
-                    Unregistered (
-                    {violationAnalytics?.unregisteredPercentage || 0}%)
+                    Unregistered ({65}%)
                   </Typography>
                   <Typography
                     component={"span"}
@@ -345,7 +305,7 @@ const Dashboard = () => {
               </ul>
             </Box>
             <Box maxHeight={450}>
-              <PieGraph pieData={violationAnalytics?.pieData} />
+              <PieGraph />
             </Box>
           </Box>
         </Paper>

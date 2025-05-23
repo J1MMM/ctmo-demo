@@ -286,9 +286,30 @@ const useFranchises = () => {
   useEffect(() => {
     const update = async () => {
       try {
-        const response = await axiosPrivate.get("franchise/analytics");
+        function generateWeeklyStats() {
+          const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+          const result = [];
 
-        setfranchiseAnalytics(response.data);
+          const today = new Date();
+
+          for (let i = 6; i >= 0; i--) {
+            const date = new Date(today);
+            date.setDate(today.getDate() - i);
+
+            const key = i === 0 ? "Today" : days[date.getDay()];
+
+            result.push({
+              key,
+              added: Math.floor(Math.random() * 40), // Replace with real data if available
+              renewed: Math.floor(Math.random() * 40),
+              revoked: Math.floor(Math.random() * 10),
+            });
+          }
+
+          return result;
+        }
+
+        setfranchiseAnalytics(generateWeeklyStats());
       } catch (error) {
         console.log(error);
       }

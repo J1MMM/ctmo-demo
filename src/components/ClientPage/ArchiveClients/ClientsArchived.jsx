@@ -32,7 +32,7 @@ const date_archived_column_format = {
 
 const ClientArchived = () => {
   document.title =
-    "Archived Management | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
+    "Archived Management | Franchise and Permit Management System";
   const axiosPrivate = useAxiosPrivate();
   const {
     archivedFranchises,

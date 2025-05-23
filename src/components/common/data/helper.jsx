@@ -279,41 +279,6 @@ const clientsColumns = [
     valueFormatter: (params) =>
       params.value && dayjs(params.value).format("ddd, MMM D YYYY"),
   },
-  {
-    field: "complaint",
-    headerName: "COMPLAINT",
-    width: 800,
-    headerClassName: "data-grid-header",
-    editable: false,
-    headerAlign: "center",
-    align: "center",
-
-    renderCell: (params, i) => {
-      const violations = params.row.complaint;
-      const paidviolations = params.row.paidViolations;
-      const result = removeOneItemPerMatch(violations, paidviolations);
-
-      if (typeof params.value[0] == "string") {
-        return (
-          <Stack key={i} direction="row" gap={1}>
-            {violations.map((v, j) => {
-              if (v != "" && v != null)
-                return (
-                  <Chip
-                    key={j}
-                    label={v}
-                    color={result[j] == v ? "primary" : "error"}
-                    size="small"
-                  />
-                );
-            })}
-          </Stack>
-        );
-      } else {
-        return null;
-      }
-    },
-  },
 ];
 
 function createClientsData(

@@ -14,7 +14,7 @@ import TCTInfo from "./TCTInfo";
 import AddTCT from "./AddTCT";
 
 const ReleasedtctTable = () => {
-  document.title = "Released TCT | TRICYCLE FRANCHISING AND RENEWAL SYSTEM";
+  document.title = "Released TCT | Franchise and Permit Management System";
 
   const { tickets, ticketLoading } = useData();
   const [snack, setSnack] = useState(false);
