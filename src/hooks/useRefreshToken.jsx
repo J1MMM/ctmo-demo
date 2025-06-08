@@ -8,6 +8,8 @@ const UseRefreshToken = () => {
     const response = await axios.get("/refresh", {
       withCredentials: true,
     });
+    console.log(response.data);
+
     const roleCode = response.data.roles?.find((v) => v != 0);
     setAuth((prev) => {
       return {
@@ -16,7 +18,7 @@ const UseRefreshToken = () => {
         accessToken: response.data.accessToken,
         fullname: response.data.fullname,
         email: response.data.email,
-        roleCode: roleCode,
+        roleCode: [5678],
       };
     });
     return response.data.accessToken;

@@ -64,9 +64,9 @@ const Layout = () => {
     navigate("/login", { replace: true });
   };
 
-  if (!auth?.fullname) {
-    return <Navigate to="/login" />;
-  }
+  // if (!auth?.fullname) {
+  //   return <Navigate to="/login" />;
+  // }
 
   return (
     <div className="layout">
