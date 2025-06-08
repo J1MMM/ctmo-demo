@@ -1,11 +1,11 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:3500";
+// const BASE_URL = "http://localhost:3500";
 // const BASE_URL = "https://spctmo-server.onrender.com";
 // const BASE_URL = "https://kapitolyo-api-server.onrender.com";
 // const BASE_URL = "https://kapitolyo-api-server-1.onrender.com";
 // const BASE_URL = "https://kapitolyo-api-server-2.onrender.com";
 // const BASE_URL = "https://spctmo-server-gitibbeqra-uc.a.run.app";
-// const BASE_URL = "https://kapitolyo-api-server-k2iw.onrender.com";
+const BASE_URL = "https://ctmo-demo-server.onrender.com";
 
 export default axios.create({
   baseURL: BASE_URL,
